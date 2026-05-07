@@ -1,4 +1,4 @@
-package com.demo3.model;
+package com.demo3.model.treenode;
 
 public abstract class Node<T> {
     protected T value;
