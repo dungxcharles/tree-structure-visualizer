@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0">
@@ -52,7 +51,7 @@
                                        <children>
                                           <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@general_tree.png" />
+                                                <Image url="@treeselection/general_tree.png" />
                                              </image>
                                           </ImageView>
                                           <Label text="General Tree">
@@ -70,7 +69,7 @@
                                        <children>
                                           <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@binary_tree.png" />
+                                                <Image url="@treeselection/binary_tree.png" />
                                              </image>
                                           </ImageView>
                                           <Label text="Binary Tree">
@@ -88,7 +87,7 @@
                                        <children>
                                           <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@redblack_tree.png" />
+                                                <Image url="@treeselection/redblack_tree.png" />
                                              </image>
                                           </ImageView>
                                           <Label text="Red-black Tree">
@@ -110,7 +109,7 @@
                                        <children>
                                           <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@avl_tree.png" />
+                                                <Image url="@treeselection/avl_tree.png" />
                                              </image>
                                           </ImageView>
                                           <Label text="AVL Tree">
@@ -128,7 +127,7 @@
                                        <children>
                                           <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@binary_search_tree.png" />
+                                                <Image url="@treeselection/binary_search_tree.png" />
                                              </image>
                                           </ImageView>
                                           <Label text="Binary Search Tree">
