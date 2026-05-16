@@ -117,7 +117,7 @@ public class CreditWindow {
             dot.setStroke(Color.BLACK);
             dot.setStrokeWidth(2);
             if (i == currentIndex) {
-                dot.setFill(Color.BLACK); // Highlighted dot
+                dot.setFill(Color.WHITE); // Highlighted dot
             } else {
                 dot.setFill(Color.TRANSPARENT); // Normal dot
             }
