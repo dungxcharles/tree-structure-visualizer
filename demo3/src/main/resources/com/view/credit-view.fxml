@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B3FFC5;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.CreditWindow">
+   <children>
+      <Button fx:id="btnBack" mnemonicParsing="false" onAction="#handleBack" text="Back" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <VBox prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="350.0" prefWidth="600.0" spacing="5.0">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <children>
+                  <Button fx:id="btnLeft" mnemonicParsing="false" onAction="#handleLeft" text="❮" />
+                  <ImageView fx:id="imageView" fitHeight="310.0" fitWidth="470.0" onMousePressed="#handleMousePressed" onMouseReleased="#handleMouseReleased" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="btnRight" mnemonicParsing="false" onAction="#handleRight" text="❯" />
+               </children>
+            </HBox>
+            <HBox fx:id="paginationHBox" alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="100.0" prefWidth="600.0" spacing="15.0">
+               <children>
+                  <Circle fill="TRANSPARENT" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="TRANSPARENT" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="TRANSPARENT" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
