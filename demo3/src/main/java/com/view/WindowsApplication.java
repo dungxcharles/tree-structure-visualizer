@@ -10,8 +10,8 @@ import java.io.IOException;
 public class WindowsApplication extends Application{
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/view/settings-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/view/tree-selection-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Help");
         stage.setScene(scene);
         stage.show();
