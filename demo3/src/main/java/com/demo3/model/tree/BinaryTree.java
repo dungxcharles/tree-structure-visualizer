@@ -44,6 +44,42 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
     }
 
     @Override
+    public boolean delete(int value) {
+        if (this.root == null) {
+            return false;
+        }
+
+        // Nếu root chính là node cần xóa, cắt bỏ toàn bộ cây
+        if (this.root.getValue() == value) {
+            this.root = null;
+            return true;
+        }
+
+        return deleteSubtree(this.root, value);
+    }
+
+    private boolean deleteSubtree(BinaryNode current, int value) {
+        if (current == null) {
+            return false;
+        }
+
+        // Kiểm tra con trái
+        if (current.getLeft() != null && current.getLeft().getValue() == value) {
+            current.setLeft(null); // Cắt đứt toàn bộ nhánh trái
+            return true;
+        }
+
+        // Kiểm tra con phải
+        if (current.getRight() != null && current.getRight().getValue() == value) {
+            current.setRight(null); // Cắt đứt toàn bộ nhánh phải
+            return true;
+        }
+
+        // Tiếp tục đệ quy tìm kiếm và xóa ở các nhánh con
+        return deleteSubtree(current.getLeft(), value) || deleteSubtree(current.getRight(), value);
+    }
+
+    @Override
     public boolean search(int value) {
         return findNode(this.root, value) != null;
     }
@@ -62,18 +98,27 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
     }
 
     @Override
-    public boolean delete(int value) {
-        return false;
+    public int getHeight() {
+        return getHeightRec(this.root);
     }
 
-    @Override
-    public int getHeight() {
-        return 0;
+    private int getHeightRec(BinaryNode node) {
+        if (node == null)
+            return 0;
+
+        return 1 + Math.max(getHeightRec(node.getLeft()), getHeightRec(node.getRight()));
     }
 
     @Override
     public int getNumberOfNodes() {
-        return 0;
+        return countNodes(this.root);
+    }
+
+    private int countNodes(BinaryNode node) {
+        if (node == null)
+            return 0;
+
+        return 1 + countNodes(node.getLeft()) + countNodes(node.getRight());
     }
 
     @Override
