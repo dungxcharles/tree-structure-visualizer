@@ -26,4 +26,19 @@ public abstract class AbstractTree<N extends Node> {
         this.root = null;
     }
 
+    public abstract void create(int value);
+
+    public abstract boolean insert(int parentValue, int value);
+
+    public abstract boolean delete(int value);
+
+    public abstract List<Integer> traverse(String type);
+
+    public abstract boolean search(int value);
+
+    public abstract int getHeight();
+
+    public abstract int getNumberOfNodes();
+
+
 }
