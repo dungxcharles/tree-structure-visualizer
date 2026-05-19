@@ -18,7 +18,41 @@ public class GeneralTree extends AbstractTree<GenericNode> {
 
     @Override
     public boolean insert(int parentValue, int childValue) {
-        return false;
+        if (this.isEmpty()) {
+            return false;
+            // hoặc throw new IllegalArgumentException("Tree is empty. Create one first.");
+        }
+
+        GenericNode parentNode = findNode(this.root, parentValue);
+
+        if (parentNode == null) {
+            return false;
+            // hoặc throw new IllegalArgumentException("Parent node with value " +
+            // parentValue + " not found.");
+        }
+
+        if (findNode(this.root, childValue) != null) {
+            return false;
+            // hoặc throw new IllegalArgumentException("Node with value " + childValue + "
+            // already exists.");
+        }
+
+        parentNode.addChild(new GenericNode(childValue));
+        return true;
+    }
+
+    private GenericNode findNode(GenericNode current, int value) {
+        if (current == null)
+            return null;
+        if (current.getValue() == value)
+            return current;
+
+        for (GenericNode child : current.getChildren()) {
+            GenericNode found = findNode(child, value);
+            if (found != null)
+                return found;
+        }
+        return null;
     }
 
     @Override
