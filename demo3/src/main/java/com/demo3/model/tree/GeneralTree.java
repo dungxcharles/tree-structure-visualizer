@@ -89,12 +89,38 @@ public class GeneralTree extends AbstractTree<GenericNode> {
 
     @Override
     public int getHeight() {
-        return 0;
+        return getTreeHeight(this.root);
+    }
+
+    private int getTreeHeight(GenericNode node) {
+        if (node == null)
+            return 0;
+
+        int maxChildHeight = 0;
+
+        for (GenericNode child : node.getChildren()) {
+            maxChildHeight = Math.max(maxChildHeight, getTreeHeight(child));
+        }
+
+        return 1 + maxChildHeight;
     }
 
     @Override
     public int getNumberOfNodes() {
-        return 0;
+        return countNodes(this.root);
+    }
+
+    private int countNodes(GenericNode node) {
+        if (node == null)
+            return 0;
+
+        int count = 1;
+
+        for (GenericNode child : node.getChildren()) {
+            count += countNodes(child);
+        }
+
+        return count;
     }
 
     @Override
