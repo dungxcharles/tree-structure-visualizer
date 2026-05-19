@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="58.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@settings/back_black.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="15.0" top="15.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <GridPane alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Resolution" textFill="#50c878">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="100.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="638.0" spacing="50.0" GridPane.columnIndex="1">
+               <children>
+                  <RadioButton mnemonicParsing="false" selected="true" text="1280 x 720">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="resolution" />
+                     </toggleGroup>
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="20.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="1366 x 768" toggleGroup="$resolution">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="20.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="1920 x 1080" toggleGroup="$resolution">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="20.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Fullscreen" textFill="#50c878">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="100.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="638.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ToggleButton mnemonicParsing="false" text="OFF">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="20.0" />
+                     </font>
+                  </ToggleButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Theme" textFill="#50c878">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="100.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="638.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <RadioButton mnemonicParsing="false" selected="true" text="Dark">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="20.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="theme" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="Light" toggleGroup="$theme">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="20.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Language" textFill="#50c878">
+                     <font>
+                        <Font name="JetBrainsMono NF Regular" size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="100.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="638.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <ChoiceBox prefHeight="35.0" prefWidth="260.0" />
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </children>
+</StackPane>
