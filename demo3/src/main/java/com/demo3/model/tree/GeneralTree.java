@@ -57,12 +57,34 @@ public class GeneralTree extends AbstractTree<GenericNode> {
 
     @Override
     public boolean delete(int value) {
+        if (isEmpty())
+            return false;
+
+        if (this.root.getValue() == value) {
+            this.root = null;
+            return true;
+        }
+
+        return deleteNode(this.root, value);
+    }
+
+    private boolean deleteNode(GenericNode current, int value) {
+        for (GenericNode child : current.getChildren()) {
+            if (child.getValue() == value) {
+                current.removeChild(child);
+                return true;
+            }
+
+            if (deleteNode(child, value)) {
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     public boolean search(int value) {
-        return false;
+        return findNode(this.root, value) != null;
     }
 
     @Override
