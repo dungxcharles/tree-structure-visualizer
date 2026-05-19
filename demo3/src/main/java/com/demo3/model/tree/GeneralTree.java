@@ -4,6 +4,9 @@ package com.demo3.model.tree;
 import com.demo3.model.node.GenericNode;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class GeneralTree extends AbstractTree<GenericNode> {
 
@@ -59,12 +62,10 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     public boolean delete(int value) {
         if (isEmpty())
             return false;
-
         if (this.root.getValue() == value) {
             this.root = null;
             return true;
         }
-
         return deleteNode(this.root, value);
     }
 
@@ -74,7 +75,6 @@ public class GeneralTree extends AbstractTree<GenericNode> {
                 current.removeChild(child);
                 return true;
             }
-
             if (deleteNode(child, value)) {
                 return true;
             }
@@ -95,13 +95,10 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     private int getTreeHeight(GenericNode node) {
         if (node == null)
             return 0;
-
         int maxChildHeight = 0;
-
         for (GenericNode child : node.getChildren()) {
             maxChildHeight = Math.max(maxChildHeight, getTreeHeight(child));
         }
-
         return 1 + maxChildHeight;
     }
 
@@ -113,18 +110,64 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     private int countNodes(GenericNode node) {
         if (node == null)
             return 0;
-
         int count = 1;
-
         for (GenericNode child : node.getChildren()) {
             count += countNodes(child);
         }
-
         return count;
     }
 
     @Override
     public List<Integer> traverse(TraversalType type) {
-        return List.of();
+        List<Integer> result = new ArrayList<>();
+        if (isEmpty())
+            return result;
+
+        switch (type) {
+            case PRE_ORDER:
+                preOrderTraverse(this.root, result);
+                break;
+            case IN_ORDER:
+                throw new UnsupportedOperationException(
+                        "In-order traversal is not defined for a general tree");
+            case POST_ORDER:
+                postOrderTraverse(this.root, result);
+                break;
+            case BFS:
+                bfsTraverse(this.root, result);
+                break;
+        }
+        return result;
+    }
+
+    private void preOrderTraverse(GenericNode node, List<Integer> result) {
+        if (node == null)
+            return;
+        result.add(node.getValue());
+        for (GenericNode child : node.getChildren()) {
+            preOrderTraverse(child, result);
+        }
+    }
+
+    private void postOrderTraverse(GenericNode node, List<Integer> result) {
+        if (node == null)
+            return;
+        for (GenericNode child : node.getChildren()) {
+            postOrderTraverse(child, result);
+        }
+        result.add(node.getValue());
+    }
+
+    private void bfsTraverse(GenericNode root, List<Integer> result) {
+        if (root == null)
+            return;
+        Queue<GenericNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            GenericNode current = queue.poll();
+            result.add(current.getValue());
+            queue.addAll(current.getChildren());
+        }
     }
 }
