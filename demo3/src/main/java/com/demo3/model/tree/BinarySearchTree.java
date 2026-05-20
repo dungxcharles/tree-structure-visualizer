@@ -99,4 +99,34 @@ public abstract class BinarySearchTree<N extends BinaryNode> extends AbstractTre
         }
         return node;
     }
+
+    @Override
+    public boolean update(int currentValue, int newValue) {
+        if (currentValue == newValue) {
+            return search(currentValue);
+        }
+        if (!search(currentValue) || search(newValue)) {
+            return false;
+        }
+
+        delete(currentValue);
+        return insert(newValue);
+    }
+
+    @Override
+    public boolean search(int value) {
+        return findNode(this.root, value) != null;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected N findNode(N current, int value) {
+        if (current == null || current.getValue() == value) {
+            return current;
+        }
+
+        if (value < current.getValue()) {
+            return findNode((N) current.getLeft(), value);
+        }
+        return findNode((N) current.getRight(), value);
+    }
 }
