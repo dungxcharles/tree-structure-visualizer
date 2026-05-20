@@ -81,6 +81,24 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
     }
 
     @Override
+    public boolean update(int currentValue, int newValue) {
+        if (isEmpty()) {
+            return false;
+        }
+        if (currentValue != newValue && search(newValue)) {
+            return false;
+        }
+
+        BinaryNode node = findNode(this.root, currentValue);
+        if (node == null) {
+            return false;
+        }
+
+        node.setValue(newValue);
+        return true;
+    }
+
+    @Override
     public boolean search(int value) {
         return findNode(this.root, value) != null;
     }
@@ -122,6 +140,10 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
 
     @Override
     public List<Integer> traverse(TraversalType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Traversal type cannot be null.");
+        }
+
         List<Integer> result = new ArrayList<>();
         if (isEmpty())
             return result;
