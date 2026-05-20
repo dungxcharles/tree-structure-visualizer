@@ -129,4 +129,32 @@ public abstract class BinarySearchTree<N extends BinaryNode> extends AbstractTre
         }
         return findNode((N) current.getRight(), value);
     }
+
+    @Override
+    public int getHeight() {
+        return getHeightRec(this.root);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected int getHeightRec(N node) {
+        if (node == null) {
+            return 0;
+        }
+
+        return 1 + Math.max(getHeightRec((N) node.getLeft()), getHeightRec((N) node.getRight()));
+    }
+
+    @Override
+    public int getNumberOfNodes() {
+        return countNodes(this.root);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected int countNodes(N node) {
+        if (node == null) {
+            return 0;
+        }
+
+        return 1 + countNodes((N) node.getLeft()) + countNodes((N) node.getRight());
+    }
 }
