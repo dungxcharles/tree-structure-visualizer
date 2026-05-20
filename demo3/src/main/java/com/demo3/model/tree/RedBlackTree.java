@@ -25,7 +25,10 @@ public class RedBlackTree extends AbstractTree<RBNode> {
     @Override
     public boolean insert(int parentValue, int value) {
         // parentValue is ignored because Red-Black Tree inserts by BST rule.
+        return insert(value);
+    }
 
+    public boolean insert(int value) {
         if (search(value)) {
             return false;
         }
@@ -174,6 +177,19 @@ public class RedBlackTree extends AbstractTree<RBNode> {
 
         deleteNode(z);
         return true;
+    }
+
+    @Override
+    public boolean update(int currentValue, int newValue) {
+        if (currentValue == newValue) {
+            return search(currentValue);
+        }
+        if (!search(currentValue) || search(newValue)) {
+            return false;
+        }
+
+        delete(currentValue);
+        return insert(newValue);
     }
 
     private void deleteNode(RBNode z) {
