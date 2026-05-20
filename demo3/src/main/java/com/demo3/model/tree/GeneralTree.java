@@ -40,8 +40,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
             // already exists.");
         }
 
-        parentNode.addChild(new GenericNode(childValue));
-        return true;
+        return parentNode.addChild(new GenericNode(childValue));
     }
 
     private GenericNode findNode(GenericNode current, int value) {
@@ -83,6 +82,24 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     }
 
     @Override
+    public boolean update(int currentValue, int newValue) {
+        if (isEmpty()) {
+            return false;
+        }
+        if (currentValue != newValue && findNode(this.root, newValue) != null) {
+            return false;
+        }
+
+        GenericNode node = findNode(this.root, currentValue);
+        if (node == null) {
+            return false;
+        }
+
+        node.setValue(newValue);
+        return true;
+    }
+
+    @Override
     public boolean search(int value) {
         return findNode(this.root, value) != null;
     }
@@ -119,6 +136,10 @@ public class GeneralTree extends AbstractTree<GenericNode> {
 
     @Override
     public List<Integer> traverse(TraversalType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Traversal type cannot be null.");
+        }
+
         List<Integer> result = new ArrayList<>();
         if (isEmpty())
             return result;
