@@ -1,9 +1,11 @@
-package com.demo3.model;
+package com.demo3.model.TreeNode;
 
 import java.util.List;
 import java.util.ArrayList;
 
-public class GenericNode <T> extends Node<T>{
+import com.demo3.model.TreeNode.Node;
+
+public class GenericNode <T> extends Node<T> {
     private List<GenericNode<T>> children;
 
     //constructor

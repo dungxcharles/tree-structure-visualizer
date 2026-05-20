@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.mainmenu.MainMenuController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
          <image>
@@ -27,6 +26,9 @@
          <font>
             <Font name="JetBrainsMono NF Bold" size="67.0" />
          </font>
+         <StackPane.margin>
+            <Insets top="-200.0" />
+         </StackPane.margin>
       </Label>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
@@ -65,8 +67,11 @@
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
+                     <padding>
+                        <Insets bottom="100.0" />
+                     </padding>
                   </Label>
-                  <ImageView fitHeight="96.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="MainMenuController" fitHeight="96.0" fitWidth="138.0" onMouseClicked="#startButtonClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@mainmenu/start.png" />
                      </image>

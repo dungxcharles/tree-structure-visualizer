@@ -1,4 +1,4 @@
-package com.demo3.model;
+package com.demo3.model.TreeNode;
 
 public class BinaryNode<T> extends Node<T>{
 
