@@ -45,4 +45,17 @@ public class HeapTree extends AbstractTree<BinaryNode> {
     private int rightIndex(int index) {
         return 2 * index + 2;
     }
+
+    private void rebuildLinks() {
+        for (int i = 0; i < heap.size(); i++) {
+            BinaryNode node = heap.get(i);
+            int leftIndex = leftIndex(i);
+            int rightIndex = rightIndex(i);
+
+            node.setLeft(leftIndex < heap.size() ? heap.get(leftIndex) : null);
+            node.setRight(rightIndex < heap.size() ? heap.get(rightIndex) : null);
+        }
+
+        this.root = heap.isEmpty() ? null : heap.get(0);
+    }
 }
