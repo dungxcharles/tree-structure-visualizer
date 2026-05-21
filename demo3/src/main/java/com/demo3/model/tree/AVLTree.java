@@ -93,4 +93,15 @@ public class AVLTree extends BinarySearchTree<AVLNode> {
         return height(node.getLeft()) - height(node.getRight());
     }
 
+    private void updateHeight(AVLNode node) {
+        node.setStoredHeight(1 + Math.max(height(node.getLeft()), height(node.getRight())));
+    }
+
+    private int height(AVLNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return node.getStoredHeight();
+    }
+
 }
