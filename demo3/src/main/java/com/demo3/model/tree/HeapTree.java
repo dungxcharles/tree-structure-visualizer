@@ -5,7 +5,7 @@ import com.demo3.model.node.BinaryNode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeapTree extends AbstractTree<BinaryNode> {
+public class HeapTree extends AbstractBinaryTree<BinaryNode> {
 
     private final List<BinaryNode> heap;
 
@@ -75,39 +75,8 @@ public class HeapTree extends AbstractTree<BinaryNode> {
     }
 
     @Override
-    public List<Integer> traverse(TraversalType type) {
-        if (type == null) {
-            throw new IllegalArgumentException("Traversal type cannot be null.");
-        }
-
-        List<Integer> result = new ArrayList<>();
-        switch (type) {
-            case BFS:
-                for (BinaryNode node : heap) {
-                    result.add(node.getValue());
-                }
-                break;
-            case IN_ORDER:
-                inOrderRec(this.root, result);
-                break;
-            case PRE_ORDER:
-                preOrderRec(this.root, result);
-                break;
-            case POST_ORDER:
-                postOrderRec(this.root, result);
-                break;
-        }
-        return result;
-    }
-
-    @Override
     public boolean search(int value) {
         return findIndex(value) >= 0;
-    }
-
-    @Override
-    public int getHeight() {
-        return getHeightRec(this.root);
     }
 
     @Override
@@ -204,41 +173,5 @@ public class HeapTree extends AbstractTree<BinaryNode> {
         return 2 * index + 2;
     }
 
-    private int getHeightRec(BinaryNode node) {
-        if (node == null) {
-            return 0;
-        }
-        return 1 + Math.max(getHeightRec(node.getLeft()), getHeightRec(node.getRight()));
-    }
-
-    private void inOrderRec(BinaryNode node, List<Integer> result) {
-        if (node == null) {
-            return;
-        }
-
-        inOrderRec(node.getLeft(), result);
-        result.add(node.getValue());
-        inOrderRec(node.getRight(), result);
-    }
-
-    private void preOrderRec(BinaryNode node, List<Integer> result) {
-        if (node == null) {
-            return;
-        }
-
-        result.add(node.getValue());
-        preOrderRec(node.getLeft(), result);
-        preOrderRec(node.getRight(), result);
-    }
-
-    private void postOrderRec(BinaryNode node, List<Integer> result) {
-        if (node == null) {
-            return;
-        }
-
-        postOrderRec(node.getLeft(), result);
-        postOrderRec(node.getRight(), result);
-        result.add(node.getValue());
-    }
 }
 	 

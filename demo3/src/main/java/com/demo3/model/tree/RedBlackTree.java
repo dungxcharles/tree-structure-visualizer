@@ -3,7 +3,7 @@ package com.demo3.model.tree;
 import com.demo3.model.node.RBNode;
 import com.demo3.model.node.RBNode.Color;
 
-public class RedBlackTree extends BinarySearchTree<RBNode> {
+public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
 
     @Override
     protected RBNode createNode(int value) {

@@ -2,7 +2,7 @@ package com.demo3.model.tree;
 
 import com.demo3.model.node.AVLNode;
 
-public class AVLTree extends BinarySearchTree<AVLNode> {
+public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
 
     private boolean inserted;
     private boolean deleted;
