@@ -88,4 +88,68 @@ public class HeapTree extends AbstractTree<BinaryNode> {
         heap.get(firstIndex).setValue(heap.get(secondIndex).getValue());
         heap.get(secondIndex).setValue(temp);
     }
+
+    @Override
+    public boolean delete(int value) {
+        int index = findIndex(value);
+        if (index < 0) {
+            return false;
+        }
+
+        int lastIndex = heap.size() - 1;
+        swapValues(index, lastIndex);
+        heap.remove(lastIndex);
+
+        if (index < heap.size()) {
+            fixHeapAt(index);
+        }
+
+        rebuildLinks();
+        return true;
+    }
+
+    @Override
+    public boolean search(int value) {
+        return findIndex(value) >= 0;
+    }
+
+    private int findIndex(int value) {
+        for (int i = 0; i < heap.size(); i++) {
+            if (heap.get(i).getValue() == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void fixHeapAt(int index) {
+        if (index > 0 && heap.get(index).getValue() > heap.get(parentIndex(index)).getValue()) {
+            heapifyUp(index);
+        } else {
+            heapifyDown(index);
+        }
+    }
+
+    private void heapifyDown(int index) {
+        while (true) {
+            int leftIndex = leftIndex(index);
+            int rightIndex = rightIndex(index);
+            int largest = index;
+
+            if (leftIndex < heap.size()
+                    && heap.get(leftIndex).getValue() > heap.get(largest).getValue()) {
+                largest = leftIndex;
+            }
+            if (rightIndex < heap.size()
+                    && heap.get(rightIndex).getValue() > heap.get(largest).getValue()) {
+                largest = rightIndex;
+            }
+            if (largest == index) {
+                return;
+            }
+
+            swapValues(index, largest);
+            index = largest;
+        }
+    }
 }
