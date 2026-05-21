@@ -73,4 +73,24 @@ public class AVLTree extends BinarySearchTree<AVLNode> {
         return rebalance(node);
     }
 
+    @Override
+    public boolean update(int currentValue, int newValue) {
+        if (currentValue == newValue) {
+            return search(currentValue);
+        }
+        if (!search(currentValue) || search(newValue)) {
+            return false;
+        }
+
+        delete(currentValue);
+        return insert(newValue);
+    }
+
+    public int getBalanceFactor(AVLNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return height(node.getLeft()) - height(node.getRight());
+    }
+
 }
