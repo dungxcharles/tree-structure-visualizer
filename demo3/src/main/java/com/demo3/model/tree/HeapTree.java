@@ -58,4 +58,34 @@ public class HeapTree extends AbstractTree<BinaryNode> {
 
         this.root = heap.isEmpty() ? null : heap.get(0);
     }
+
+    @Override
+    public boolean insert(int parentValue, int value) {
+        return insert(value);
+    }
+
+    public boolean insert(int value) {
+        heap.add(new BinaryNode(value));
+        heapifyUp(heap.size() - 1);
+        rebuildLinks();
+        return true;
+    }
+
+    private void heapifyUp(int index) {
+        while (index > 0) {
+            int parentIndex = parentIndex(index);
+            if (heap.get(parentIndex).getValue() >= heap.get(index).getValue()) {
+                break;
+            }
+
+            swapValues(parentIndex, index);
+            index = parentIndex;
+        }
+    }
+
+    private void swapValues(int firstIndex, int secondIndex) {
+        int temp = heap.get(firstIndex).getValue();
+        heap.get(firstIndex).setValue(heap.get(secondIndex).getValue());
+        heap.get(secondIndex).setValue(temp);
+    }
 }
