@@ -37,4 +37,40 @@ public class AVLTree extends BinarySearchTree<AVLNode> {
 
         return rebalance(node);
     }
+
+    @Override
+    public boolean delete(int value) {
+        deleted = false;
+        this.root = deleteRec(this.root, value);
+        return deleted;
+    }
+
+    @Override
+    protected AVLNode deleteRec(AVLNode node, int value) {
+        if (node == null) {
+            return null;
+        }
+
+        if (value < node.getValue()) {
+            node.setLeft(deleteRec(node.getLeft(), value));
+        } else if (value > node.getValue()) {
+            node.setRight(deleteRec(node.getRight(), value));
+        } else {
+            deleted = true;
+
+            if (node.getLeft() == null) {
+                return node.getRight();
+            }
+            if (node.getRight() == null) {
+                return node.getLeft();
+            }
+
+            AVLNode successor = minimum(node.getRight());
+            node.setValue(successor.getValue());
+            node.setRight(deleteRec(node.getRight(), successor.getValue()));
+        }
+
+        return rebalance(node);
+    }
+
 }
