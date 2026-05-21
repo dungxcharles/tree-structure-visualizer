@@ -104,4 +104,49 @@ public class AVLTree extends BinarySearchTree<AVLNode> {
         return node.getStoredHeight();
     }
 
+    private AVLNode rebalance(AVLNode node) {
+        updateHeight(node);
+        int balance = getBalanceFactor(node);
+
+        if (balance > 1) {
+            if (getBalanceFactor(node.getLeft()) < 0) {
+                node.setLeft(leftRotate(node.getLeft()));
+            }
+            return rightRotate(node);
+        }
+
+        if (balance < -1) {
+            if (getBalanceFactor(node.getRight()) > 0) {
+                node.setRight(rightRotate(node.getRight()));
+            }
+            return leftRotate(node);
+        }
+
+        return node;
+    }
+
+    private AVLNode leftRotate(AVLNode x) {
+        AVLNode y = x.getRight();
+        AVLNode middle = y.getLeft();
+
+        y.setLeft(x);
+        x.setRight(middle);
+
+        updateHeight(x);
+        updateHeight(y);
+        return y;
+    }
+
+    private AVLNode rightRotate(AVLNode y) {
+        AVLNode x = y.getLeft();
+        AVLNode middle = x.getRight();
+
+        x.setRight(y);
+        y.setLeft(middle);
+
+        updateHeight(y);
+        updateHeight(x);
+        return x;
+    }
+
 }
