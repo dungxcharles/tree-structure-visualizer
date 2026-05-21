@@ -1,10 +1,10 @@
-module com.demo3 {
+module com {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.demo3 to javafx.fxml;
-    exports com.demo3.model.TreeNode;
+    opens com.model.TreeNode to javafx.fxml;
+    exports com.model.TreeNode;
     opens com.view to javafx.fxml;
     exports com.view;
     exports com.controller;

@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Reorganize the files">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/OOP.20252-14.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/OOP.20252-14.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/TreeNode/BinaryNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/BinaryNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/TreeNode/GenericNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/GenericNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/TreeNode/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/TreeNode/RBNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/RBNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/mainmenu/MainMenuApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/mainmenu/MainMenuApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/mainmenu/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/mainmenu/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/BinaryNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/BinaryNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/GenericNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/GenericNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/RBNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/RBNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/demo3/hello-view.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +27,69 @@
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="a909cc71-9f0e-422f-ac22-7ac309d8446d" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7,
-  "fromUser": false
-}]]></component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0000000000128304" />
+      <entry key="S5" value="1.00008500029705" />
+      <entry key="S10" value="1.0159678321457553" />
+      <entry key="S30" value="1.5237900790993502" />
+      <entry key="S60" value="2.253570866464943" />
+      <entry key="M2" value="2.9494023303619876" />
+      <entry key="M5" value="3.8836722778178223" />
+      <entry key="M10" value="5.012631113746035" />
+      <entry key="M15" value="5.783792138516402" />
+      <entry key="M30" value="6.994758431566714" />
+      <entry key="H1" value="7.864971506014682" />
+      <entry key="H2" value="8.393811440862489" />
+      <entry key="H4" value="8.68642189453102" />
+      <entry key="D1" value="8.946205260410597" />
+      <entry key="W1" value="8.992276492456263" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="3.729295874728848E-203" />
+      <entry key="S5" value="1.068195480882134E-81" />
+      <entry key="S10" value="3.2683259948819884E-41" />
+      <entry key="S30" value="3.1972391535169316E-14" />
+      <entry key="S60" value="1.788082535432001E-7" />
+      <entry key="M2" value="4.2285724960463916E-4" />
+      <entry key="M5" value="0.04471749965091859" />
+      <entry key="M10" value="0.2114651263232748" />
+      <entry key="M15" value="0.3549434536686509" />
+      <entry key="M30" value="0.5957713098737224" />
+      <entry key="H1" value="0.7718622350353215" />
+      <entry key="H2" value="0.8785569048361758" />
+      <entry key="H4" value="0.9373136640613831" />
+      <entry key="D1" value="0.9892684485423451" />
+      <entry key="W1" value="0.9984598230244944" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.2496885336478823E-6" />
+      <entry key="MS500" value="0.06597210735237291" />
+      <entry key="S2" value="0.5068040645623921" />
+      <entry key="S5" value="0.7620496543339194" />
+      <entry key="S10" value="0.8886732255953957" />
+      <entry key="S30" value="1.4772701782079827" />
+      <entry key="S60" value="2.228506962933197" />
+      <entry key="M2" value="2.9364648899313917" />
+      <entry key="M5" value="3.922020604235984" />
+      <entry key="M10" value="5.219696275999295" />
+      <entry key="M15" value="6.135165615740833" />
+      <entry key="M30" value="7.5882266862238" />
+      <entry key="H1" value="8.63549501027411" />
+      <entry key="H2" value="9.271642362177236" />
+      <entry key="H4" value="9.623356971312505" />
+      <entry key="D1" value="9.935408311189832" />
+      <entry key="W1" value="9.99072691479049" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3DyM62M9V7qoK8xQqlNFdvX4hZ4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -34,6 +97,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.MainMenuApplication.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
@@ -46,9 +114,28 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\view" />
+      <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\controller.mainmenu" />
+      <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\java\com" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.24374.151" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.24374.151" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Reorganize the files" />
@@ -57,6 +144,15 @@
       <option name="presentableId" value="Default" />
       <updated>1779249678086</updated>
     </task>
+    <task id="LOCAL-00001" summary="Reorganize the files">
+      <option name="closed" value="true" />
+      <created>1779250126307</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779250126307</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

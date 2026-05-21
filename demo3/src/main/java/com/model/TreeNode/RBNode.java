@@ -1,4 +1,4 @@
-package com.demo3.model.TreeNode;
+package com.model.TreeNode;
 
 public class RBNode <T extends Comparable<T>> extends BinaryNode<T>{
     private RBNode<T> parent;
