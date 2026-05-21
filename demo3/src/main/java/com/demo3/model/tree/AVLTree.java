@@ -4,8 +4,8 @@ import com.demo3.model.node.AVLNode;
 
 public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
 
-    private boolean inserted;
-    private boolean deleted;
+    private boolean nodeInserted;
+    private boolean nodeDeleted;
 
     @Override
     protected AVLNode createNode(int value) {
@@ -18,14 +18,14 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
             return false;
         }
 
-        inserted = false;
+        nodeInserted = false;
         this.root = insertRec(this.root, value);
-        return inserted;
+        return nodeInserted;
     }
 
     private AVLNode insertRec(AVLNode node, int value) {
         if (node == null) {
-            inserted = true;
+            nodeInserted = true;
             return createNode(value);
         }
 
@@ -40,9 +40,9 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
 
     @Override
     public boolean delete(int value) {
-        deleted = false;
+        nodeDeleted = false;
         this.root = deleteRec(this.root, value);
-        return deleted;
+        return nodeDeleted;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
         } else if (value > node.getValue()) {
             node.setRight(deleteRec(node.getRight(), value));
         } else {
-            deleted = true;
+            nodeDeleted = true;
 
             if (node.getLeft() == null) {
                 return node.getRight();
