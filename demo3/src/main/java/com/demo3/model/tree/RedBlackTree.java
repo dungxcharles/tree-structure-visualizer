@@ -3,11 +3,16 @@ package com.demo3.model.tree;
 import com.demo3.model.node.RBNode;
 import com.demo3.model.node.RBNode.Color;
 
-public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
+public class RedBlackTree extends BinarySearchTree {
 
     @Override
     protected RBNode createNode(int value) {
         return new RBNode(value);
+    }
+
+    @Override
+    public RBNode getRoot() {
+        return (RBNode) this.root;
     }
 
     @Override
@@ -16,23 +21,23 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
             return;
         }
 
-        RBNode node = new RBNode(value);
+        RBNode node = createNode(value);
         node.setColor(Color.BLACK);
         this.root = node;
     }
 
     @Override
     public boolean insert(int parentValue, int value) {
-        // parentValue is ignored because Red-Black Tree inserts by BST rule.
         return insert(value);
     }
 
+    @Override
     public boolean insert(int value) {
         if (search(value)) {
             return false;
         }
 
-        RBNode newNode = new RBNode(value);
+        RBNode newNode = createNode(value);
         newNode.setColor(Color.RED);
 
         if (this.root == null) {
@@ -41,9 +46,8 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
             return true;
         }
 
-        insertBST(this.root, newNode);
+        insertBST(getRoot(), newNode);
         fixInsert(newNode);
-
         return true;
     }
 
@@ -53,14 +57,14 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
                 current.setLeft(newNode);
                 newNode.setParent(current);
             } else {
-                insertBST((RBNode) current.getLeft(), newNode);
+                insertBST(current.getLeft(), newNode);
             }
         } else {
             if (current.getRight() == null) {
                 current.setRight(newNode);
                 newNode.setParent(current);
             } else {
-                insertBST((RBNode) current.getRight(), newNode);
+                insertBST(current.getRight(), newNode);
             }
         }
     }
@@ -71,7 +75,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
             RBNode grandParent = parentOf(parent);
 
             if (parent == grandParent.getLeft()) {
-                RBNode uncle = (RBNode) grandParent.getRight();
+                RBNode uncle = grandParent.getRight();
 
                 if (colorOf(uncle) == Color.RED) {
                     parent.setColor(Color.BLACK);
@@ -89,7 +93,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
                     rightRotate(parentOf(parentOf(node)));
                 }
             } else {
-                RBNode uncle = (RBNode) grandParent.getLeft();
+                RBNode uncle = grandParent.getLeft();
 
                 if (colorOf(uncle) == Color.RED) {
                     parent.setColor(Color.BLACK);
@@ -109,7 +113,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
             }
         }
 
-        this.root.setColor(Color.BLACK);
+        getRoot().setColor(Color.BLACK);
     }
 
     private void leftRotate(RBNode x) {
@@ -117,12 +121,11 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
             return;
         }
 
-        RBNode y = (RBNode) x.getRight();
-
+        RBNode y = x.getRight();
         x.setRight(y.getLeft());
 
         if (y.getLeft() != null) {
-            ((RBNode) y.getLeft()).setParent(x);
+            y.getLeft().setParent(x);
         }
 
         y.setParent(x.getParent());
@@ -144,12 +147,11 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
             return;
         }
 
-        RBNode y = (RBNode) x.getLeft();
-
+        RBNode y = x.getLeft();
         x.setLeft(y.getRight());
 
         if (y.getRight() != null) {
-            ((RBNode) y.getRight()).setParent(x);
+            y.getRight().setParent(x);
         }
 
         y.setParent(x.getParent());
@@ -168,8 +170,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
 
     @Override
     public boolean delete(int value) {
-        RBNode z = findNode(this.root, value);
-
+        RBNode z = (RBNode) findNode(this.root, value);
         if (z == null) {
             return false;
         }
@@ -199,43 +200,38 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
         RBNode xParent;
 
         if (z.getLeft() == null) {
-            x = (RBNode) z.getRight();
+            x = z.getRight();
             xParent = z.getParent();
-            transplant(z, (RBNode) z.getRight());
+            transplant(z, z.getRight());
         } else if (z.getRight() == null) {
-            x = (RBNode) z.getLeft();
+            x = z.getLeft();
             xParent = z.getParent();
-            transplant(z, (RBNode) z.getLeft());
+            transplant(z, z.getLeft());
         } else {
-            y = minimum((RBNode) z.getRight());
+            y = (RBNode) minimum(z.getRight());
             originalColor = y.getColor();
-
-            x = (RBNode) y.getRight();
+            x = y.getRight();
 
             if (y.getParent() == z) {
                 xParent = y;
-
                 if (x != null) {
                     x.setParent(y);
                 }
             } else {
                 xParent = y.getParent();
-
-                transplant(y, (RBNode) y.getRight());
-
+                transplant(y, y.getRight());
                 y.setRight(z.getRight());
 
                 if (y.getRight() != null) {
-                    ((RBNode) y.getRight()).setParent(y);
+                    y.getRight().setParent(y);
                 }
             }
 
             transplant(z, y);
-
             y.setLeft(z.getLeft());
 
             if (y.getLeft() != null) {
-                ((RBNode) y.getLeft()).setParent(y);
+                y.getLeft().setParent(y);
             }
 
             y.setColor(z.getColor());
@@ -246,7 +242,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
         }
 
         if (this.root != null) {
-            this.root.setColor(Color.BLACK);
+            getRoot().setColor(Color.BLACK);
         }
     }
 
@@ -257,13 +253,13 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
             }
 
             if (x == parent.getLeft()) {
-                RBNode sibling = (RBNode) parent.getRight();
+                RBNode sibling = parent.getRight();
 
                 if (colorOf(sibling) == Color.RED) {
                     sibling.setColor(Color.BLACK);
                     parent.setColor(Color.RED);
                     leftRotate(parent);
-                    sibling = (RBNode) parent.getRight();
+                    sibling = parent.getRight();
                 }
 
                 if (colorOf(leftOf(sibling)) == Color.BLACK
@@ -285,7 +281,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
                             rightRotate(sibling);
                         }
 
-                        sibling = (RBNode) parent.getRight();
+                        sibling = parent.getRight();
                     }
 
                     if (sibling != null) {
@@ -299,18 +295,17 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
                     }
 
                     leftRotate(parent);
-
-                    x = this.root;
+                    x = getRoot();
                     parent = null;
                 }
             } else {
-                RBNode sibling = (RBNode) parent.getLeft();
+                RBNode sibling = parent.getLeft();
 
                 if (colorOf(sibling) == Color.RED) {
                     sibling.setColor(Color.BLACK);
                     parent.setColor(Color.RED);
                     rightRotate(parent);
-                    sibling = (RBNode) parent.getLeft();
+                    sibling = parent.getLeft();
                 }
 
                 if (colorOf(rightOf(sibling)) == Color.BLACK
@@ -332,7 +327,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
                             leftRotate(sibling);
                         }
 
-                        sibling = (RBNode) parent.getLeft();
+                        sibling = parent.getLeft();
                     }
 
                     if (sibling != null) {
@@ -346,8 +341,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
                     }
 
                     rightRotate(parent);
-
-                    x = this.root;
+                    x = getRoot();
                     parent = null;
                 }
             }
@@ -376,7 +370,6 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
         if (node == null) {
             return Color.BLACK;
         }
-
         return node.getColor();
     }
 
@@ -384,7 +377,6 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
         if (node == null) {
             return null;
         }
-
         return node.getParent();
     }
 
@@ -392,15 +384,13 @@ public class RedBlackTree extends AbstractBinarySearchTree<RBNode> {
         if (node == null) {
             return null;
         }
-
-        return (RBNode) node.getLeft();
+        return node.getLeft();
     }
 
     private RBNode rightOf(RBNode node) {
         if (node == null) {
             return null;
         }
-
-        return (RBNode) node.getRight();
+        return node.getRight();
     }
 }

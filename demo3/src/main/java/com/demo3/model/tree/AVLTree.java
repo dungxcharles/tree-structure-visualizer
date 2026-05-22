@@ -2,7 +2,7 @@ package com.demo3.model.tree;
 
 import com.demo3.model.node.AVLNode;
 
-public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
+public class AVLTree extends BinarySearchTree {
 
     private boolean nodeInserted;
     private boolean nodeDeleted;
@@ -13,13 +13,18 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
     }
 
     @Override
+    public AVLNode getRoot() {
+        return (AVLNode) this.root;
+    }
+
+    @Override
     public boolean insert(int value) {
         if (search(value)) {
             return false;
         }
 
         nodeInserted = false;
-        this.root = insertRec(this.root, value);
+        this.root = insertRec(getRoot(), value);
         return nodeInserted;
     }
 
@@ -41,12 +46,11 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
     @Override
     public boolean delete(int value) {
         nodeDeleted = false;
-        this.root = deleteRec(this.root, value);
+        this.root = deleteRec(getRoot(), value);
         return nodeDeleted;
     }
 
-    @Override
-    protected AVLNode deleteRec(AVLNode node, int value) {
+    private AVLNode deleteRec(AVLNode node, int value) {
         if (node == null) {
             return null;
         }
@@ -91,6 +95,13 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
             return 0;
         }
         return height(node.getLeft()) - height(node.getRight());
+    }
+
+    private AVLNode minimum(AVLNode node) {
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
+        return node;
     }
 
     private void updateHeight(AVLNode node) {
@@ -148,5 +159,4 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
         updateHeight(x);
         return x;
     }
-
 }
