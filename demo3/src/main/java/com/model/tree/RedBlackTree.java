@@ -1,7 +1,7 @@
-package com.demo3.model.tree;
+package com.model.tree;
 
-import com.demo3.model.node.RBNode;
-import com.demo3.model.node.RBNode.Color;
+import com.model.node.RBNode;
+import com.model.node.RBNode.Color;
 
 import java.util.List;
 

@@ -4,22 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Reorganize the files">
-      <change beforePath="$PROJECT_DIR$/.idea/OOP.20252-14.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/OOP.20252-14.iml" afterDir="false" />
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Feat: Granting access to workspace from main menu.">
+      <change afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/mainmenu/MainMenuApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/mainmenu/MainMenuApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/mainmenu/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/mainmenu/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/BinaryNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/BinaryNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/GenericNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/GenericNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/RBNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/RBNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/node/BinaryNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/node/BinaryNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/node/GenericNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/node/GenericNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/node/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/node/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/node/RBNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/node/RBNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/tree/AbstractTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AbstractTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/tree/BinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/tree/GeneralTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/tree/RedBlackTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/demo3/model/tree/TraversalType.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/TraversalType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/BinaryNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/GenericNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/Node.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/TreeNode/RBNode.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/demo3/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -31,59 +48,59 @@
     <decayedCancelled>
       <entry key="MS100" value="1.0" />
       <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0000000000128304" />
-      <entry key="S5" value="1.00008500029705" />
-      <entry key="S10" value="1.0159678321457553" />
-      <entry key="S30" value="1.5237900790993502" />
-      <entry key="S60" value="2.253570866464943" />
-      <entry key="M2" value="2.9494023303619876" />
-      <entry key="M5" value="3.8836722778178223" />
-      <entry key="M10" value="5.012631113746035" />
-      <entry key="M15" value="5.783792138516402" />
-      <entry key="M30" value="6.994758431566714" />
-      <entry key="H1" value="7.864971506014682" />
-      <entry key="H2" value="8.393811440862489" />
-      <entry key="H4" value="8.68642189453102" />
-      <entry key="D1" value="8.946205260410597" />
-      <entry key="W1" value="8.992276492456263" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.000000035865681" />
+      <entry key="S10" value="1.0002210530347897" />
+      <entry key="S30" value="1.1516729279221687" />
+      <entry key="S60" value="2.229584559958056" />
+      <entry key="M2" value="5.36078662027409" />
+      <entry key="M5" value="12.721457507950847" />
+      <entry key="M10" value="21.820764411560805" />
+      <entry key="M15" value="29.029195292987318" />
+      <entry key="M30" value="42.282777798870484" />
+      <entry key="H1" value="53.18633273442588" />
+      <entry key="H2" value="60.33785396377468" />
+      <entry key="H4" value="64.45831807268519" />
+      <entry key="D1" value="68.2117183873461" />
+      <entry key="W1" value="68.88659203076331" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="3.729295874728848E-203" />
-      <entry key="S5" value="1.068195480882134E-81" />
-      <entry key="S10" value="3.2683259948819884E-41" />
-      <entry key="S30" value="3.1972391535169316E-14" />
-      <entry key="S60" value="1.788082535432001E-7" />
-      <entry key="M2" value="4.2285724960463916E-4" />
-      <entry key="M5" value="0.04471749965091859" />
-      <entry key="M10" value="0.2114651263232748" />
-      <entry key="M15" value="0.3549434536686509" />
-      <entry key="M30" value="0.5957713098737224" />
-      <entry key="H1" value="0.7718622350353215" />
-      <entry key="H2" value="0.8785569048361758" />
-      <entry key="H4" value="0.9373136640613831" />
-      <entry key="D1" value="0.9892684485423451" />
-      <entry key="W1" value="0.9984598230244944" />
+      <entry key="MS100" value="3.301836488433967E-38" />
+      <entry key="MS500" value="3.3793682508795866E-8" />
+      <entry key="S2" value="0.020488170260536058" />
+      <entry key="S5" value="0.3609544239786841" />
+      <entry key="S10" value="1.0111869591180251" />
+      <entry key="S30" value="2.5676405318960027" />
+      <entry key="S60" value="4.943338439098431" />
+      <entry key="M2" value="9.189708467733421" />
+      <entry key="M5" value="16.77301831116867" />
+      <entry key="M10" value="23.63742254246149" />
+      <entry key="M15" value="27.84179909408203" />
+      <entry key="M30" value="34.28174282226377" />
+      <entry key="H1" value="38.906503130095935" />
+      <entry key="H2" value="41.73475486195251" />
+      <entry key="H4" value="43.30752224158019" />
+      <entry key="D1" value="44.70911453571446" />
+      <entry key="W1" value="44.958222496160644" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.2496885336478823E-6" />
-      <entry key="MS500" value="0.06597210735237291" />
-      <entry key="S2" value="0.5068040645623921" />
-      <entry key="S5" value="0.7620496543339194" />
-      <entry key="S10" value="0.8886732255953957" />
-      <entry key="S30" value="1.4772701782079827" />
-      <entry key="S60" value="2.228506962933197" />
-      <entry key="M2" value="2.9364648899313917" />
-      <entry key="M5" value="3.922020604235984" />
-      <entry key="M10" value="5.219696275999295" />
-      <entry key="M15" value="6.135165615740833" />
-      <entry key="M30" value="7.5882266862238" />
-      <entry key="H1" value="8.63549501027411" />
-      <entry key="H2" value="9.271642362177236" />
-      <entry key="H4" value="9.623356971312505" />
-      <entry key="D1" value="9.935408311189832" />
-      <entry key="W1" value="9.99072691479049" />
+      <entry key="MS100" value="0.9138314502294005" />
+      <entry key="MS500" value="0.9821396049614634" />
+      <entry key="S2" value="1.0081226793523148" />
+      <entry key="S5" value="1.2873291069764572" />
+      <entry key="S10" value="1.9028478318243358" />
+      <entry key="S30" value="3.6265733070481647" />
+      <entry key="S60" value="7.079720065454427" />
+      <entry key="M2" value="14.45505029762446" />
+      <entry key="M5" value="29.416180756994574" />
+      <entry key="M10" value="45.397309316960786" />
+      <entry key="M15" value="56.820388352095655" />
+      <entry key="M30" value="76.53091199499016" />
+      <entry key="H1" value="92.07287073642269" />
+      <entry key="H2" value="102.06163044494843" />
+      <entry key="H4" value="107.76007000193165" />
+      <entry key="D1" value="112.91982905485577" />
+      <entry key="W1" value="113.84467004163518" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -91,36 +108,40 @@
   &quot;fromUser&quot;: false
 }</component>
   <component name="ProjectId" id="3DyM62M9V7qoK8xQqlNFdvX4hZ4" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MainMenuApplication.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feature/controller",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainMenuApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/controller&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\view" />
@@ -152,14 +173,34 @@
       <option name="project" value="LOCAL" />
       <updated>1779250126307</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Feat: Granting access to workspace from main menu.">
+      <option name="closed" value="true" />
+      <created>1779328485268</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1779328485268</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Reorganize the files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reorganize the files" />
+    <MESSAGE value="Feat: Granting access to workspace from main menu." />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: Granting access to workspace from main menu." />
   </component>
 </project>

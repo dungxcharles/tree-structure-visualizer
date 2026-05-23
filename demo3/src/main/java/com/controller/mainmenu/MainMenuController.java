@@ -1,6 +1,7 @@
 package com.controller.mainmenu;
 
-import javafx.event.ActionEvent;
+import com.controller.workspace.WorkspaceController;
+import com.model.tree.GeneralTree;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,11 +19,16 @@ public class MainMenuController {
 
     @FXML
     void startButtonClicked(MouseEvent event) throws IOException {
+        // Get workspace FXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/workspace.fxml"));
+
+        // Initialize default settings
         Parent workspaceView = loader.load();
+        WorkspaceController workspaceCtrl = loader.getController();
+        workspaceCtrl.initWorkspace();
 
+        // Setting up the workspace scene
         Scene workspaceScene = new Scene(workspaceView);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(workspaceScene);
         stage.show();

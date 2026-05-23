@@ -1,7 +1,7 @@
-package com.demo3.model.tree;
+package com.model.tree;
 
 
-import com.demo3.model.node.GenericNode;
+import com.model.node.GenericNode;
 
 import java.util.List;
 import java.util.ArrayList;

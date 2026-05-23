@@ -1,6 +1,6 @@
-package com.demo3.model.tree;
+package com.model.tree;
 
-import com.demo3.model.node.Node;
+import com.model.node.Node;
 
 import java.util.List;
 

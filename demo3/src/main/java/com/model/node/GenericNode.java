@@ -1,4 +1,4 @@
-package com.demo3.model.node;
+package com.model.node;
 
 import java.util.List;
 import java.util.ArrayList;

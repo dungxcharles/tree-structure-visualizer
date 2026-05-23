@@ -7,7 +7,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
@@ -22,7 +21,7 @@
                <children>
                   <HBox prefHeight="73.0" prefWidth="600.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="185.0" style="-fx-background-color: TRANSPARENT;" text="⬅Back">
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" style="-fx-background-color: TRANSPARENT;" text="⬅Back">
                            <HBox.margin>
                               <Insets left="10.0" top="10.0" />
                            </HBox.margin>
@@ -37,7 +36,11 @@
                               <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="183.0" text="Select a structure to visualize" wrapText="true" />
                            </children>
                         </VBox>
-                        <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="⬅Back" visible="false" />
+                        <Button disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" opacity="0.0" prefHeight="25.0" prefWidth="250.0" style="-fx-background-color: TRANSPARENT;" text="⬅Back" visible="false">
+                           <HBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                   </HBox>
                   <ScrollPane hbarPolicy="NEVER" prefHeight="321.0" prefWidth="600.0" style="-fx-background-color: TRANSPARENT; -fx-background-insets: 0;">
@@ -156,60 +159,5 @@
             </VBox>
          </children>
       </AnchorPane>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@treeselection/back_black.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                  </ImageView>
-               </children>
-            </HBox>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <ImageView fitHeight="208.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@treeselection/tree_test.jpg" />
-                     </image>
-                  </ImageView>
-               </center>
-               <bottom>
-                  <VBox alignment="CENTER" prefHeight="76.0" prefWidth="500.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="585.0" text="--- Unknown Tree ----">
-                           <font>
-                              <Font name="JetBrainsMono NF Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <HBox alignment="CENTER" cacheShape="false" prefHeight="55.0" prefWidth="500.0" spacing="40.0">
-                           <children>
-                              <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@treeselection/prev_tree_black.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@treeselection/start_black.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@treeselection/next_tree_black.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </bottom>
-            </BorderPane>
-         </children>
-      </StackPane>
    </children>
 </StackPane>

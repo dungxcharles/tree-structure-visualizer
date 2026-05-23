@@ -1,6 +1,6 @@
-package com.demo3.model.tree;
+package com.model.tree;
 
-import com.demo3.model.node.BinaryNode;
+import com.model.node.BinaryNode;
 
 import java.util.List;
 import java.util.ArrayList;
