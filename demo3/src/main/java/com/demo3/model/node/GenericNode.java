@@ -23,32 +23,33 @@ public class GenericNode extends Node {
         return this.parent;
     }
 
-    public void addChild(GenericNode child) {
+    public boolean addChild(GenericNode child) {
         if (child == null) {
-            return;
+            return false;
         }
 
         // Không cho add chính nó hoặc tổ tiên của this làm con
         GenericNode current = this;
         while (current != null) {
             if (current == child) {
-                return;
+                return false;
             }
             current = current.parent;
         }
 
         // Không cho add cùng một object child hai lần
         if (this.children.contains(child)) {
-            return;
+            return false;
         }
 
         // Không cho một node có 2 parent
         if (child.parent != null) {
-            return;
+            return false;
         }
 
         child.parent = this;
         this.children.add(child);
+        return true;
     }
 
     public boolean removeChild(GenericNode child) {

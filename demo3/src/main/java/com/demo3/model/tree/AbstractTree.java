@@ -32,6 +32,8 @@ public abstract class AbstractTree<N extends Node> {
 
     public abstract boolean delete(int value);
 
+    public abstract boolean update(int currentValue, int newValue);
+
     public abstract List<Integer> traverse(TraversalType type);
 
     public abstract boolean search(int value);
