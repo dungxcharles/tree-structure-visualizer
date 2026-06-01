@@ -1,16 +1,33 @@
 package com.visualization.view.animation;
 
 import com.visualization.model.VisualNode;
+import javafx.animation.Transition;
+import javafx.util.Duration;
 
 public class NodeMoveAnimation implements TreeAnimation {
-    public NodeMoveAnimation(VisualNode node, double targetX, double targetY, double durationMs) {}
+    private final Transition transition;
+
+    public NodeMoveAnimation(VisualNode node, double targetX, double targetY, double durationMs) {
+
+    }
 
     @Override
-    public void play() {}
+    public void play() {
+        transition.play();
+    }
+
     @Override
-    public void pause() {}
+    public void pause() {
+        transition.pause();
+    }
+
     @Override
-    public void stop() {}
+    public void stop() {
+        transition.stop();
+    }
+
     @Override
-    public void setOnFinished(Runnable action) {}
+    public void setOnFinished(Runnable action) {
+        transition.setOnFinished(e -> action.run());
+    }
 }
