@@ -9,7 +9,24 @@ public class NodeColorAnimation implements TreeAnimation {
     private final Transition transition;
 
     public NodeColorAnimation(VisualNode node, String fromColorHex, String toColorHex, double durationMs) {
+        final Color startColor = Color.web(fromColorHex);
+        final Color endColor = Color.web(toColorHex);
 
+        this.transition = new Transition() {
+            {
+                setCycleDuration(Duration.millis(durationMs));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                Color interpolated = startColor.interpolate(endColor, frac);
+                String hex = String.format("#%02X%02X%02X",
+                        (int) (interpolated.getRed() * 255),
+                        (int) (interpolated.getGreen() * 255),
+                        (int) (interpolated.getBlue() * 255));
+                node.setColorHex(hex);
+            }
+        };
     }
 
     @Override
