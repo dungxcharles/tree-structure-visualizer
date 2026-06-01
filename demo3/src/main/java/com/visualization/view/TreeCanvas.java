@@ -30,4 +30,10 @@ public class TreeCanvas {
             this.nodeRenderer.render(gc, node);
         }
     }
+
+    public void clear(GraphicsContext gc) {
+        if (gc != null) {
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+        }
+    }
 }
