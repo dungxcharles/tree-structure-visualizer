@@ -16,4 +16,18 @@ public class TreeCanvas {
         this.edgeRenderer = edgeRenderer;
     }
 
+    public void draw(VisualTree tree, GraphicsContext gc) {
+        if (tree == null || gc == null)
+            return;
+
+        // Draw edges first so they're behind the nodes
+        for (VisualEdge edge : tree.getEdges()) {
+            this.edgeRenderer.render(gc, edge);
+        }
+
+        // Draw nodes on top
+        for (VisualNode node : tree.getNodes()) {
+            this.nodeRenderer.render(gc, node);
+        }
+    }
 }
