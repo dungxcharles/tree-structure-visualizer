@@ -32,4 +32,21 @@ public class BinaryTreeLayout implements LayoutStrategy {
         
         layoutNode(root, childrenMap, 0, containerWidth, 0);
     }
+
+    private VisualNode findRoot(VisualTree tree) {
+        List<VisualNode> nodes = tree.getNodes();
+        for (VisualNode node : nodes) {
+            boolean hasIncomingEdge = false;
+            for (VisualEdge edge : tree.getEdges()) {
+                if (edge.getTarget().equals(node)) {
+                    hasIncomingEdge = true;
+                    break;
+                }
+            }
+            if (!hasIncomingEdge) {
+                return node; // Root node found
+            }
+        }
+        return nodes.isEmpty() ? null : nodes.get(0);
+    }
 }
