@@ -5,11 +5,11 @@ import com.visualization.model.VisualNode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DefaultEdgeRenderer<T> implements EdgeRenderer<T> {
+public class DefaultEdgeRenderer implements EdgeRenderer<GraphicsContext> {
     public DefaultEdgeRenderer() {}
 
     @Override
-    public void render(T graphicsContext, VisualEdge edge) {
+    public void render(GraphicsContext gc, VisualEdge edge) {
         if (!edge.isVisible()) return;
 
         VisualNode source = edge.getSource();
@@ -18,8 +18,6 @@ public class DefaultEdgeRenderer<T> implements EdgeRenderer<T> {
         if (source == null || target == null || !source.isVisible() || !target.isVisible()) {
             return;
         }
-
-        GraphicsContext gc = (GraphicsContext) graphicsContext;
         
         gc.setStroke(Color.web(edge.getColorHex()));
         gc.setLineWidth(2.0);
