@@ -6,15 +6,23 @@ public class VisualEdge implements VisualElement {
     private String colorHex;
     private boolean visible;
 
-    public VisualEdge(VisualNode source, VisualNode target) {}
+    public VisualEdge(VisualNode source, VisualNode target) {
+        if (source == null || target == null) {
+            throw new IllegalArgumentException("Source and target nodes cannot be null.");
+        }
+        this.source = source;
+        this.target = target;
+        this.visible = true;
+        this.colorHex = "#000000";
+    }
 
-    public VisualNode getSource() { return null; }
-    public VisualNode getTarget() { return null; }
-    public String getColorHex() { return null; }
-    public void setColorHex(String colorHex) {}
+    public VisualNode getSource() { return this.source; }
+    public VisualNode getTarget() { return this.target; }
+    public String getColorHex() { return this.colorHex; }
+    public void setColorHex(String colorHex) { this.colorHex = colorHex; }
 
     @Override
-    public boolean isVisible() { return false; }
+    public boolean isVisible() { return this.visible; }
     @Override
-    public void setVisible(boolean visible) {}
+    public void setVisible(boolean visible) { this.visible = visible; }
 }
