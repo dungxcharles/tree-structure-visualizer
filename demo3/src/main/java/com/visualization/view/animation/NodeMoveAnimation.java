@@ -8,7 +8,20 @@ public class NodeMoveAnimation implements TreeAnimation {
     private final Transition transition;
 
     public NodeMoveAnimation(VisualNode node, double targetX, double targetY, double durationMs) {
+        final double startX = node.getX();
+        final double startY = node.getY();
 
+        this.transition = new Transition() {
+            {
+                setCycleDuration(Duration.millis(durationMs));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                node.setX(startX + (targetX - startX) * frac);
+                node.setY(startY + (targetY - startY) * frac);
+            }
+        };
     }
 
     @Override
