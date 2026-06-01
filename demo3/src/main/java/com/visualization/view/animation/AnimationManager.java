@@ -25,4 +25,7 @@ public class AnimationManager {
             anim.play();
         }
     }
+
+    public void clearQueue() {
+    }
 }
