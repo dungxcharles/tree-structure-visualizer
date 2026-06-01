@@ -5,18 +5,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class DefaultNodeRenderer<T> implements NodeRenderer<T> {
+public class DefaultNodeRenderer implements NodeRenderer<GraphicsContext> {
     private static final double RADIUS = 20.0;
 
     public DefaultNodeRenderer() {
     }
 
     @Override
-    public void render(T graphicsContext, VisualNode node) {
+    public void render(GraphicsContext gc, VisualNode node) {
         if (!node.isVisible())
             return;
-
-        GraphicsContext gc = (GraphicsContext) graphicsContext;
 
         double x = node.getX();
         double y = node.getY();
