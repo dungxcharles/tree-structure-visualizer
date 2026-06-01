@@ -13,6 +13,24 @@ public class DefaultNodeRenderer<T> implements NodeRenderer<T> {
 
     @Override
     public void render(T graphicsContext, VisualNode node) {
+        if (!node.isVisible())
+            return;
 
+        GraphicsContext gc = (GraphicsContext) graphicsContext;
+
+        double x = node.getX();
+        double y = node.getY();
+
+        // Draw node background
+        gc.setFill(Color.web(node.getColorHex()));
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(2.0);
+        gc.fillOval(x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+        gc.strokeOval(x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+
+        // Draw label
+        gc.setFill(Color.BLACK);
+        gc.setFont(new Font("System", 14));
+        gc.fillText(node.getLabel(), x - 8, y + 5);
     }
 }
