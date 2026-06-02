@@ -1,10 +1,10 @@
-package com.demo3.model.tree;
+package com.model.tree;
 
 
-import com.demo3.model.node.GenericNode;
-import com.demo3.model.pseudocode.PseudocodeTemplate;
-import com.demo3.model.step.TreeOperation;
-import com.demo3.model.pseudocode.PseudocodeRepository;
+import com.model.node.GenericNode;
+import com.model.pseudocode.PseudocodeTemplate;
+import com.model.step.TreeOperation;
+import com.model.pseudocode.PseudocodeRepository;
 
 import java.util.List;
 import java.util.ArrayList;

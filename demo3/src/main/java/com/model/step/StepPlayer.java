@@ -1,6 +1,6 @@
-package com.demo3.model.step;
+package com.model.step;
 
-import com.demo3.model.node.Node;
+import com.model.node.Node;
 
 public final class StepPlayer<N extends Node> {
 

@@ -1,4 +1,4 @@
-package com.demo3.model.step;
+package com.model.step;
 
 import java.util.List;
 

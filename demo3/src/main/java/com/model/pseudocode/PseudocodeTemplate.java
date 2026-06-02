@@ -1,4 +1,4 @@
-package com.demo3.model.pseudocode;
+package com.model.pseudocode;
 
 import java.util.Collections;
 import java.util.EnumMap;

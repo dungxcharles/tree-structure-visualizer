@@ -1,9 +1,9 @@
-package com.demo3.model.tree;
+package com.model.tree;
 
-import com.demo3.model.node.BinaryNode;
-import com.demo3.model.pseudocode.PseudocodeTemplate;
-import com.demo3.model.step.TreeOperation;
-import com.demo3.model.pseudocode.PseudocodeRepository;
+import com.model.node.BinaryNode;
+import com.model.pseudocode.PseudocodeTemplate;
+import com.model.step.TreeOperation;
+import com.model.pseudocode.PseudocodeRepository;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

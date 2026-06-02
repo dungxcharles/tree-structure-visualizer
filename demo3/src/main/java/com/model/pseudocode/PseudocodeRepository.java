@@ -1,4 +1,4 @@
-package com.demo3.model.pseudocode;
+package com.model.pseudocode;
 
 public final class PseudocodeRepository {
 
