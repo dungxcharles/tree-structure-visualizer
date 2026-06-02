@@ -84,10 +84,10 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
             
-            <TextField prefWidth="60.0" />
-            <Button style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;" text="Insert" />
-            <Button style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
-            <Button style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="Search" />
+            <TextField fx:id="valueTextField" prefWidth="60.0" promptText="Value" />
+            <Button onAction="#handleInsertAction" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;" text="Insert" />
+            <Button onAction="#handleDeleteAction" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
+            <Button onAction="#handleSearchAction" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="Search" />
             
             <Separator orientation="VERTICAL" />
             
