@@ -16,6 +16,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -45,8 +46,31 @@ public class DemoWorkspaceController {
     @FXML
     private TextField valueTextField;
 
+    @FXML
+    private TextField parentValueTextField;
+
+    @FXML
+    private Label treeTypeLabel;
+
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
+
+    @FXML
+    void handleSelectTreeType(ActionEvent event) {
+        String type = treeTypeTF.getText();
+        if (type != null && !type.trim().isEmpty()) {
+            type = type.trim();
+            if (treeTypeLabel != null) {
+                treeTypeLabel.setText(type);
+            }
+            // If the tree type is GeneralTree, show the parent value text field
+            boolean isGeneralTree = type.equalsIgnoreCase("General Tree");
+            if (parentValueTextField != null) {
+                parentValueTextField.setVisible(isGeneralTree);
+                parentValueTextField.setManaged(isGeneralTree);
+            }
+        }
+    }
 
     @FXML
     void handleInsertAction(ActionEvent event) {
