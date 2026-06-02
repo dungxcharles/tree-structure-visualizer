@@ -102,6 +102,31 @@ public class TreeVisualizationController {
         }
     }
 
+    public void animateNodeDeletion(Object logicalNodeInfo) {
+        if (!(logicalNodeInfo instanceof com.model.node.Node)) return;
+        com.model.node.Node logicalNode = (com.model.node.Node) logicalNodeInfo;
+
+        String id = String.valueOf(System.identityHashCode(logicalNode));
+        VisualNode targetNode = null;
+        for (VisualNode n : this.visualTree.getNodes()) {
+            if (n.getId().equals(id)) {
+                targetNode = n;
+                break;
+            }
+        }
+
+        if (targetNode != null && this.animationManager != null) {
+            List<TreeAnimation> animations = new ArrayList<>();
+            NodeColorAnimation fadeOut = new NodeColorAnimation(targetNode, targetNode.getColorHex(), "#ff0000", 500);
+            VisualNode finalTarget = targetNode;
+            fadeOut.setOnFinished(() -> {
+                this.visualTree.removeNode(finalTarget);
+            });
+            animations.add(fadeOut);
+            this.animationManager.playSequential(animations);
+        }
+    }
+
     public void updateLayout(double width, double height) {
         if (this.layoutStrategy != null && this.visualTree != null) {
             this.layoutStrategy.calculateLayout(this.visualTree, width, height);
