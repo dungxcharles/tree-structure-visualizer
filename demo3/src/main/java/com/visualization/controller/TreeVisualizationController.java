@@ -1,11 +1,18 @@
 package com.visualization.controller;
 
 import com.visualization.model.VisualTree;
+import com.visualization.model.VisualNode;
+import com.visualization.model.VisualEdge;
 import com.visualization.view.TreeCanvas;
 import com.visualization.view.animation.AnimationManager;
+import com.visualization.view.animation.NodeMoveAnimation;
+import com.visualization.view.animation.NodeColorAnimation;
+import com.visualization.view.animation.TreeAnimation;
 import com.visualization.layout.LayoutStrategy;
 
 import javafx.scene.canvas.GraphicsContext;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TreeVisualizationController {
     private VisualTree visualTree;
@@ -24,10 +31,16 @@ public class TreeVisualizationController {
     }
 
     public void setTreeData(Object logicalTreeData) {
-        // TODO: Map the abstract logicalTreeData to VisualTree nodes and edges.
-        // For now, simply clear the visual tree when new data is injected.
         if (this.visualTree != null) {
             this.visualTree.clear();
+        }
+        
+        if (logicalTreeData instanceof com.model.tree.AbstractTree) {
+            com.model.tree.AbstractTree<?> tree = (com.model.tree.AbstractTree<?>) logicalTreeData;
+            com.model.node.Node root = tree.getRoot();
+            if (root != null) {
+                mapLogicalNodeToVisual(root, null);
+            }
         }
     }
 
@@ -42,14 +55,6 @@ public class TreeVisualizationController {
             this.canvas.clear(graphicsContext);
             this.canvas.draw(this.visualTree, graphicsContext);
         }
-    }
-
-    public void animateNodeInsertion(Object logicalNodeInfo) {
-        // TODO: Convert logicalNodeInfo to VisualNode, calculate layout delta, and pass to animationManager
-    }
-
-    public void animateNodeDeletion(Object logicalNodeInfo) {
-        // TODO: Find VisualNode from logicalNodeInfo, create disappearing animation, and pass to animationManager
     }
 
     public void setLayoutStrategy(LayoutStrategy layoutStrategy) {
