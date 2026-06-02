@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class DefaultNodeRenderer implements NodeRenderer<GraphicsContext> {
+public class DefaultNodeRenderer implements NodeRenderer {
     private static final double RADIUS = 20.0;
 
     public DefaultNodeRenderer() {

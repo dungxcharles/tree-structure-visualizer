@@ -8,10 +8,10 @@ import com.visualization.view.render.NodeRenderer;
 import javafx.scene.canvas.GraphicsContext;
 
 public class TreeCanvas {
-    private NodeRenderer<GraphicsContext> nodeRenderer;
-    private EdgeRenderer<GraphicsContext> edgeRenderer;
+    private NodeRenderer nodeRenderer;
+    private EdgeRenderer edgeRenderer;
 
-    public TreeCanvas(NodeRenderer<GraphicsContext> nodeRenderer, EdgeRenderer<GraphicsContext> edgeRenderer) {
+    public TreeCanvas(NodeRenderer nodeRenderer, EdgeRenderer edgeRenderer) {
         this.nodeRenderer = nodeRenderer;
         this.edgeRenderer = edgeRenderer;
     }

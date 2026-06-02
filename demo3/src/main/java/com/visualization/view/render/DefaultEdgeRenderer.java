@@ -5,7 +5,7 @@ import com.visualization.model.VisualNode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DefaultEdgeRenderer implements EdgeRenderer<GraphicsContext> {
+public class DefaultEdgeRenderer implements EdgeRenderer {
     public DefaultEdgeRenderer() {}
 
     @Override
