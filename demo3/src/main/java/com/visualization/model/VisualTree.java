@@ -1,9 +1,11 @@
 package com.visualization.model;
 
 import java.util.List;
-
+import java.util.Map;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class VisualTree {
     private List<VisualNode> nodes;
@@ -43,6 +45,42 @@ public class VisualTree {
         return Collections.unmodifiableList(this.edges); 
     }
     
+    public VisualNode getRoot() {
+        for (VisualNode node : this.nodes) {
+            boolean hasIncomingEdge = false;
+            for (VisualEdge edge : this.edges) {
+                if (edge.getTarget().equals(node)) {
+                    hasIncomingEdge = true;
+                    break;
+                }
+            }
+            if (!hasIncomingEdge) {
+                return node; // Root node found
+            }
+        }
+        return this.nodes.isEmpty() ? null : this.nodes.get(0);
+    }
+
+    public Map<VisualNode, List<VisualNode>> getChildrenMap() {
+        Map<VisualNode, List<VisualNode>> map = new HashMap<>();
+        for (VisualNode node : this.nodes) {
+            map.put(node, new ArrayList<>());
+        }
+
+        for (VisualEdge edge : this.edges) {
+            List<VisualNode> children = map.get(edge.getSource());
+            if (children != null) {
+                children.add(edge.getTarget());
+            }
+        }
+
+        for (List<VisualNode> children : map.values()) {
+            children.sort(Comparator.comparing(VisualNode::getLabel));
+        }
+
+        return map;
+    }
+
     public void clear() {
         this.nodes.clear();
         this.edges.clear();
