@@ -41,8 +41,41 @@ public class DemoWorkspaceController {
     @FXML
     private TextField treeTypeTF;
 
+    @FXML
+    private TextField valueTextField;
+
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
+
+    @FXML
+    void handleInsertAction(javafx.event.ActionEvent event) {
+        String valueStr = valueTextField.getText();
+        if (valueStr == null || valueStr.trim().isEmpty()) return;
+        
+        System.out.println("Insert button clicked with value: " + valueStr);
+        // TODO: Pass value to the logical tree model (e.g. treeModel.insert(Integer.parseInt(valueStr)))
+        // TODO: Inform TreeVisualizationController to update layout/animation
+    }
+
+    @FXML
+    void handleDeleteAction(javafx.event.ActionEvent event) {
+        String valueStr = valueTextField.getText();
+        if (valueStr == null || valueStr.trim().isEmpty()) return;
+
+        System.out.println("Delete button clicked with value: " + valueStr);
+        // TODO: Pass value to the logical tree model (e.g. treeModel.delete(Integer.parseInt(valueStr)))
+        // TODO: Inform TreeVisualizationController to update layout/animation
+    }
+
+    @FXML
+    void handleSearchAction(javafx.event.ActionEvent event) {
+        String valueStr = valueTextField.getText();
+        if (valueStr == null || valueStr.trim().isEmpty()) return;
+
+        System.out.println("Search button clicked with value: " + valueStr);
+        // TODO: Pass value to the logical tree model to perform search
+        // TODO: Highlight the found node visually
+    }
 
     @FXML
     public void initialize() {
