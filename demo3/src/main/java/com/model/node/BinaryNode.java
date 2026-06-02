@@ -1,4 +1,4 @@
-package com.model.node;
+package com.demo3.model.node;
 
 public class BinaryNode extends Node {
 
