@@ -14,8 +14,8 @@ public class TreeVisualizationController {
     private LayoutStrategy layoutStrategy;
 
     public TreeVisualizationController(
-            TreeCanvas canvas, 
-            AnimationManager animationManager, 
+            TreeCanvas canvas,
+            AnimationManager animationManager,
             LayoutStrategy layoutStrategy) {
         this.visualTree = new VisualTree();
         this.canvas = canvas;
@@ -45,11 +45,13 @@ public class TreeVisualizationController {
     }
 
     public void animateNodeInsertion(Object logicalNodeInfo) {
-        // TODO: Convert logicalNodeInfo to VisualNode, calculate layout delta, and pass to animationManager
+        // TODO: Convert logicalNodeInfo to VisualNode, calculate layout delta, and pass
+        // to animationManager
     }
 
     public void animateNodeDeletion(Object logicalNodeInfo) {
-        // TODO: Find VisualNode from logicalNodeInfo, create disappearing animation, and pass to animationManager
+        // TODO: Find VisualNode from logicalNodeInfo, create disappearing animation,
+        // and pass to animationManager
     }
 
     public void setLayoutStrategy(LayoutStrategy layoutStrategy) {

@@ -10,6 +10,7 @@ import com.visualization.view.render.DefaultEdgeRenderer;
 import com.visualization.view.render.DefaultNodeRenderer;
 import com.visualization.controller.TreeVisualizationController;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
@@ -48,29 +49,34 @@ public class DemoWorkspaceController {
     private Canvas fxCanvas;
 
     @FXML
-    void handleInsertAction(javafx.event.ActionEvent event) {
+    void handleInsertAction(ActionEvent event) {
         String valueStr = valueTextField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty()) return;
-        
+        if (valueStr == null || valueStr.trim().isEmpty())
+            return;
+
         System.out.println("Insert button clicked with value: " + valueStr);
-        // TODO: Pass value to the logical tree model (e.g. treeModel.insert(Integer.parseInt(valueStr)))
+        // TODO: Pass value to the logical tree model (e.g.
+        // treeModel.insert(Integer.parseInt(valueStr)))
         // TODO: Inform TreeVisualizationController to update layout/animation
     }
 
     @FXML
-    void handleDeleteAction(javafx.event.ActionEvent event) {
+    void handleDeleteAction(ActionEvent event) {
         String valueStr = valueTextField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty()) return;
+        if (valueStr == null || valueStr.trim().isEmpty())
+            return;
 
         System.out.println("Delete button clicked with value: " + valueStr);
-        // TODO: Pass value to the logical tree model (e.g. treeModel.delete(Integer.parseInt(valueStr)))
+        // TODO: Pass value to the logical tree model (e.g.
+        // treeModel.delete(Integer.parseInt(valueStr)))
         // TODO: Inform TreeVisualizationController to update layout/animation
     }
 
     @FXML
-    void handleSearchAction(javafx.event.ActionEvent event) {
+    void handleSearchAction(ActionEvent event) {
         String valueStr = valueTextField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty()) return;
+        if (valueStr == null || valueStr.trim().isEmpty())
+            return;
 
         System.out.println("Search button clicked with value: " + valueStr);
         // TODO: Pass value to the logical tree model to perform search
@@ -94,8 +100,7 @@ public class DemoWorkspaceController {
         treeController = new TreeVisualizationController(
                 treeCanvas,
                 new AnimationManager(),
-                new GeneralTreeLayout()
-        );
+                new GeneralTreeLayout());
 
         // 3. Create a Dummy Tree for testing
         drawDummyTree();
@@ -111,7 +116,7 @@ public class DemoWorkspaceController {
     private void drawDummyTree() {
         VisualTree tree = treeController.getVisualTree();
         tree.clear();
-        
+
         VisualNode root = new VisualNode("root", "Root");
         root.setColorHex("#ff9999"); // Distinguish the root node with a color
         VisualNode child1 = new VisualNode("c1", "Child 1");
@@ -126,7 +131,7 @@ public class DemoWorkspaceController {
         tree.addEdge(new VisualEdge(root, child1));
         tree.addEdge(new VisualEdge(root, child2));
         tree.addEdge(new VisualEdge(root, child3));
-        
+
         // Optionally add a sub-child
         VisualNode subChild = new VisualNode("c1-1", "Sub 1");
         tree.addNode(subChild);
@@ -139,7 +144,7 @@ public class DemoWorkspaceController {
     private void redrawTree() {
         double width = visualizerPane.getWidth();
         double height = visualizerPane.getHeight();
-        
+
         if (width > 0 && height > 0) {
             treeController.updateLayout(width, height);
             treeController.renderFrame(fxCanvas.getGraphicsContext2D());
