@@ -78,6 +78,30 @@ public class TreeVisualizationController {
         return vNode;
     }
 
+    public void animateNodeInsertion(Object logicalNodeInfo) {
+        if (!(logicalNodeInfo instanceof com.model.node.Node)) return;
+        com.model.node.Node logicalNode = (com.model.node.Node) logicalNodeInfo;
+
+        String id = String.valueOf(System.identityHashCode(logicalNode));
+        VisualNode targetNode = null;
+        for (VisualNode n : this.visualTree.getNodes()) {
+            if (n.getId().equals(id)) {
+                targetNode = n;
+                break;
+            }
+        }
+
+        if (targetNode != null && this.animationManager != null) {
+            double targetX = targetNode.getX();
+            double targetY = targetNode.getY();
+            targetNode.setY(targetY - 50); // Start from above to simulate dropping in
+
+            List<TreeAnimation> animations = new ArrayList<>();
+            animations.add(new NodeMoveAnimation(targetNode, targetX, targetY, 500));
+            this.animationManager.playParallel(animations);
+        }
+    }
+
     public void updateLayout(double width, double height) {
         if (this.layoutStrategy != null && this.visualTree != null) {
             this.layoutStrategy.calculateLayout(this.visualTree, width, height);
