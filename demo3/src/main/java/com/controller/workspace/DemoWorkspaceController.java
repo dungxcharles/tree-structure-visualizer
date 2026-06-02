@@ -10,11 +10,14 @@ import com.visualization.view.render.DefaultEdgeRenderer;
 import com.visualization.view.render.DefaultNodeRenderer;
 import com.visualization.controller.TreeVisualizationController;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -39,10 +42,71 @@ public class DemoWorkspaceController {
     private Button homeButton;
 
     @FXML
-    private TextField treeTypeTF;
+    private ComboBox<String> treeTypeComboBox;
+
+    @FXML
+    private TextField valueTextField;
+
+    @FXML
+    private TextField parentValueTextField;
+
+    @FXML
+    private Label treeTypeLabel;
 
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
+
+    @FXML
+    void handleSelectTreeType(ActionEvent event) {
+        String type = treeTypeComboBox.getValue();
+        if (type != null && !type.trim().isEmpty()) {
+            type = type.trim();
+            if (treeTypeLabel != null) {
+                treeTypeLabel.setText(type);
+            }
+            // If the tree type is GeneralTree, show the parent value text field
+            boolean isGeneralTree = type.equalsIgnoreCase("General Tree");
+            if (parentValueTextField != null) {
+                parentValueTextField.setVisible(isGeneralTree);
+                parentValueTextField.setManaged(isGeneralTree);
+            }
+        }
+    }
+
+    @FXML
+    void handleInsertAction(ActionEvent event) {
+        String valueStr = valueTextField.getText();
+        if (valueStr == null || valueStr.trim().isEmpty())
+            return;
+
+        System.out.println("Insert button clicked with value: " + valueStr);
+        // TODO: Pass value to the logical tree model (e.g.
+        // treeModel.insert(Integer.parseInt(valueStr)))
+        // TODO: Inform TreeVisualizationController to update layout/animation
+    }
+
+    @FXML
+    void handleDeleteAction(ActionEvent event) {
+        String valueStr = valueTextField.getText();
+        if (valueStr == null || valueStr.trim().isEmpty())
+            return;
+
+        System.out.println("Delete button clicked with value: " + valueStr);
+        // TODO: Pass value to the logical tree model (e.g.
+        // treeModel.delete(Integer.parseInt(valueStr)))
+        // TODO: Inform TreeVisualizationController to update layout/animation
+    }
+
+    @FXML
+    void handleSearchAction(ActionEvent event) {
+        String valueStr = valueTextField.getText();
+        if (valueStr == null || valueStr.trim().isEmpty())
+            return;
+
+        System.out.println("Search button clicked with value: " + valueStr);
+        // TODO: Pass value to the logical tree model to perform search
+        // TODO: Highlight the found node visually
+    }
 
     @FXML
     public void initialize() {
@@ -61,8 +125,7 @@ public class DemoWorkspaceController {
         treeController = new TreeVisualizationController(
                 treeCanvas,
                 new AnimationManager(),
-                new GeneralTreeLayout()
-        );
+                new GeneralTreeLayout());
 
         // 3. Create a Dummy Tree for testing
         drawDummyTree();
@@ -78,7 +141,7 @@ public class DemoWorkspaceController {
     private void drawDummyTree() {
         VisualTree tree = treeController.getVisualTree();
         tree.clear();
-        
+
         VisualNode root = new VisualNode("root", "Root");
         root.setColorHex("#ff9999"); // Distinguish the root node with a color
         VisualNode child1 = new VisualNode("c1", "Child 1");
@@ -93,7 +156,7 @@ public class DemoWorkspaceController {
         tree.addEdge(new VisualEdge(root, child1));
         tree.addEdge(new VisualEdge(root, child2));
         tree.addEdge(new VisualEdge(root, child3));
-        
+
         // Optionally add a sub-child
         VisualNode subChild = new VisualNode("c1-1", "Sub 1");
         tree.addNode(subChild);
@@ -106,7 +169,7 @@ public class DemoWorkspaceController {
     private void redrawTree() {
         double width = visualizerPane.getWidth();
         double height = visualizerPane.getHeight();
-        
+
         if (width > 0 && height > 0) {
             treeController.updateLayout(width, height);
             treeController.renderFrame(fxCanvas.getGraphicsContext2D());
