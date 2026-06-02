@@ -27,7 +27,7 @@
             </padding>
             <Button fx:id="homeButton" onMouseClicked="#homeButtonClicked" text="Home" />
             <Label text="Tree Type:" />
-         <TextField fx:id="treeTypeTF" />
+         <ComboBox fx:id="treeTypeComboBox" promptText="Select Tree Type" />
          <Button mnemonicParsing="false" onAction="#handleSelectTreeType" text="Select" />
         </HBox>
     </top>

@@ -16,6 +16,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -41,7 +42,7 @@ public class DemoWorkspaceController {
     private Button homeButton;
 
     @FXML
-    private TextField treeTypeTF;
+    private ComboBox<String> treeTypeComboBox;
 
     @FXML
     private TextField valueTextField;
@@ -57,7 +58,7 @@ public class DemoWorkspaceController {
 
     @FXML
     void handleSelectTreeType(ActionEvent event) {
-        String type = treeTypeTF.getText();
+        String type = treeTypeComboBox.getValue();
         if (type != null && !type.trim().isEmpty()) {
             type = type.trim();
             if (treeTypeLabel != null) {
