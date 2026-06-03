@@ -17,7 +17,9 @@ import com.model.tree.AbstractTree;
 
 import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TreeVisualizationController {
     private VisualTree visualTree;
@@ -132,6 +134,53 @@ public class TreeVisualizationController {
             animations.add(fadeOut);
             this.animationManager.playSequential(animations);
         }
+    }
+
+    public void highlightNode(Object logicalNodeInfo, String highlightColor) {
+        VisualNode targetNode = getVisualNode(logicalNodeInfo);
+        if (targetNode != null && this.animationManager != null) {
+            String originalColor = targetNode.getColorHex();
+
+            NodeColorAnimation highlightAnim = new NodeColorAnimation(targetNode, originalColor, highlightColor, 400);
+            NodeColorAnimation restoreAnim = new NodeColorAnimation(targetNode, highlightColor, originalColor, 400);
+
+            List<TreeAnimation> sequence = new ArrayList<>();
+            sequence.add(highlightAnim);
+            sequence.add(restoreAnim);
+
+            this.animationManager.playSequential(sequence);
+        }
+    }
+
+    public void animateLayoutTransition(double width, double height) {
+        if (this.layoutStrategy == null || this.visualTree == null || this.animationManager == null) {
+            updateLayout(width, height);
+            return;
+        }
+
+        Map<String, double[]> oldPositions = new HashMap<>();
+        for (VisualNode node : this.visualTree.getNodes()) {
+            oldPositions.put(node.getId(), new double[] { node.getX(), node.getY() });
+        }
+
+        this.layoutStrategy.calculateLayout(this.visualTree, width, height);
+
+        List<TreeAnimation> animations = new ArrayList<>();
+        for (VisualNode node : this.visualTree.getNodes()) {
+            double[] oldPos = oldPositions.get(node.getId());
+            if (oldPos != null) {
+                double targetX = node.getX();
+                double targetY = node.getY();
+
+                if (oldPos[0] != targetX || oldPos[1] != targetY) {
+                    node.setX(oldPos[0]);
+                    node.setY(oldPos[1]);
+                    animations.add(new NodeMoveAnimation(node, targetX, targetY, 500));
+                }
+            }
+        }
+
+        this.animationManager.playParallel(animations);
     }
 
     public void updateLayout(double width, double height) {
