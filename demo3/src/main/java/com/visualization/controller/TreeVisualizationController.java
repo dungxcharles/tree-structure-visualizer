@@ -50,56 +50,68 @@ public class TreeVisualizationController {
     }
 
     private VisualNode mapLogicalNodeToVisual(Node logicalNode, VisualNode parentVisual) {
-        if (logicalNode == null) return null;
+        if (logicalNode == null)
+            return null;
 
         String id = String.valueOf(System.identityHashCode(logicalNode));
         String label = String.valueOf(logicalNode.getValue());
         VisualNode vNode = new VisualNode(id, label);
 
-        if (logicalNode instanceof RBNode) {
-            RBNode rbNode = (RBNode) logicalNode;
-            vNode.setColorHex(rbNode.getColor() == RBNode.Color.RED ? "#ff0000" : "#333333");
-        } else {
-            vNode.setColorHex("#ffffff");
-        }
-
+        vNode.setColorHex(getLogicalNodeColor(logicalNode));
         this.visualTree.addNode(vNode);
 
-        if (parentVisual != null) {
+        if (parentVisual != null)
             this.visualTree.addEdge(new VisualEdge(parentVisual, vNode));
-        }
 
-        if (logicalNode instanceof BinaryNode) {
-            BinaryNode bNode = (BinaryNode) logicalNode;
-            if (bNode.getLeft() != null) mapLogicalNodeToVisual(bNode.getLeft(), vNode);
-            if (bNode.getRight() != null) mapLogicalNodeToVisual(bNode.getRight(), vNode);
-        } else if (logicalNode instanceof GenericNode) {
-            GenericNode gNode = (GenericNode) logicalNode;
-            for (GenericNode child : gNode.getChildren()) {
-                mapLogicalNodeToVisual(child, vNode);
-            }
-        }
+        for (Node child : getLogicalChildren(logicalNode))
+            mapLogicalNodeToVisual(child, vNode);
 
         return vNode;
     }
 
-    public void animateNodeInsertion(Object logicalNodeInfo) {
-        if (!(logicalNodeInfo instanceof Node)) return;
-        Node logicalNode = (Node) logicalNodeInfo;
+    private String getLogicalNodeColor(Node logicalNode) {
+        if (logicalNode instanceof RBNode) {
+            RBNode rbNode = (RBNode) logicalNode;
+            return rbNode.getColor() == RBNode.Color.RED ? "#ff0000" : "#333333";
+        }
+        return "#ffffff";
+    }
 
-        String id = String.valueOf(System.identityHashCode(logicalNode));
-        VisualNode targetNode = null;
+    private List<Node> getLogicalChildren(Node logicalNode) {
+        List<Node> children = new ArrayList<>();
+        if (logicalNode instanceof BinaryNode) {
+            BinaryNode bNode = (BinaryNode) logicalNode;
+            if (bNode.getLeft() != null)
+                children.add(bNode.getLeft());
+            if (bNode.getRight() != null)
+                children.add(bNode.getRight());
+        } else if (logicalNode instanceof GenericNode) {
+            GenericNode gNode = (GenericNode) logicalNode;
+            children.addAll(gNode.getChildren());
+        }
+        return children;
+    }
+
+    private VisualNode getVisualNode(Object logicalNodeInfo) {
+        if (!(logicalNodeInfo instanceof Node))
+            return null;
+        String id = String.valueOf(System.identityHashCode(logicalNodeInfo));
+
         for (VisualNode n : this.visualTree.getNodes()) {
             if (n.getId().equals(id)) {
-                targetNode = n;
-                break;
+                return n;
             }
         }
+        return null;
+    }
+
+    public void animateNodeInsertion(Object logicalNodeInfo) {
+        VisualNode targetNode = getVisualNode(logicalNodeInfo);
 
         if (targetNode != null && this.animationManager != null) {
             double targetX = targetNode.getX();
             double targetY = targetNode.getY();
-            targetNode.setY(targetY - 50); // Start from above to simulate dropping in
+            targetNode.setY(targetY - 50);
 
             List<TreeAnimation> animations = new ArrayList<>();
             animations.add(new NodeMoveAnimation(targetNode, targetX, targetY, 500));
@@ -108,17 +120,7 @@ public class TreeVisualizationController {
     }
 
     public void animateNodeDeletion(Object logicalNodeInfo) {
-        if (!(logicalNodeInfo instanceof Node)) return;
-        Node logicalNode = (Node) logicalNodeInfo;
-
-        String id = String.valueOf(System.identityHashCode(logicalNode));
-        VisualNode targetNode = null;
-        for (VisualNode n : this.visualTree.getNodes()) {
-            if (n.getId().equals(id)) {
-                targetNode = n;
-                break;
-            }
-        }
+        VisualNode targetNode = getVisualNode(logicalNodeInfo);
 
         if (targetNode != null && this.animationManager != null) {
             List<TreeAnimation> animations = new ArrayList<>();
