@@ -42,7 +42,7 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
 
     @Override
     public boolean delete(int value) {
-        if (this.root == null) {
+        if (isEmpty()) {
             return false;
         }
         if (this.root.getValue() == value) {
