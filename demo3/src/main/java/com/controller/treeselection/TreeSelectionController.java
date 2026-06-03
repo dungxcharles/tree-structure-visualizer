@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class TreeSelectionController {
+    private static final double POPUP_MAXWIDTH_RATIO = 0.65;
+    private static final double POPUP_MAXHEIGHT_RATIO = 0.75;
 
     @FXML
     private StackPane rootStackPane;
@@ -94,8 +96,18 @@ public class TreeSelectionController {
     private void showInformationPopUp(TreeDetailPopupController.TreeInfo info) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/tree-detail-popup.fxml"));
-            Node popupContent = loader.load();
+            Region popupContent = loader.load();
             TreeDetailPopupController controller = loader.getController();
+
+            Scene scene = rootStackPane.getScene();
+            DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> {
+                double scaleX = scene.getWidth() / DESIGN_WIDTH;
+                double scaleY = scene.getHeight() / DESIGN_HEIGHT;
+                return Math.min(scaleX, scaleY);
+            }, scene.widthProperty(), scene.heightProperty());
+
+            popupContent.scaleXProperty().bind(scaleBinding);
+            popupContent.scaleYProperty().bind(scaleBinding);
 
             Region dimOverlay = new Region();
             dimOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
