@@ -185,6 +185,6 @@ public class CreditWindow {
 
     @FXML
     private void handleBack() {
-        System.out.println("Returning to main menu...");
+        com.controller.NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
     }
 }
