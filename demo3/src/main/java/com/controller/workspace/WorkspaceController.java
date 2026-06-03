@@ -19,12 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.Parent;
-import javafx.scene.Node;
-import javafx.fxml.FXMLLoader;
-import java.io.IOException;
 
 /**
  * A new controller for workspace.fxml to test the tree visualization
@@ -33,7 +27,7 @@ import java.io.IOException;
  * To use this, update your workspace.fxml to point to this controller:
  * fx:controller="com.controller.workspace.DemoWorkspaceController"
  */
-public class DemoWorkspaceController {
+public class WorkspaceController {
 
     @FXML
     private Pane visualizerPane;
