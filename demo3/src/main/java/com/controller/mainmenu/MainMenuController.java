@@ -1,16 +1,9 @@
 package com.controller.mainmenu;
 
-import com.controller.workspace.WorkspaceController;
-import com.model.tree.GeneralTree;
+import com.controller.NavigationManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import java.io.IOException;
 
 public class MainMenuController {
 
@@ -18,18 +11,17 @@ public class MainMenuController {
     private ImageView MainMenuController;
 
     @FXML
-    void startButtonClicked(MouseEvent event) throws IOException {
-        // Get workspace FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/workspace.fxml"));
+    void startButtonClicked(MouseEvent event) {
+        NavigationManager.getInstance().navigateTo("/com/view/tree-selection-view.fxml");
+    }
 
-        // Initialize default settings
-        Parent workspaceView = loader.load();
-        com.controller.workspace.DemoWorkspaceController workspaceCtrl = loader.getController();
+    @FXML
+    void settingsButtonClicked(MouseEvent event) {
+        NavigationManager.getInstance().navigateTo("/com/view/settings-view.fxml");
+    }
 
-        // Setting up the workspace scene
-        Scene workspaceScene = new Scene(workspaceView);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(workspaceScene);
-        stage.show();
+    @FXML
+    void helpButtonClicked(MouseEvent event) {
+        NavigationManager.getInstance().navigateTo("/com/view/credit-view.fxml");
     }
 }

@@ -1,4 +1,4 @@
-package com.view;
+package com.controller.credits;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
