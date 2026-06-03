@@ -1,10 +1,6 @@
 package com.model.tree;
 
-
 import com.model.node.GenericNode;
-import com.model.pseudocode.PseudocodeTemplate;
-import com.model.step.TreeOperation;
-import com.model.pseudocode.PseudocodeRepository;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -122,6 +118,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         return 1 + maxChildHeight;
     }
 
+    // provide an interface for user not to pass the node root
     @Override
     public int getNumberOfNodes() {
         return countNodes(this.root);
@@ -195,60 +192,5 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         }
     }
 
-    @Override
-    protected GenericNode cloneSubtree(GenericNode node) {
-        if (node == null) {
-            return null;
-        }
-
-        GenericNode copy = new GenericNode(node.getValue());
-        for (GenericNode child : node.getChildren()) {
-            copy.addChild(cloneSubtree(child));
-        }
-        return copy;
-    }
-
-    @Override
-    protected List<Integer> getSearchPath(int value) {
-        List<Integer> path = new ArrayList<>();
-        fillDepthFirstPath(this.root, value, path);
-        return path;
-    }
-
-    @Override
-    protected PseudocodeTemplate getPseudocodeTemplate(TreeOperation operation, TraversalType traversalType) {
-        if (operation == TreeOperation.INSERT) {
-            return PseudocodeRepository.getGenericInsert();
-        }
-        if (operation == TreeOperation.DELETE) {
-            return PseudocodeRepository.getGenericDelete();
-        }
-        if (operation == TreeOperation.SEARCH) {
-            return PseudocodeRepository.getGenericSearch();
-        }
-        if (operation == TreeOperation.TRAVERSE) {
-            return PseudocodeRepository.getGenericTraversal();
-        }
-        if (operation == TreeOperation.TRAVERSE && traversalType == TraversalType.IN_ORDER) {
-            return PseudocodeRepository.getGenericTraversal();
-        }
-        return super.getPseudocodeTemplate(operation, traversalType);
-    }
-
-    private boolean fillDepthFirstPath(GenericNode node, int value, List<Integer> path) {
-        if (node == null) {
-            return false;
-        }
-
-        path.add(node.getValue());
-        if (node.getValue() == value) {
-            return true;
-        }
-        for (GenericNode child : node.getChildren()) {
-            if (fillDepthFirstPath(child, value, path)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // delete will erase the subtree
 }

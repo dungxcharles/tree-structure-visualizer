@@ -1,12 +1,6 @@
 package com.model.tree;
 
 import com.model.node.BinaryNode;
-import com.model.pseudocode.PseudocodeTemplate;
-import com.model.step.TreeOperation;
-import com.model.pseudocode.PseudocodeRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BinarySearchTree extends BinaryTree {
 
@@ -134,37 +128,4 @@ public class BinarySearchTree extends BinaryTree {
         return findNode(current.getRight(), value);
     }
 
-    @Override
-    protected List<Integer> getSearchPath(int value) {
-        List<Integer> path = new ArrayList<>();
-        BinaryNode current = this.root;
-
-        while (current != null) {
-            path.add(current.getValue());
-            if (current.getValue() == value) {
-                break;
-            }
-            current = value < current.getValue() ? current.getLeft() : current.getRight();
-        }
-        return path;
-    }
-
-    @Override
-    protected List<Integer> getInsertPath(int parentValue, int value) {
-        return getSearchPath(value);
-    }
-
-    @Override
-    protected PseudocodeTemplate getPseudocodeTemplate(TreeOperation operation, TraversalType traversalType) {
-        if (operation == TreeOperation.INSERT) {
-            return PseudocodeRepository.getBSTInsert();
-        }
-        if (operation == TreeOperation.DELETE) {
-            return PseudocodeRepository.getBSTDelete();
-        }
-        if (operation == TreeOperation.SEARCH) {
-            return PseudocodeRepository.getBSTSearch();
-        }
-        return super.getPseudocodeTemplate(operation, traversalType);
-    }
 }

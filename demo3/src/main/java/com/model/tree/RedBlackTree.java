@@ -1,13 +1,7 @@
 package com.model.tree;
 
-import com.model.node.BinaryNode;
 import com.model.node.RBNode;
 import com.model.node.RBNode.Color;
-import com.model.pseudocode.PseudocodeTemplate;
-import com.model.step.TreeOperation;
-import com.model.pseudocode.PseudocodeRepository;
-
-import java.util.List;
 
 public class RedBlackTree extends BinarySearchTree {
 
@@ -400,35 +394,4 @@ public class RedBlackTree extends BinarySearchTree {
         return node.getRight();
     }
 
-    @Override
-    protected RBNode cloneSubtree(BinaryNode node) {
-        return cloneSubtree((RBNode) node, null);
-    }
-
-    private RBNode cloneSubtree(RBNode node, RBNode parent) {
-        if (node == null) {
-            return null;
-        }
-
-        RBNode copy = new RBNode(node.getValue());
-        copy.setColor(node.getColor());
-        copy.setParent(parent);
-        copy.setLeft(cloneSubtree(node.getLeft(), copy));
-        copy.setRight(cloneSubtree(node.getRight(), copy));
-        return copy;
-    }
-
-    @Override
-    protected PseudocodeTemplate getPseudocodeTemplate(TreeOperation operation, TraversalType traversalType) {
-        if (operation == TreeOperation.INSERT) {
-            return PseudocodeRepository.getRBInsert();
-        }
-        if (operation == TreeOperation.DELETE) {
-            return PseudocodeRepository.getRBDelete();
-        }
-        if (operation == TreeOperation.SEARCH) {
-            return PseudocodeRepository.getRBSearch();
-        }
-        return super.getPseudocodeTemplate(operation, traversalType);
-    }
 }
