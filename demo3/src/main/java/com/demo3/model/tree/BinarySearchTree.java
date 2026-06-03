@@ -1,6 +1,12 @@
 package com.demo3.model.tree;
 
 import com.demo3.model.node.BinaryNode;
+import com.demo3.model.pseudocode.PseudocodeTemplate;
+import com.demo3.model.step.TreeOperation;
+import com.demo3.model.pseudocode.PseudocodeRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BinarySearchTree extends BinaryTree {
 
@@ -8,6 +14,15 @@ public class BinarySearchTree extends BinaryTree {
         return new BinaryNode(value);
     }
 
+
+    @Override
+    public void create(int value) {
+        if (!isEmpty()) {
+            return;
+        }
+        this.root = createNode(value);
+    }
+    
     @Override
     public boolean insert(int parentValue, int value) {
         return insert(value);
@@ -117,5 +132,39 @@ public class BinarySearchTree extends BinaryTree {
             return findNode(current.getLeft(), value);
         }
         return findNode(current.getRight(), value);
+    }
+
+    @Override
+    protected List<Integer> getSearchPath(int value) {
+        List<Integer> path = new ArrayList<>();
+        BinaryNode current = this.root;
+
+        while (current != null) {
+            path.add(current.getValue());
+            if (current.getValue() == value) {
+                break;
+            }
+            current = value < current.getValue() ? current.getLeft() : current.getRight();
+        }
+        return path;
+    }
+
+    @Override
+    protected List<Integer> getInsertPath(int parentValue, int value) {
+        return getSearchPath(value);
+    }
+
+    @Override
+    protected PseudocodeTemplate getPseudocodeTemplate(TreeOperation operation, TraversalType traversalType) {
+        if (operation == TreeOperation.INSERT) {
+            return PseudocodeRepository.getBSTInsert();
+        }
+        if (operation == TreeOperation.DELETE) {
+            return PseudocodeRepository.getBSTDelete();
+        }
+        if (operation == TreeOperation.SEARCH) {
+            return PseudocodeRepository.getBSTSearch();
+        }
+        return super.getPseudocodeTemplate(operation, traversalType);
     }
 }
