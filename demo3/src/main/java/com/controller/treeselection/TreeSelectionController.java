@@ -6,14 +6,21 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class TreeSelectionController {
+
+    @FXML
+    private StackPane rootStackPane;
 
     @FXML
     private AnchorPane mainContainer;
@@ -58,4 +65,54 @@ public class TreeSelectionController {
     void handleBack(ActionEvent event){
         NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
     }
+
+    @FXML
+    void handleClickedTree1(MouseEvent event){
+        showInformationPopUp(TreeDetailPopupController.TreeInfo.GENERAL_TREE);
+    }
+
+    @FXML
+    void handleClickedTree2(MouseEvent event){
+        showInformationPopUp(TreeDetailPopupController.TreeInfo.BINARY_TREE);
+    }
+
+    @FXML
+    void handleClickedTree3(MouseEvent event){
+        showInformationPopUp(TreeDetailPopupController.TreeInfo.RED_BLACK_TREE);
+    }
+
+    @FXML
+    void handleClickedTree4(MouseEvent event){
+        showInformationPopUp(TreeDetailPopupController.TreeInfo.AVL_TREE);
+    }
+
+    @FXML
+    void handleClickedTree5(MouseEvent event){
+        showInformationPopUp(TreeDetailPopupController.TreeInfo.BINARY_SEARCH_TREE);
+    }
+
+    private void showInformationPopUp(TreeDetailPopupController.TreeInfo info) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/tree-detail-popup.fxml"));
+            Node popupContent = loader.load();
+            TreeDetailPopupController controller = loader.getController();
+
+            Region dimOverlay = new Region();
+            dimOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+
+            StackPane popupContainer = new StackPane(dimOverlay, popupContent);
+
+            Runnable closePopup = () -> rootStackPane.getChildren().remove(popupContainer);
+
+            dimOverlay.setOnMouseClicked(e -> closePopup.run());
+            popupContent.setOnMouseClicked(MouseEvent::consume);
+            controller.setOnCloseAction(closePopup);
+            controller.setTreeInfo(info);
+
+            rootStackPane.getChildren().add(popupContainer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

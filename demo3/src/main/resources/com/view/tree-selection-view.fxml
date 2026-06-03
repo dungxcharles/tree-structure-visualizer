@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.treeselection.TreeSelectionController">
+<StackPane fx:id="rootStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.treeselection.TreeSelectionController">
    <children>
       <AnchorPane fx:id="mainContainer" prefHeight="720.0" prefWidth="1280.0">
          <children>
@@ -65,7 +65,7 @@
                                     <Insets left="5.0" right="5.0" top="10.0" />
                                  </VBox.margin>
                                  <children>
-                                    <TilePane alignment="CENTER" focusTraversable="true" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
+                                    <TilePane alignment="CENTER" focusTraversable="true" onMouseClicked="#handleClickedTree1" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
                                           <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
                                              <children>
@@ -82,8 +82,11 @@
                                              </children>
                                           </VBox>
                                        </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </TilePane>
-                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
+                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" onMouseClicked="#handleClickedTree2" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
                                           <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
                                              <children>
@@ -100,8 +103,11 @@
                                              </children>
                                           </VBox>
                                        </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </TilePane>
-                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
+                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" onMouseClicked="#handleClickedTree3" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
                                           <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
                                              <children>
@@ -118,12 +124,15 @@
                                              </children>
                                           </VBox>
                                        </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </TilePane>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" spacing="30.0">
                                  <children>
-                                    <TilePane alignment="CENTER" focusTraversable="true" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
+                                    <TilePane alignment="CENTER" focusTraversable="true" onMouseClicked="#handleClickedTree4" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
                                           <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
                                              <children>
@@ -140,8 +149,11 @@
                                              </children>
                                           </VBox>
                                        </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </TilePane>
-                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
+                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" onMouseClicked="#handleClickedTree5" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
                                           <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
                                              <children>
@@ -158,6 +170,9 @@
                                              </children>
                                           </VBox>
                                        </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </TilePane>
                                  </children>
                                  <VBox.margin>
