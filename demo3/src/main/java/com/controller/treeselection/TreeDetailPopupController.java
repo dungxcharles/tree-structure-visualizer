@@ -1,5 +1,6 @@
 package com.controller.treeselection;
 
+import com.controller.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +15,7 @@ public class TreeDetailPopupController {
     private Label lblDescription;
 
     @FXML
-    private Button btnClose;
+    private Button btnStart;
 
     private Runnable onCloseAction;
 
@@ -28,10 +29,11 @@ public class TreeDetailPopupController {
     }
 
     @FXML
-    void handleClose(ActionEvent event) {
+    void handleStartVisualization(ActionEvent event) {
         if (onCloseAction != null) {
             onCloseAction.run();
         }
+        NavigationManager.getInstance().navigateTo("/com/view/workspace.fxml");
     }
 
     public enum TreeInfo {

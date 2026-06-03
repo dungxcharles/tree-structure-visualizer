@@ -1,5 +1,6 @@
 package com.controller.credits;
 
+import com.controller.NavigationManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -185,6 +186,6 @@ public class CreditWindow {
 
     @FXML
     private void handleBack() {
-        com.controller.NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
     }
 }
