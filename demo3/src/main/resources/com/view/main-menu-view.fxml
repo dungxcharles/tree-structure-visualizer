@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
@@ -41,6 +42,9 @@
                      <HBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                   <ImageView fitHeight="46.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -49,6 +53,9 @@
                      <HBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </children>
                <BorderPane.margin>
@@ -78,6 +85,9 @@
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </children>
             </VBox>

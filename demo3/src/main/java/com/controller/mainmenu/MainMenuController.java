@@ -24,8 +24,7 @@ public class MainMenuController {
 
         // Initialize default settings
         Parent workspaceView = loader.load();
-        WorkspaceController workspaceCtrl = loader.getController();
-        workspaceCtrl.initWorkspace();
+        com.controller.workspace.DemoWorkspaceController workspaceCtrl = loader.getController();
 
         // Setting up the workspace scene
         Scene workspaceScene = new Scene(workspaceView);
