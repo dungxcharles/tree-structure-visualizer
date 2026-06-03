@@ -136,7 +136,7 @@ public class TreeVisualizationController {
         }
     }
 
-    public void highlightNode(Object logicalNodeInfo, String highlightColor) {
+    public void animateNodeSearching(Object logicalNodeInfo, String highlightColor) {
         VisualNode targetNode = getVisualNode(logicalNodeInfo);
         if (targetNode != null && this.animationManager != null) {
             String originalColor = targetNode.getColorHex();
@@ -152,7 +152,7 @@ public class TreeVisualizationController {
         }
     }
 
-    public void animateLayoutTransition(double width, double height) {
+    public void animateNodeRotating(double width, double height) {
         if (this.layoutStrategy == null || this.visualTree == null || this.animationManager == null) {
             updateLayout(width, height);
             return;
