@@ -2,9 +2,7 @@ package com.model.tree;
 
 import com.model.node.AVLNode;
 import com.model.node.BinaryNode;
-import com.model.pseudocode.PseudocodeTemplate;
-import com.model.step.TreeOperation;
-import com.model.pseudocode.PseudocodeRepository;
+import com.model.step.StepType;
 
 import java.util.List;
 
@@ -36,13 +34,17 @@ public class AVLTree extends BinarySearchTree {
 
     private AVLNode insertRec(AVLNode node, int value) {
         if (node == null) {
+            fireStep(StepType.INSERT_NODE, value, "Chèn node " + value);
             nodeInserted = true;
             return createNode(value);
         }
 
+        fireStep(StepType.COMPARE, node.getValue(), "So sánh " + value + " với " + node.getValue());
         if (value < node.getValue()) {
+            fireStep(StepType.GO_LEFT, node.getValue(), value + " < " + node.getValue() + " -> Đi trái");
             node.setLeft(insertRec(node.getLeft(), value));
         } else if (value > node.getValue()) {
+            fireStep(StepType.GO_RIGHT, node.getValue(), value + " > " + node.getValue() + " -> Đi phải");
             node.setRight(insertRec(node.getRight(), value));
         }
 
@@ -61,21 +63,28 @@ public class AVLTree extends BinarySearchTree {
             return null;
         }
 
+        fireStep(StepType.COMPARE, node.getValue(), "So sánh " + value + " với " + node.getValue());
         if (value < node.getValue()) {
+            fireStep(StepType.GO_LEFT, node.getValue(), value + " < " + node.getValue() + " -> Đi trái");
             node.setLeft(deleteRec(node.getLeft(), value));
         } else if (value > node.getValue()) {
+            fireStep(StepType.GO_RIGHT, node.getValue(), value + " > " + node.getValue() + " -> Đi phải");
             node.setRight(deleteRec(node.getRight(), value));
         } else {
+            fireStep(StepType.FOUND, node.getValue(), "Tìm thấy " + value + " để xóa");
             nodeDeleted = true;
 
             if (node.getLeft() == null) {
+                fireStep(StepType.DELETE_NODE, value, "Xóa node (không có con trái)");
                 return node.getRight();
             }
             if (node.getRight() == null) {
+                fireStep(StepType.DELETE_NODE, value, "Xóa node (không có con phải)");
                 return node.getLeft();
             }
 
             AVLNode successor = minimum(node.getRight());
+            fireStep(StepType.REPLACE_VALUE, node.getValue(), "Thay thế " + node.getValue() + " bằng successor " + successor.getValue());
             node.setValue(successor.getValue());
             node.setRight(deleteRec(node.getRight(), successor.getValue()));
         }
@@ -105,6 +114,7 @@ public class AVLTree extends BinarySearchTree {
 
     private AVLNode minimum(AVLNode node) {
         while (node.getLeft() != null) {
+            fireStep(StepType.GO_LEFT, node.getValue(), "Đi trái tìm min");
             node = node.getLeft();
         }
         return node;
@@ -124,18 +134,23 @@ public class AVLTree extends BinarySearchTree {
     private AVLNode rebalance(AVLNode node) {
         updateHeight(node);
         int balance = getBalanceFactor(node);
+        fireStep(StepType.CHECK_BALANCE, node.getValue(), "Kiểm tra balance của " + node.getValue() + " = " + balance);
 
         if (balance > 1) {
             if (getBalanceFactor(node.getLeft()) < 0) {
+                fireStep(StepType.ROTATE_LEFT, node.getLeft().getValue(), "Mất cân bằng Trái-Phải -> Xoay trái tại " + node.getLeft().getValue());
                 node.setLeft(leftRotate(node.getLeft()));
             }
+            fireStep(StepType.ROTATE_RIGHT, node.getValue(), "Xoay phải tại " + node.getValue());
             return rightRotate(node);
         }
 
         if (balance < -1) {
             if (getBalanceFactor(node.getRight()) > 0) {
+                fireStep(StepType.ROTATE_RIGHT, node.getRight().getValue(), "Mất cân bằng Phải-Trái -> Xoay phải tại " + node.getRight().getValue());
                 node.setRight(rightRotate(node.getRight()));
             }
+            fireStep(StepType.ROTATE_LEFT, node.getValue(), "Xoay trái tại " + node.getValue());
             return leftRotate(node);
         }
 
@@ -166,31 +181,4 @@ public class AVLTree extends BinarySearchTree {
         return x;
     }
 
-    @Override
-    protected AVLNode cloneSubtree(BinaryNode node) {
-        if (node == null) {
-            return null;
-        }
-
-        AVLNode avlNode = (AVLNode) node;
-        AVLNode copy = new AVLNode(avlNode.getValue());
-        copy.setStoredHeight(avlNode.getStoredHeight());
-        copy.setLeft(cloneSubtree(avlNode.getLeft()));
-        copy.setRight(cloneSubtree(avlNode.getRight()));
-        return copy;
-    }
-
-    @Override
-    protected PseudocodeTemplate getPseudocodeTemplate(TreeOperation operation, TraversalType traversalType) {
-        if (operation == TreeOperation.INSERT) {
-            return PseudocodeRepository.getAVLInsert();
-        }
-        if (operation == TreeOperation.DELETE) {
-            return PseudocodeRepository.getAVLDelete();
-        }
-        if (operation == TreeOperation.SEARCH) {
-            return PseudocodeRepository.getAVLSearch();
-        }
-        return super.getPseudocodeTemplate(operation, traversalType);
-    }
 }

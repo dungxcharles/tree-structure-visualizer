@@ -43,6 +43,7 @@ public class AVLNode extends BinaryNode {
         super.setRight(right);
     }
 
+    // set and get for avl tree height
     public int getStoredHeight() {
         return this.height;
     }
