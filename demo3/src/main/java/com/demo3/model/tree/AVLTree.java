@@ -1,6 +1,12 @@
 package com.demo3.model.tree;
 
 import com.demo3.model.node.AVLNode;
+import com.demo3.model.node.BinaryNode;
+import com.demo3.model.pseudocode.PseudocodeTemplate;
+import com.demo3.model.step.TreeOperation;
+import com.demo3.model.pseudocode.PseudocodeRepository;
+
+import java.util.List;
 
 public class AVLTree extends BinarySearchTree {
 
@@ -158,5 +164,33 @@ public class AVLTree extends BinarySearchTree {
         updateHeight(y);
         updateHeight(x);
         return x;
+    }
+
+    @Override
+    protected AVLNode cloneSubtree(BinaryNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        AVLNode avlNode = (AVLNode) node;
+        AVLNode copy = new AVLNode(avlNode.getValue());
+        copy.setStoredHeight(avlNode.getStoredHeight());
+        copy.setLeft(cloneSubtree(avlNode.getLeft()));
+        copy.setRight(cloneSubtree(avlNode.getRight()));
+        return copy;
+    }
+
+    @Override
+    protected PseudocodeTemplate getPseudocodeTemplate(TreeOperation operation, TraversalType traversalType) {
+        if (operation == TreeOperation.INSERT) {
+            return PseudocodeRepository.getAVLInsert();
+        }
+        if (operation == TreeOperation.DELETE) {
+            return PseudocodeRepository.getAVLDelete();
+        }
+        if (operation == TreeOperation.SEARCH) {
+            return PseudocodeRepository.getAVLSearch();
+        }
+        return super.getPseudocodeTemplate(operation, traversalType);
     }
 }
