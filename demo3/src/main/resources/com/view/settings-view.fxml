@@ -42,7 +42,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="638.0" spacing="50.0" GridPane.columnIndex="1">
                <children>
-                  <RadioButton mnemonicParsing="false" selected="true" text="1280 x 720">
+                  <RadioButton mnemonicParsing="false" onAction="#changeResolution" selected="true" text="1280 x 720">
                      <toggleGroup>
                         <ToggleGroup fx:id="resolution" />
                      </toggleGroup>
@@ -50,12 +50,12 @@
                         <Font name="JetBrainsMono NF Regular" size="20.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="1366 x 768" toggleGroup="$resolution">
+                  <RadioButton mnemonicParsing="false" onAction="#changeResolution" text="1366 x 768" toggleGroup="$resolution">
                      <font>
                         <Font name="JetBrainsMono NF Regular" size="20.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="1920 x 1080" toggleGroup="$resolution">
+                  <RadioButton mnemonicParsing="false" onAction="#changeResolution" text="1920 x 1080" toggleGroup="$resolution">
                      <font>
                         <Font name="JetBrainsMono NF Regular" size="20.0" />
                      </font>
@@ -76,7 +76,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="638.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <ToggleButton mnemonicParsing="false" text="OFF">
+                  <ToggleButton fx:id="fullscreenToggle" mnemonicParsing="false" onAction="#toggleFullscreen" text="OFF">
                      <font>
                         <Font name="JetBrainsMono NF Regular" size="20.0" />
                      </font>

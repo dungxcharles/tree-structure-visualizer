@@ -21,6 +21,10 @@ public class NavigationManager {
         return instance;
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
