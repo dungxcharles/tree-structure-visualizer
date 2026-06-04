@@ -1,4 +1,4 @@
-package com.visualization.model;
+package com.model.vis;
 
 public class VisualNode implements VisualElement {
     private String id;

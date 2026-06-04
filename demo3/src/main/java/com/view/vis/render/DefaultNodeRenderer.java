@@ -1,6 +1,6 @@
-package com.visualization.view.render;
+package com.view.vis.render;
 
-import com.visualization.model.VisualNode;
+import com.model.vis.VisualNode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

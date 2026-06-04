@@ -1,4 +1,4 @@
-package com.visualization.view.animation;
+package com.view.vis.animation;
 
 import java.util.List;
 

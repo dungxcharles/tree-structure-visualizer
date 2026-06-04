@@ -1,4 +1,4 @@
-package com.visualization.model;
+package com.model.vis;
 
 import java.util.List;
 import java.util.Map;

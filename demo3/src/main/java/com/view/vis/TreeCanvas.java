@@ -1,10 +1,10 @@
-package com.visualization.view;
+package com.view.vis;
 
-import com.visualization.model.VisualEdge;
-import com.visualization.model.VisualNode;
-import com.visualization.model.VisualTree;
-import com.visualization.view.render.EdgeRenderer;
-import com.visualization.view.render.NodeRenderer;
+import com.model.vis.VisualEdge;
+import com.model.vis.VisualNode;
+import com.model.vis.VisualTree;
+import com.view.vis.render.EdgeRenderer;
+import com.view.vis.render.NodeRenderer;
 import javafx.scene.canvas.GraphicsContext;
 
 public class TreeCanvas {

@@ -1,14 +1,14 @@
 package com.controller.workspace;
 
-import com.visualization.model.VisualNode;
-import com.visualization.model.VisualEdge;
-import com.visualization.model.VisualTree;
-import com.visualization.layout.GeneralTreeLayout;
-import com.visualization.view.TreeCanvas;
-import com.visualization.view.animation.AnimationManager;
-import com.visualization.view.render.DefaultEdgeRenderer;
-import com.visualization.view.render.DefaultNodeRenderer;
-import com.visualization.controller.TreeVisualizationController;
+import com.model.vis.VisualNode;
+import com.model.vis.VisualEdge;
+import com.model.vis.VisualTree;
+import com.view.vis.layout.GeneralTreeLayout;
+import com.view.vis.TreeCanvas;
+import com.view.vis.animation.AnimationManager;
+import com.view.vis.render.DefaultEdgeRenderer;
+import com.view.vis.render.DefaultNodeRenderer;
+import com.controller.vis.TreeVisualizationController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

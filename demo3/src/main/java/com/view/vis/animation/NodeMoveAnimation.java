@@ -1,6 +1,6 @@
-package com.visualization.view.animation;
+package com.view.vis.animation;
 
-import com.visualization.model.VisualNode;
+import com.model.vis.VisualNode;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 

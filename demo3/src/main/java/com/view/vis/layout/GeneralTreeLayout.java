@@ -1,7 +1,7 @@
-package com.visualization.layout;
+package com.view.vis.layout;
 
-import com.visualization.model.VisualNode;
-import com.visualization.model.VisualTree;
+import com.model.vis.VisualNode;
+import com.model.vis.VisualTree;
 
 import java.util.ArrayList;
 import java.util.List;

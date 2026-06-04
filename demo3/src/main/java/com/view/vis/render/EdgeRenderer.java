@@ -1,6 +1,6 @@
-package com.visualization.view.render;
+package com.view.vis.render;
 
-import com.visualization.model.VisualEdge;
+import com.model.vis.VisualEdge;
 import javafx.scene.canvas.GraphicsContext;
 
 public interface EdgeRenderer {

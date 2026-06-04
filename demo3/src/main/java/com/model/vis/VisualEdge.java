@@ -1,4 +1,4 @@
-package com.visualization.model;
+package com.model.vis;
 
 public class VisualEdge implements VisualElement {
     private VisualNode source;
