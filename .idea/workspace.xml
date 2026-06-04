@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Feat: Granting access to workspace from main menu.">
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" afterDir="false" />
-    </list>
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Feat: Granting access to workspace from main menu." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
