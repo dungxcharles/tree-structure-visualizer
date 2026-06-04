@@ -5,32 +5,30 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
-import javafx.stage.Stage;
 
 public class SettingsController {
+
+    @FXML
+    private ToggleButton fullscreenToggle;
 
     @FXML
     void changeResolution(ActionEvent event) {
         RadioButton selectedButton = (RadioButton) event.getSource();
         String[] res = selectedButton.getText().split(" x ");
 
-        Stage stage = NavigationManager.getInstance().getStage();
-        if (stage != null && !stage.isFullScreen()) {
-            stage.setWidth(Double.parseDouble(res[0]));
-            stage.setHeight(Double.parseDouble(res[1]));
-            stage.centerOnScreen();
-        }
+        double width = Double.parseDouble(res[0]);
+        double height = Double.parseDouble(res[1]);
+
+        NavigationManager.getInstance().setResolution(width, height);
     }
 
     @FXML
     void toggleFullscreen(ActionEvent event) {
         ToggleButton toggleButton = (ToggleButton) event.getSource();
-        Stage stage = NavigationManager.getInstance().getStage();
+        boolean isSelected = toggleButton.isSelected();
 
-        if (stage != null) {
-            stage.setFullScreen(toggleButton.isSelected());
-            toggleButton.setText(toggleButton.isSelected() ? "ON" : "OFF");
-        }
+        NavigationManager.getInstance().setFullScreen(isSelected);
+        toggleButton.setText(isSelected ? "ON" : "OFF");
     }
 
     @FXML

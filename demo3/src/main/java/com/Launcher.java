@@ -10,9 +10,8 @@ public class Launcher extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         stage.setTitle("Tree Operation");
-        stage.setResizable(false);
         NavigationManager.getInstance().setStage(stage);
         NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
     }
