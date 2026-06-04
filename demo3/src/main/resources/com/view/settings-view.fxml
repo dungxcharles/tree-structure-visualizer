@@ -2,13 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -114,39 +112,21 @@
                   </RadioButton>
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-               <children>
-                  <Label text="Language" textFill="#50c878">
-                     <font>
-                        <Font name="JetBrainsMono NF Regular" size="25.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets right="100.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="638.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <children>
-                  <ChoiceBox prefHeight="35.0" prefWidth="260.0" />
-               </children>
-            </HBox>
-         </children>
-      </GridPane>
-      <HBox prefHeight="100.0" prefWidth="200.0" pickOnBounds="false">
-         <children>
-            <ImageView fitHeight="58.0" fitWidth="52.0" onMouseClicked="#backButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-               <image>
-                  <Image url="@settings/back_black.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="15.0" top="15.0" />
-               </HBox.margin>
+            <Button mnemonicParsing="false" onAction="#backButtonClicked" style="-fx-background-color: TRANSPARENT;" text="⬅Back">
+               <font>
+                  <Font size="18.0" />
+               </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </ImageView>
+               <GridPane.margin>
+                  <Insets bottom="100.0" left="20.0" />
+               </GridPane.margin>
+            </Button>
          </children>
-      </HBox>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+      </GridPane>
    </children>
 </StackPane>
