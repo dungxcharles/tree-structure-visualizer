@@ -4,6 +4,7 @@ import com.model.node.BinaryNode;
 import com.model.step.StepType;
 
 import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -209,11 +210,11 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
 
         fireStep(StepType.GO_LEFT, node.getValue(), "In-order: Đi sang nhánh trái của " + node.getValue());
         inOrderRec(node.getLeft(), result);
-        
+
         fireStep(StepType.VISIT, node.getValue(), "In-order: Thăm node " + node.getValue());
         fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
-        
+
         fireStep(StepType.GO_RIGHT, node.getValue(), "In-order: Đi sang nhánh phải của " + node.getValue());
         inOrderRec(node.getRight(), result);
     }
@@ -226,10 +227,10 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         fireStep(StepType.VISIT, node.getValue(), "Pre-order: Thăm node " + node.getValue());
         fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
-        
+
         fireStep(StepType.GO_LEFT, node.getValue(), "Pre-order: Đi sang nhánh trái của " + node.getValue());
         preOrderRec(node.getLeft(), result);
-        
+
         fireStep(StepType.GO_RIGHT, node.getValue(), "Pre-order: Đi sang nhánh phải của " + node.getValue());
         preOrderRec(node.getRight(), result);
     }
@@ -241,10 +242,10 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
 
         fireStep(StepType.GO_LEFT, node.getValue(), "Post-order: Đi sang nhánh trái của " + node.getValue());
         postOrderRec(node.getLeft(), result);
-        
+
         fireStep(StepType.GO_RIGHT, node.getValue(), "Post-order: Đi sang nhánh phải của " + node.getValue());
         postOrderRec(node.getRight(), result);
-        
+
         fireStep(StepType.VISIT, node.getValue(), "Post-order: Thăm node " + node.getValue());
         fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
@@ -257,15 +258,18 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         while (!queue.isEmpty()) {
             BinaryNode current = queue.poll();
             fireStep(StepType.VISIT, current.getValue(), "BFS: Lấy node " + current.getValue() + " từ Queue và thăm");
-            fireStep(StepType.ADD_TO_RESULT, current.getValue(), "Thêm " + current.getValue() + " vào danh sách kết quả");
+            fireStep(StepType.ADD_TO_RESULT, current.getValue(),
+                    "Thêm " + current.getValue() + " vào danh sách kết quả");
             result.add(current.getValue());
 
             if (current.getLeft() != null) {
-                fireStep(StepType.GO_LEFT, current.getValue(), "Đưa con trái " + current.getLeft().getValue() + " vào Queue");
+                fireStep(StepType.GO_LEFT, current.getValue(),
+                        "Đưa con trái " + current.getLeft().getValue() + " vào Queue");
                 queue.add(current.getLeft());
             }
             if (current.getRight() != null) {
-                fireStep(StepType.GO_RIGHT, current.getValue(), "Đưa con phải " + current.getRight().getValue() + " vào Queue");
+                fireStep(StepType.GO_RIGHT, current.getValue(),
+                        "Đưa con phải " + current.getRight().getValue() + " vào Queue");
                 queue.add(current.getRight());
             }
         }
