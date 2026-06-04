@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Feat: Granting access to workspace from main menu." />
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Feat: Granting access to workspace from main menu.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/pseudo/AlgorithmStep.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AVLTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AbstractTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AbstractTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
