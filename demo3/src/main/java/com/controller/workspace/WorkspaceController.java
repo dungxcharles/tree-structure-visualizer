@@ -1,6 +1,9 @@
 package com.controller.workspace;
 
 import com.model.vis.VisualNode;
+import com.model.tree.AbstractTree;
+import com.model.tree.TreeFactory;
+import com.model.tree.TreeType;
 import com.model.vis.VisualEdge;
 import com.model.vis.VisualTree;
 import com.view.vis.layout.GeneralTreeLayout;
@@ -8,6 +11,7 @@ import com.view.vis.TreeCanvas;
 import com.view.vis.animation.AnimationManager;
 import com.view.vis.render.DefaultEdgeRenderer;
 import com.view.vis.render.DefaultNodeRenderer;
+import com.controller.NavigationManager;
 import com.controller.vis.TreeVisualizationController;
 
 import javafx.event.ActionEvent;
@@ -50,21 +54,13 @@ public class WorkspaceController {
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
 
+    // Static state to pass data between controllers without a new class
+    public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
+
     @FXML
     void handleSelectTreeType(ActionEvent event) {
-        String type = treeTypeComboBox.getValue();
-        if (type != null && !type.trim().isEmpty()) {
-            type = type.trim();
-            if (treeTypeLabel != null) {
-                treeTypeLabel.setText(type);
-            }
-            // If the tree type is GeneralTree, show the parent value text field
-            boolean isGeneralTree = type.equalsIgnoreCase("General Tree");
-            if (parentValueTextField != null) {
-                parentValueTextField.setVisible(isGeneralTree);
-                parentValueTextField.setManaged(isGeneralTree);
-            }
-        }
+        // Redundant since TreeSelection UI handles this, but kept to prevent FXML
+        // LoadException.
     }
 
     @FXML
@@ -121,40 +117,26 @@ public class WorkspaceController {
                 new AnimationManager(),
                 new GeneralTreeLayout());
 
-        // 3. Create a Dummy Tree for testing
-        drawDummyTree();
+        // 3. Initialize logical tree based on the selected static state
+        AbstractTree<?> logicalTree = TreeFactory.create(currentTreeType);
+        treeController.setTreeData(logicalTree);
+
+        // Setup UI dynamically based on the selected tree type
+        boolean isGeneralTree = (currentTreeType == TreeType.GENERAL);
+        if (parentValueTextField != null) {
+            parentValueTextField.setVisible(isGeneralTree);
+            parentValueTextField.setManaged(isGeneralTree);
+        }
+        if (treeTypeLabel != null) {
+            treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
+        }
+        if (treeTypeComboBox != null) {
+            treeTypeComboBox.setValue(currentTreeType.name().replace("_", " "));
+        }
 
         // 4. Force a layout and render when pane is resized
         visualizerPane.widthProperty().addListener((obs, oldVal, newVal) -> redrawTree());
         visualizerPane.heightProperty().addListener((obs, oldVal, newVal) -> redrawTree());
-    }
-
-    /**
-     * Creates a dummy tree to test the layout and rendering logic.
-     */
-    private void drawDummyTree() {
-        VisualTree tree = treeController.getVisualTree();
-        tree.clear();
-
-        VisualNode root = new VisualNode("root", "Root");
-        root.setColorHex("#ff9999"); // Distinguish the root node with a color
-        VisualNode child1 = new VisualNode("c1", "Child 1");
-        VisualNode child2 = new VisualNode("c2", "Child 2");
-        VisualNode child3 = new VisualNode("c3", "Child 3");
-
-        tree.addNode(root);
-        tree.addNode(child1);
-        tree.addNode(child2);
-        tree.addNode(child3);
-
-        tree.addEdge(new VisualEdge(root, child1));
-        tree.addEdge(new VisualEdge(root, child2));
-        tree.addEdge(new VisualEdge(root, child3));
-
-        // Optionally add a sub-child
-        VisualNode subChild = new VisualNode("c1-1", "Sub 1");
-        tree.addNode(subChild);
-        tree.addEdge(new VisualEdge(child1, subChild));
     }
 
     /**
@@ -172,6 +154,6 @@ public class WorkspaceController {
 
     @FXML
     void homeButtonClicked(MouseEvent event) {
-        com.controller.NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
     }
 }
