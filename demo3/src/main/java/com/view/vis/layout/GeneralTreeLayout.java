@@ -58,4 +58,3 @@ public class GeneralTreeLayout implements LayoutStrategy {
         }
     }
 }
-

@@ -13,6 +13,8 @@ import com.view.vis.render.DefaultEdgeRenderer;
 import com.view.vis.render.DefaultNodeRenderer;
 import com.controller.NavigationManager;
 import com.controller.vis.TreeVisualizationController;
+import com.view.vis.layout.BinaryTreeLayout;
+import com.view.vis.layout.LayoutStrategy;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,7 +69,8 @@ public class WorkspaceController {
     @FXML
     void handleInsertAction(ActionEvent event) {
         String valueStr = valueTextField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty()) return;
+        if (valueStr == null || valueStr.trim().isEmpty())
+            return;
 
         int value = Integer.parseInt(valueStr.trim());
 
@@ -124,10 +127,18 @@ public class WorkspaceController {
 
         // 2. Setup the MVC Visualization components
         TreeCanvas treeCanvas = new TreeCanvas(new DefaultNodeRenderer(), new DefaultEdgeRenderer());
+        
+        LayoutStrategy layoutStrategy;
+        if (currentTreeType == TreeType.GENERAL) {
+            layoutStrategy = new GeneralTreeLayout();
+        } else {
+            layoutStrategy = new BinaryTreeLayout();
+        }
+
         treeController = new TreeVisualizationController(
                 treeCanvas,
                 new AnimationManager(),
-                new GeneralTreeLayout());
+                layoutStrategy);
 
         // 3. Initialize logical tree based on the selected static state
         logicalTree = TreeFactory.create(currentTreeType);

@@ -47,10 +47,34 @@ public class BinaryTreeLayout implements LayoutStrategy {
         List<VisualNode> children = childrenMap.getOrDefault(node, new ArrayList<>());
 
         if (children.size() == 1) {
-            // One child, place it in the center or let it take the whole bounds
-            layoutNode(children.get(0), childrenMap, minX, maxX, depth + 1);
+            VisualNode child = children.get(0);
+            boolean goLeft = true; // Default to left branch
+            try {
+                int parentVal = Integer.parseInt(node.getLabel());
+                int childVal = Integer.parseInt(child.getLabel());
+                if (childVal >= parentVal) {
+                    goLeft = false; // Branch right if value is greater
+                }
+            } catch (Exception e) {
+                // Ignore and use default left branch
+            }
+
+            if (goLeft) {
+                layoutNode(child, childrenMap, minX, x, depth + 1);
+            } else {
+                layoutNode(child, childrenMap, x, maxX, depth + 1);
+            }
         } else if (children.size() >= 2) {
-            // Two children (Binary), divide space. First goes left, second goes right.
+            // Re-sort children numerically to preserve correct BST left/right order
+            children.sort((a, b) -> {
+                try {
+                    return Integer.compare(Integer.parseInt(a.getLabel()), Integer.parseInt(b.getLabel()));
+                } catch (Exception e) {
+                    return a.getLabel().compareTo(b.getLabel());
+                }
+            });
+            // Two children (Binary), divide space. First (smaller) goes left, second
+            // (larger) goes right.
             layoutNode(children.get(0), childrenMap, minX, x, depth + 1);
             layoutNode(children.get(1), childrenMap, x, maxX, depth + 1);
         }
