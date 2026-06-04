@@ -53,6 +53,7 @@ public class WorkspaceController {
 
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
+    private AbstractTree<?> logicalTree;
 
     // Static state to pass data between controllers without a new class
     public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
@@ -66,13 +67,24 @@ public class WorkspaceController {
     @FXML
     void handleInsertAction(ActionEvent event) {
         String valueStr = valueTextField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty())
-            return;
+        if (valueStr == null || valueStr.trim().isEmpty()) return;
 
-        System.out.println("Insert button clicked with value: " + valueStr);
-        // TODO: Pass value to the logical tree model (e.g.
-        // treeModel.insert(Integer.parseInt(valueStr)))
-        // TODO: Inform TreeVisualizationController to update layout/animation
+        int value = Integer.parseInt(valueStr.trim());
+
+        if (logicalTree.isEmpty()) {
+            logicalTree.create(value);
+        } else {
+            if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
+                int parentValue = Integer.parseInt(parentValueTextField.getText().trim());
+                logicalTree.insert(parentValue, value);
+            } else {
+                logicalTree.insert(0, value);
+            }
+        }
+
+        treeController.setTreeData(logicalTree);
+        redrawTree(); // Fix: Force layout calculation AND render to the canvas
+        treeController.playAnimations();
     }
 
     @FXML
@@ -118,14 +130,15 @@ public class WorkspaceController {
                 new GeneralTreeLayout());
 
         // 3. Initialize logical tree based on the selected static state
-        AbstractTree<?> logicalTree = TreeFactory.create(currentTreeType);
+        logicalTree = TreeFactory.create(currentTreeType);
+        logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
 
         // Setup UI dynamically based on the selected tree type
-        boolean isGeneralTree = (currentTreeType == TreeType.GENERAL);
+        boolean needsParent = (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY);
         if (parentValueTextField != null) {
-            parentValueTextField.setVisible(isGeneralTree);
-            parentValueTextField.setManaged(isGeneralTree);
+            parentValueTextField.setVisible(needsParent);
+            parentValueTextField.setManaged(needsParent);
         }
         if (treeTypeLabel != null) {
             treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
