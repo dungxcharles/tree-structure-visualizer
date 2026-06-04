@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TreeVisualizationController {
+public class TreeVisualizationController implements TreeOperationAnimator {
     private VisualTree visualTree;
     private TreeCanvas canvas;
     private AnimationManager animationManager;
@@ -94,95 +94,6 @@ public class TreeVisualizationController {
         return children;
     }
 
-    private VisualNode getVisualNode(Object logicalNodeInfo) {
-        if (!(logicalNodeInfo instanceof Node))
-            return null;
-        String id = String.valueOf(System.identityHashCode(logicalNodeInfo));
-
-        for (VisualNode n : this.visualTree.getNodes()) {
-            if (n.getId().equals(id)) {
-                return n;
-            }
-        }
-        return null;
-    }
-
-    public void animateNodeInsertion(Object logicalNodeInfo) {
-        VisualNode targetNode = getVisualNode(logicalNodeInfo);
-
-        if (targetNode != null && this.animationManager != null) {
-            double targetX = targetNode.getX();
-            double targetY = targetNode.getY();
-            targetNode.setY(targetY - 50);
-
-            List<TreeAnimation> animations = new ArrayList<>();
-            animations.add(new NodeMoveAnimation(targetNode, targetX, targetY, 500));
-            this.animationManager.playParallel(animations);
-        }
-    }
-
-    public void animateNodeDeletion(Object logicalNodeInfo) {
-        VisualNode targetNode = getVisualNode(logicalNodeInfo);
-
-        if (targetNode != null && this.animationManager != null) {
-            List<TreeAnimation> animations = new ArrayList<>();
-            NodeColorAnimation fadeOut = new NodeColorAnimation(targetNode, targetNode.getColorHex(), "#ff0000", 500);
-            VisualNode finalTarget = targetNode;
-            fadeOut.setOnFinished(() -> {
-                this.visualTree.removeNode(finalTarget);
-            });
-            animations.add(fadeOut);
-            this.animationManager.playSequential(animations);
-        }
-    }
-
-    public void highlightNode(Object logicalNodeInfo, String highlightColor) {
-        VisualNode targetNode = getVisualNode(logicalNodeInfo);
-        if (targetNode != null && this.animationManager != null) {
-            String originalColor = targetNode.getColorHex();
-
-            NodeColorAnimation highlightAnim = new NodeColorAnimation(targetNode, originalColor, highlightColor, 400);
-            NodeColorAnimation restoreAnim = new NodeColorAnimation(targetNode, highlightColor, originalColor, 400);
-
-            List<TreeAnimation> sequence = new ArrayList<>();
-            sequence.add(highlightAnim);
-            sequence.add(restoreAnim);
-
-            this.animationManager.playSequential(sequence);
-        }
-    }
-
-    public void animateLayoutTransition(double width, double height) {
-        if (this.layoutStrategy == null || this.visualTree == null || this.animationManager == null) {
-            updateLayout(width, height);
-            return;
-        }
-
-        Map<String, double[]> oldPositions = new HashMap<>();
-        for (VisualNode node : this.visualTree.getNodes()) {
-            oldPositions.put(node.getId(), new double[] { node.getX(), node.getY() });
-        }
-
-        this.layoutStrategy.calculateLayout(this.visualTree, width, height);
-
-        List<TreeAnimation> animations = new ArrayList<>();
-        for (VisualNode node : this.visualTree.getNodes()) {
-            double[] oldPos = oldPositions.get(node.getId());
-            if (oldPos != null) {
-                double targetX = node.getX();
-                double targetY = node.getY();
-
-                if (oldPos[0] != targetX || oldPos[1] != targetY) {
-                    node.setX(oldPos[0]);
-                    node.setY(oldPos[1]);
-                    animations.add(new NodeMoveAnimation(node, targetX, targetY, 500));
-                }
-            }
-        }
-
-        this.animationManager.playParallel(animations);
-    }
-
     public void updateLayout(double width, double height) {
         if (this.layoutStrategy != null && this.visualTree != null) {
             this.layoutStrategy.calculateLayout(this.visualTree, width, height);
@@ -202,5 +113,32 @@ public class TreeVisualizationController {
 
     public VisualTree getVisualTree() {
         return visualTree;
+    }
+
+    // --- TreeOperationAnimator Implementation ---
+
+    @Override
+    public void animateInsert(Node node) {
+        // TODO: Implement insert animation logic
+    }
+
+    @Override
+    public void animateRemove(Node node) {
+        // TODO: Implement remove animation logic
+    }
+
+    @Override
+    public void animateHighlight(Node node) {
+        // TODO: Implement highlight animation logic
+    }
+
+    @Override
+    public void animateSearch(Node node) {
+        // TODO: Implement search animation logic
+    }
+
+    @Override
+    public void animateRotate(Node node) {
+        // TODO: Implement rotate animation logic
     }
 }
