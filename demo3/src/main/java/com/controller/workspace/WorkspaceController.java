@@ -53,6 +53,18 @@ public class WorkspaceController {
     @FXML
     private Label treeTypeLabel;
 
+    @FXML
+    private Label statusLabel;
+
+    @FXML
+    private Button insertButton;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button searchButton;
+
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
     private AbstractTree<?> logicalTree;
@@ -66,19 +78,43 @@ public class WorkspaceController {
         // LoadException.
     }
 
+    private int getValueFromTextField(TextField textField) throws NullPointerException, NumberFormatException {
+        if (textField == null)
+            throw new NullPointerException("TextField is null");
+
+        String valueStr = textField.getText();
+        if (valueStr == null || valueStr.trim().isEmpty())
+            throw new NumberFormatException("TextField is empty");
+
+        try {
+            return Integer.parseInt(valueStr.trim());
+        } catch (NumberFormatException e) {
+            throw e;
+        }
+    }
+
     @FXML
     void handleInsertAction(ActionEvent event) {
-        String valueStr = valueTextField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty())
+        if (treeController.isAnimating())
             return;
 
-        int value = Integer.parseInt(valueStr.trim());
+        int value = getValueFromTextField(valueTextField);
+
+        setOperationButtonsDisabled(true);
+        if (statusLabel != null) {
+            statusLabel.setText("Inserting " + value + "...");
+        }
 
         if (logicalTree.isEmpty()) {
             logicalTree.create(value);
         } else {
             if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
-                int parentValue = Integer.parseInt(parentValueTextField.getText().trim());
+                String parentStr = parentValueTextField.getText();
+                if (parentStr == null || parentStr.trim().isEmpty()) {
+                    setOperationButtonsDisabled(false);
+                    return;
+                }
+                int parentValue = Integer.parseInt(parentStr.trim());
                 logicalTree.insert(parentValue, value);
             } else {
                 logicalTree.insert(0, value);
@@ -86,31 +122,52 @@ public class WorkspaceController {
         }
 
         treeController.setTreeData(logicalTree);
-        redrawTree(); // Fix: Force layout calculation AND render to the canvas
+        redrawTree();
         treeController.playAnimations();
     }
 
     @FXML
     void handleDeleteAction(ActionEvent event) {
-        String valueStr = valueTextField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty())
+        if (treeController.isAnimating())
             return;
 
-        System.out.println("Delete button clicked with value: " + valueStr);
-        // TODO: Pass value to the logical tree model (e.g.
-        // treeModel.delete(Integer.parseInt(valueStr)))
-        // TODO: Inform TreeVisualizationController to update layout/animation
+        int value = getValueFromTextField(valueTextField);
+
+        setOperationButtonsDisabled(true);
+        if (statusLabel != null) {
+            statusLabel.setText("Deleting " + value + "...");
+        }
+
+        logicalTree.delete(value);
+        treeController.playAnimations();
     }
 
     @FXML
     void handleSearchAction(ActionEvent event) {
-        String valueStr = valueTextField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty())
+        if (treeController.isAnimating())
             return;
 
-        System.out.println("Search button clicked with value: " + valueStr);
-        // TODO: Pass value to the logical tree model to perform search
-        // TODO: Highlight the found node visually
+        int value = getValueFromTextField(valueTextField);
+
+        setOperationButtonsDisabled(true);
+        if (statusLabel != null) {
+            statusLabel.setText("Searching for " + value + "...");
+        }
+
+        logicalTree.search(value);
+        treeController.playAnimations();
+    }
+
+    /**
+     * Disables or enables the Insert, Delete, Search buttons.
+     */
+    private void setOperationButtonsDisabled(boolean disabled) {
+        if (insertButton != null)
+            insertButton.setDisable(disabled);
+        if (deleteButton != null)
+            deleteButton.setDisable(disabled);
+        if (searchButton != null)
+            searchButton.setDisable(disabled);
     }
 
     @FXML
@@ -127,7 +184,7 @@ public class WorkspaceController {
 
         // 2. Setup the MVC Visualization components
         TreeCanvas treeCanvas = new TreeCanvas(new DefaultNodeRenderer(), new DefaultEdgeRenderer());
-        
+
         LayoutStrategy layoutStrategy;
         if (currentTreeType == TreeType.GENERAL) {
             layoutStrategy = new GeneralTreeLayout();
@@ -139,6 +196,17 @@ public class WorkspaceController {
                 treeCanvas,
                 new AnimationManager(),
                 layoutStrategy);
+
+        // Pass the canvas reference so the AnimationTimer can render
+        treeController.setFxCanvas(fxCanvas);
+
+        // Wire up status callback
+        if (statusLabel != null) {
+            treeController.setStatusCallback(msg -> statusLabel.setText(msg));
+        }
+
+        // Wire up animation finished callback to re-enable buttons
+        treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
 
         // 3. Initialize logical tree based on the selected static state
         logicalTree = TreeFactory.create(currentTreeType);

@@ -79,32 +79,42 @@
     </right>
 
     <bottom>
-        <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-border-color: #cccccc; -fx-border-width: 1 0 0 0; -fx-background-color: #ffffff;">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-            
-            <TextField fx:id="parentValueTextField" managed="false" prefWidth="60.0" promptText="Parent" visible="false" />
-            <TextField fx:id="valueTextField" prefWidth="60.0" promptText="Value" />
-            <Button onAction="#handleInsertAction" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;" text="Insert" />
-            <Button onAction="#handleDeleteAction" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
-            <Button onAction="#handleSearchAction" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="Search" />
-            
-            <Separator orientation="VERTICAL" />
-            
-            <Button text="Random" />
-            <Button text="&lt;&lt;" />
-            <Button text="Replay" />
-            <Button text="&gt;&gt;" />
-            
-            <Separator orientation="VERTICAL" />
-            
-            <Label text="Traverse" />
-            <ComboBox prefWidth="120.0" />
-            
-            <Label text="Speed:" />
-            <Slider value="50.0" />
-        </HBox>
+        <VBox style="-fx-border-color: #cccccc; -fx-border-width: 1 0 0 0; -fx-background-color: #ffffff;">
+            <!-- Status bar for animation step messages -->
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
+                <padding>
+                    <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
+                </padding>
+                <Label fx:id="statusLabel" text="Ready." style="-fx-font-size: 12px; -fx-text-fill: #555555;" />
+            </HBox>
+            <!-- Operation toolbar -->
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+                
+                <TextField fx:id="parentValueTextField" managed="false" prefWidth="60.0" promptText="Parent" visible="false" />
+                <TextField fx:id="valueTextField" prefWidth="60.0" promptText="Value" />
+                <Button fx:id="insertButton" onAction="#handleInsertAction" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;" text="Insert" />
+                <Button fx:id="deleteButton" onAction="#handleDeleteAction" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
+                <Button fx:id="searchButton" onAction="#handleSearchAction" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="Search" />
+                
+                <Separator orientation="VERTICAL" />
+                
+                <Button text="Random" />
+                <Button text="&lt;&lt;" />
+                <Button text="Replay" />
+                <Button text="&gt;&gt;" />
+                
+                <Separator orientation="VERTICAL" />
+                
+                <Label text="Traverse" />
+                <ComboBox prefWidth="120.0" />
+                
+                <Label text="Speed:" />
+                <Slider value="50.0" />
+            </HBox>
+        </VBox>
     </bottom>
 
 </BorderPane>

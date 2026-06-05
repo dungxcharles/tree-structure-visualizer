@@ -11,45 +11,67 @@ import java.util.List;
 
 public class SearchStepStrategy implements StepAnimationStrategy {
 
-    private static final String HIGHLIGHT_COLOR = "#ffff00"; // Yellow
-    private static final String FOUND_COLOR = "#0000ff";     // Blue
-    private static final String NOT_FOUND_COLOR = "#ff0000"; // Red
-    private static final String DEFAULT_COLOR = "#ffffff";
-    private static final double DURATION_MS = 400;
+    private static final String TRAVERSAL_COLOR = "#FF7F00";
+    private static final String FOUND_COLOR = "#2ECC71";
+    private static final String NOT_FOUND_COLOR = "#E74C3C";
+    private static final String DEFAULT_COLOR = "#FFFFFF";
+    private static final double STEP_DURATION_MS = 400;
 
     @Override
     public List<TreeAnimation> createAnimations(AnimationStep step, VisualTree tree) {
         List<TreeAnimation> animations = new ArrayList<>();
         VisualNode targetNode = findVisualNodeByValue(tree, step.getMainNodeValue());
-        
-        if (targetNode != null) {
-            switch (step.getType()) {
-                case VISIT:
-                case COMPARE:
-                case GO_LEFT:
-                case GO_RIGHT:
-                case GO_CHILD:
-                case ADD_TO_RESULT:
-                    // Highlight the node briefly
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), HIGHLIGHT_COLOR, DURATION_MS));
-                    animations.add(new NodeColorAnimation(targetNode, HIGHLIGHT_COLOR, targetNode.getColorHex(), DURATION_MS));
-                    break;
-                case FOUND:
-                    // Color it blue to indicate it was found
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), FOUND_COLOR, DURATION_MS * 2));
-                    break;
-                case NOT_FOUND:
-                    // Color it red to indicate failure
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), NOT_FOUND_COLOR, DURATION_MS * 2));
-                    break;
-                case DONE:
-                    // Restore default or original color
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), DEFAULT_COLOR, DURATION_MS));
-                    break;
-                default:
-                    break;
-            }
+
+        if (targetNode == null) {
+            return animations;
         }
+
+        String originalColor = targetNode.getColorHex();
+
+        switch (step.getType()) {
+            case VISIT:
+            case COMPARE:
+                // Highlight orange while comparing, then restore
+                animations.add(new NodeColorAnimation(targetNode, originalColor, TRAVERSAL_COLOR, STEP_DURATION_MS));
+                animations
+                        .add(new NodeColorAnimation(targetNode, TRAVERSAL_COLOR, originalColor, STEP_DURATION_MS / 2));
+                break;
+
+            case GO_LEFT:
+            case GO_RIGHT:
+            case GO_CHILD:
+                // Brief orange flash to indicate direction taken
+                animations
+                        .add(new NodeColorAnimation(targetNode, originalColor, TRAVERSAL_COLOR, STEP_DURATION_MS / 2));
+                animations
+                        .add(new NodeColorAnimation(targetNode, TRAVERSAL_COLOR, originalColor, STEP_DURATION_MS / 2));
+                break;
+
+            case ADD_TO_RESULT:
+                // Quick green flash for traversal result
+                animations.add(new NodeColorAnimation(targetNode, originalColor, FOUND_COLOR, STEP_DURATION_MS / 2));
+                break;
+
+            case FOUND:
+                // Node found: turn green and stay
+                animations.add(new NodeColorAnimation(targetNode, originalColor, FOUND_COLOR, STEP_DURATION_MS));
+                break;
+
+            case NOT_FOUND:
+                // Search failed: flash red
+                animations.add(new NodeColorAnimation(targetNode, originalColor, NOT_FOUND_COLOR, STEP_DURATION_MS));
+                break;
+
+            case DONE:
+                // Restore to default color
+                animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), DEFAULT_COLOR,
+                        STEP_DURATION_MS / 2));
+                break;
+
+            default:
+                break;
+        }
+
         return animations;
     }
 

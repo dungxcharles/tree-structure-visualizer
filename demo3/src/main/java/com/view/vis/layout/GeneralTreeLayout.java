@@ -37,7 +37,7 @@ public class GeneralTreeLayout implements LayoutStrategy {
             return;
         }
 
-        // Calculate current node position (Center of horizontal bounds)
+        // Positioning
         double x = minX + (maxX - minX) / 2.0;
         double y = PADDING_TOP + depth * LEVEL_HEIGHT;
 
@@ -47,8 +47,8 @@ public class GeneralTreeLayout implements LayoutStrategy {
         List<VisualNode> children = childrenMap.getOrDefault(node, new ArrayList<>());
         int numChildren = children.size();
 
+        // Padding
         if (numChildren > 0) {
-            // Distribute children evenly in the available horizontal space
             double sectionWidth = (maxX - minX) / numChildren;
             for (int i = 0; i < numChildren; i++) {
                 double childMinX = minX + i * sectionWidth;

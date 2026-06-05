@@ -21,30 +21,31 @@ public class VisualTree {
             this.nodes.add(node);
         }
     }
-    
+
     public void removeNode(VisualNode node) {
         this.nodes.remove(node);
         this.edges.removeIf(edge -> edge.getSource().equals(node) || edge.getTarget().equals(node));
     }
-    
+
     public void addEdge(VisualEdge edge) {
         if (edge != null && !this.edges.contains(edge)) {
             this.edges.add(edge);
         }
     }
-    
+
     public void removeEdge(VisualEdge edge) {
         this.edges.remove(edge);
     }
-    
-    public List<VisualNode> getNodes() { 
-        return Collections.unmodifiableList(this.nodes); 
+
+    public List<VisualNode> getNodes() {
+        return Collections.unmodifiableList(this.nodes);
     }
-    
-    public List<VisualEdge> getEdges() { 
-        return Collections.unmodifiableList(this.edges); 
+
+    public List<VisualEdge> getEdges() {
+        return Collections.unmodifiableList(this.edges);
     }
-    
+
+    // Root node has no incoming edges
     public VisualNode getRoot() {
         for (VisualNode node : this.nodes) {
             boolean hasIncomingEdge = false;
@@ -55,12 +56,13 @@ public class VisualTree {
                 }
             }
             if (!hasIncomingEdge) {
-                return node; // Root node found
+                return node;
             }
         }
         return this.nodes.isEmpty() ? null : this.nodes.get(0);
     }
 
+    // Get children for each node in the tree (visual)
     public Map<VisualNode, List<VisualNode>> getChildrenMap() {
         Map<VisualNode, List<VisualNode>> map = new HashMap<>();
         for (VisualNode node : this.nodes) {
@@ -74,6 +76,7 @@ public class VisualTree {
             }
         }
 
+        // Sort ascending
         for (List<VisualNode> children : map.values()) {
             children.sort(Comparator.comparing(VisualNode::getLabel));
         }

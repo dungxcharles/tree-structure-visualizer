@@ -5,6 +5,9 @@ import com.model.vis.VisualNode;
 import com.model.vis.VisualEdge;
 import com.view.vis.TreeCanvas;
 import com.view.vis.animation.AnimationManager;
+import com.view.vis.animation.FadeAnimation;
+import com.view.vis.animation.NodeColorAnimation;
+import com.view.vis.animation.NodeMoveAnimation;
 import com.view.vis.animation.TreeAnimation;
 import com.view.vis.layout.LayoutStrategy;
 import com.model.node.Node;
@@ -18,9 +21,14 @@ import com.model.step.StepType;
 import com.view.vis.animation.strategy.StepAnimationStrategy;
 import com.view.vis.animation.strategy.StepAnimatorFactory;
 
+import javafx.animation.AnimationTimer;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class TreeVisualizationController implements TreeOperationAnimator, TreeOperationListener {
     private VisualTree visualTree;
@@ -29,6 +37,24 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     private LayoutStrategy layoutStrategy;
     private List<AnimationStep> recordedSteps;
     private StepAnimatorFactory animatorFactory;
+
+    // Render loop for animating transitions on the canvas
+    private Canvas fxCanvas;
+    private AnimationTimer renderLoop;
+    private boolean animating = false;
+
+    // Status message callback (pushes step descriptions to the UI)
+    private Consumer<String> statusCallback;
+
+    // Callback to notify when all animations finish (to re-enable buttons etc.)
+    private Runnable onAnimationFinished;
+
+    // Reference to the logical tree for rebuilding visual tree after mutations
+    private AbstractTree<?> logicalTree;
+
+    // Canvas dimensions for layout
+    private double canvasWidth;
+    private double canvasHeight;
 
     public TreeVisualizationController(
             TreeCanvas canvas,
@@ -42,6 +68,34 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         this.animatorFactory = new StepAnimatorFactory();
     }
 
+    /**
+     * Sets the JavaFX Canvas so the AnimationTimer can continuously render during animations.
+     */
+    public void setFxCanvas(Canvas fxCanvas) {
+        this.fxCanvas = fxCanvas;
+    }
+
+    /**
+     * Sets a callback that receives status messages for each animation step.
+     */
+    public void setStatusCallback(Consumer<String> statusCallback) {
+        this.statusCallback = statusCallback;
+    }
+
+    /**
+     * Sets a callback invoked when all animations complete.
+     */
+    public void setOnAnimationFinished(Runnable onAnimationFinished) {
+        this.onAnimationFinished = onAnimationFinished;
+    }
+
+    /**
+     * Returns true if animations are currently playing.
+     */
+    public boolean isAnimating() {
+        return animating;
+    }
+
     public void setTreeData(Object logicalTreeData) {
         if (this.visualTree != null) {
             this.visualTree.clear();
@@ -49,6 +103,7 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
 
         if (logicalTreeData instanceof AbstractTree) {
             AbstractTree<?> tree = (AbstractTree<?>) logicalTreeData;
+            this.logicalTree = tree;
             // Listen to tree's operation steps
             tree.setListener(this);
             Node root = tree.getRoot();
@@ -102,6 +157,8 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     }
 
     public void updateLayout(double width, double height) {
+        this.canvasWidth = width;
+        this.canvasHeight = height;
         if (this.layoutStrategy != null && this.visualTree != null) {
             this.layoutStrategy.calculateLayout(this.visualTree, width, height);
         }
@@ -139,13 +196,31 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         this.recordedSteps.add(new AnimationStep(type, nodeValue, message));
     }
 
+    /**
+     * Builds the animation sequence from recorded steps and plays them with a
+     * continuous render loop so that color/position interpolations are visible on the canvas.
+     *
+     * After all step-based animations finish, the visual tree is rebuilt from the
+     * logical tree and nodes smoothly slide to their new layout positions.
+     */
     private void processRecordedStepsAndAnimate() {
-        if (this.recordedSteps.isEmpty())
+        if (this.recordedSteps.isEmpty()) {
+            if (onAnimationFinished != null) {
+                onAnimationFinished.run();
+            }
             return;
+        }
 
         List<TreeAnimation> animationsToPlay = new ArrayList<>();
 
         for (AnimationStep step : this.recordedSteps) {
+            // Push status message to UI
+            if (statusCallback != null) {
+                String msg = step.getMessage();
+                // Create a status animation that fires the callback when played
+                animationsToPlay.add(new StatusAnimation(msg, statusCallback));
+            }
+
             StepAnimationStrategy strategy = animatorFactory.getStrategy(step.getType());
             if (strategy != null) {
                 List<TreeAnimation> stepAnimations = strategy.createAnimations(step, this.visualTree);
@@ -155,15 +230,206 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
             }
         }
 
-        // Play accumulated animations sequentially
-        this.animationManager.playSequential(animationsToPlay);
-
         // Clear steps for the next operation
         this.recordedSteps.clear();
+
+        if (animationsToPlay.isEmpty()) {
+            if (onAnimationFinished != null) {
+                onAnimationFinished.run();
+            }
+            return;
+        }
+
+        // Start the render loop
+        startRenderLoop();
+
+        // After all step animations complete: rebuild, re-layout, and animate positions
+        this.animationManager.setOnAllFinished(() -> {
+            // Reset all node colors to default before rebuilding
+            resetAllNodeColors();
+
+            // Capture old positions before rebuild
+            Map<String, double[]> oldPositions = capturePositions();
+
+            // Rebuild visual tree from logical model
+            rebuildVisualTree();
+
+            // Calculate new layout
+            if (canvasWidth > 0 && canvasHeight > 0) {
+                updateLayout(canvasWidth, canvasHeight);
+            }
+
+            // Animate nodes moving from old to new positions
+            List<TreeAnimation> moveAnimations = createMoveAnimations(oldPositions);
+            if (!moveAnimations.isEmpty()) {
+                this.animationManager.setOnAllFinished(() -> {
+                    stopRenderLoop();
+                    renderCurrentFrame();
+                    if (statusCallback != null) {
+                        statusCallback.accept("Done.");
+                    }
+                    if (onAnimationFinished != null) {
+                        onAnimationFinished.run();
+                    }
+                });
+                this.animationManager.playParallel(moveAnimations);
+            } else {
+                stopRenderLoop();
+                renderCurrentFrame();
+                if (statusCallback != null) {
+                    statusCallback.accept("Done.");
+                }
+                if (onAnimationFinished != null) {
+                    onAnimationFinished.run();
+                }
+            }
+        });
+
+        // Play all step animations sequentially
+        this.animationManager.playSequential(animationsToPlay);
+    }
+
+    /**
+     * Resets all node colors back to white (default) before rebuilding.
+     */
+    private void resetAllNodeColors() {
+        for (VisualNode node : this.visualTree.getNodes()) {
+            // Only reset non-RB nodes to white; RB nodes keep their color
+            if (!node.getColorHex().equals("#ff0000") && !node.getColorHex().equals("#333333")) {
+                node.setColorHex("#ffffff");
+            }
+        }
+    }
+
+    /**
+     * Captures current positions of all visual nodes keyed by label.
+     */
+    private Map<String, double[]> capturePositions() {
+        Map<String, double[]> positions = new HashMap<>();
+        for (VisualNode node : this.visualTree.getNodes()) {
+            positions.put(node.getLabel(), new double[] { node.getX(), node.getY() });
+        }
+        return positions;
+    }
+
+    /**
+     * Rebuilds the visual tree from the logical tree.
+     */
+    private void rebuildVisualTree() {
+        this.visualTree.clear();
+        if (this.logicalTree != null) {
+            Node root = this.logicalTree.getRoot();
+            if (root != null) {
+                mapLogicalNodeToVisual(root, null);
+            }
+        }
+    }
+
+    /**
+     * Creates move animations for nodes that changed position.
+     * Nodes start at their old position and animate to their new (layout-computed) position.
+     * New nodes (not in oldPositions) fade in gradually with their parent edge.
+     */
+    private List<TreeAnimation> createMoveAnimations(Map<String, double[]> oldPositions) {
+        List<TreeAnimation> moves = new ArrayList<>();
+        for (VisualNode node : this.visualTree.getNodes()) {
+            double[] oldPos = oldPositions.get(node.getLabel());
+            if (oldPos != null) {
+                double newX = node.getX();
+                double newY = node.getY();
+                // Move from old position to new position
+                node.setX(oldPos[0]);
+                node.setY(oldPos[1]);
+                if (Math.abs(oldPos[0] - newX) > 1 || Math.abs(oldPos[1] - newY) > 1) {
+                    moves.add(new NodeMoveAnimation(node, newX, newY, 400));
+                }
+            } else {
+                // New node: fade in gradually with its parent edge
+                node.setOpacity(0.0);
+                moves.add(new FadeAnimation(node, this.visualTree, 0.0, 1.0, 400));
+            }
+        }
+        return moves;
+    }
+
+    /**
+     * Starts a JavaFX AnimationTimer that continuously re-renders the canvas.
+     */
+    private void startRenderLoop() {
+        if (renderLoop != null) {
+            renderLoop.stop();
+        }
+        animating = true;
+        renderLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                renderCurrentFrame();
+            }
+        };
+        renderLoop.start();
+    }
+
+    /**
+     * Stops the render loop.
+     */
+    private void stopRenderLoop() {
+        animating = false;
+        if (renderLoop != null) {
+            renderLoop.stop();
+            renderLoop = null;
+        }
+    }
+
+    /**
+     * Renders the current state of the visual tree onto the canvas.
+     */
+    private void renderCurrentFrame() {
+        if (fxCanvas != null) {
+            renderFrame(fxCanvas.getGraphicsContext2D());
+        }
     }
 
     @Override
     public void playAnimations() {
         processRecordedStepsAndAnimate();
+    }
+
+    // --- Inner class: StatusAnimation ---
+
+    /**
+     * A pseudo-animation that fires a status callback instantly and completes.
+     * Used to inject status messages into the sequential animation chain.
+     */
+    private static class StatusAnimation implements TreeAnimation {
+        private final String message;
+        private final Consumer<String> callback;
+        private Runnable onFinished;
+
+        StatusAnimation(String message, Consumer<String> callback) {
+            this.message = message;
+            this.callback = callback;
+        }
+
+        @Override
+        public void play() {
+            if (callback != null) {
+                callback.accept(message);
+            }
+            if (onFinished != null) {
+                // Use Platform.runLater to avoid stack overflow from deep chaining
+                javafx.application.Platform.runLater(onFinished);
+            }
+        }
+
+        @Override
+        public void pause() {}
+
+        @Override
+        public void stop() {}
+
+        @Override
+        public void setOnFinished(Runnable action) {
+            this.onFinished = action;
+        }
     }
 }

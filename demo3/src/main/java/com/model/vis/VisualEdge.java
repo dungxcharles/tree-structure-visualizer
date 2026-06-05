@@ -5,6 +5,7 @@ public class VisualEdge implements VisualElement {
     private VisualNode target;
     private String colorHex;
     private boolean visible;
+    private double opacity = 1.0;
 
     public VisualEdge(VisualNode source, VisualNode target) {
         if (source == null || target == null) {
@@ -20,6 +21,8 @@ public class VisualEdge implements VisualElement {
     public VisualNode getTarget() { return this.target; }
     public String getColorHex() { return this.colorHex; }
     public void setColorHex(String colorHex) { this.colorHex = colorHex; }
+    public double getOpacity() { return this.opacity; }
+    public void setOpacity(double opacity) { this.opacity = Math.max(0.0, Math.min(1.0, opacity)); }
 
     @Override
     public boolean isVisible() { return this.visible; }
