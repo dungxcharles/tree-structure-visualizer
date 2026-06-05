@@ -61,10 +61,16 @@ public class WorkspaceController {
     private Label numNodesLabel;
 
     @FXML
+    private Label leafNodesLabel;
+
+    @FXML
     private Label rootValueLabel;
 
     @FXML
     private Slider speedSlider;
+
+    @FXML
+    private ComboBox<String> traversalComboBox;
 
     @FXML
     private Button insertButton;
@@ -242,6 +248,30 @@ public class WorkspaceController {
         if (pseudoCodeListView != null) {
             pseudoCodeDisplay = new ListViewPseudoCodeDisplay(pseudoCodeListView);
             treeController.setStepHighlightCallback(pseudoCodeDisplay::addAndHighlightStep);
+        }
+
+        // Initialize traversal combobox
+        if (traversalComboBox != null) {
+            traversalComboBox.getItems().clear();
+            for (com.model.tree.TraversalType type : com.model.tree.TraversalType.values()) {
+                traversalComboBox.getItems().add(type.name().replace("_", " "));
+            }
+            traversalComboBox.setOnAction(event -> {
+                if (treeController.isAnimating())
+                    return;
+                String selected = traversalComboBox.getValue();
+                if (selected != null) {
+                    com.model.tree.TraversalType type = com.model.tree.TraversalType
+                            .valueOf(selected.replace(" ", "_"));
+                    if (pseudoCodeDisplay != null) {
+                        pseudoCodeDisplay.clear();
+                    }
+                    setOperationButtonsDisabled(true);
+                    logicalTree.traverse(type);
+                    treeController.playAnimations();
+                    javafx.application.Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
+                }
+            });
         }
 
         // 3. Initialize logical tree based on the selected static state
