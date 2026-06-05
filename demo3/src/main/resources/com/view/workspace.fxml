@@ -98,7 +98,7 @@
                 <ComboBox prefWidth="120.0" />
                 
                 <Label text="Speed:" />
-                <Slider value="50.0" />
+                <Slider fx:id="speedSlider" min="0.5" max="1.5" value="1.0" majorTickUnit="0.5" minorTickCount="4" showTickMarks="true" showTickLabels="true" />
             </HBox>
         </VBox>
     </bottom>

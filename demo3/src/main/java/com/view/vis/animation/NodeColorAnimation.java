@@ -48,4 +48,9 @@ public class NodeColorAnimation implements TreeAnimation {
     public void setOnFinished(Runnable action) {
         transition.setOnFinished(e -> action.run());
     }
+
+    @Override
+    public void setRate(double rate) {
+        transition.setRate(rate);
+    }
 }

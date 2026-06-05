@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 
@@ -61,6 +62,9 @@ public class WorkspaceController {
 
     @FXML
     private Label rootValueLabel;
+
+    @FXML
+    private Slider speedSlider;
 
     @FXML
     private Button insertButton;
@@ -223,6 +227,16 @@ public class WorkspaceController {
 
         // Wire up animation finished callback to re-enable buttons
         treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
+
+        // Connect animation speed slider
+        if (speedSlider != null) {
+            // Set initial speed
+            treeController.setAnimationSpeed(speedSlider.getValue());
+            // Listen for slider changes
+            speedSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+                treeController.setAnimationSpeed(newVal.doubleValue());
+            });
+        }
 
         // Wire up pseudo code UI
         if (pseudoCodeListView != null) {

@@ -5,4 +5,5 @@ public interface TreeAnimation {
     void pause();
     void stop();
     void setOnFinished(Runnable action);
+    void setRate(double rate);
 }

@@ -41,6 +41,7 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     private Canvas fxCanvas;
     private AnimationTimer renderLoop;
     private boolean animating = false;
+    private double animationSpeed = 1.0;
 
     private Consumer<String> stepHighlightCallback;
 
@@ -69,6 +70,10 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
 
     public void setStepHighlightCallback(Consumer<String> stepHighlightCallback) {
         this.stepHighlightCallback = stepHighlightCallback;
+    }
+
+    public void setAnimationSpeed(double animationSpeed) {
+        this.animationSpeed = animationSpeed;
     }
 
     public void setOnAnimationFinished(Runnable onAnimationFinished) {
@@ -180,10 +185,12 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
 
         for (AnimationStep step : this.recordedSteps) {
             String message = step.getMessage();
-            
-            // Add a zero-duration animation that just fires the callback to insert and highlight the text
+
+            // Add a zero-duration animation that just fires the callback to insert and
+            // highlight the text
             animationsToPlay.add(new TreeAnimation() {
                 private Runnable onFinished;
+
                 @Override
                 public void play() {
                     if (stepHighlightCallback != null) {
@@ -193,9 +200,23 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
                         javafx.application.Platform.runLater(onFinished);
                     }
                 }
-                @Override public void pause() {}
-                @Override public void stop() {}
-                @Override public void setOnFinished(Runnable action) { this.onFinished = action; }
+
+                @Override
+                public void pause() {
+                }
+
+                @Override
+                public void stop() {
+                }
+
+                @Override
+                public void setOnFinished(Runnable action) {
+                    this.onFinished = action;
+                }
+
+                @Override
+                public void setRate(double rate) {
+                } // No real transition, so ignore rate
             });
 
             StepAnimationStrategy strategy = animatorFactory.getStrategy(step.getType());
@@ -231,12 +252,19 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
 
             List<TreeAnimation> moveAnimations = createMoveAnimations(oldPositions);
             if (!moveAnimations.isEmpty()) {
+                for (TreeAnimation anim : moveAnimations) {
+                    anim.setRate(this.animationSpeed);
+                }
                 this.animationManager.setOnAllFinished(this::finishAnimationSequence);
                 this.animationManager.playParallel(moveAnimations);
             } else {
                 finishAnimationSequence();
             }
         });
+
+        for (TreeAnimation anim : animationsToPlay) {
+            anim.setRate(this.animationSpeed);
+        }
 
         this.animationManager.playSequential(animationsToPlay);
     }
