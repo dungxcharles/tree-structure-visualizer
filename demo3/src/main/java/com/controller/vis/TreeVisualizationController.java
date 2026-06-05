@@ -38,21 +38,16 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     private List<AnimationStep> recordedSteps;
     private StepAnimatorFactory animatorFactory;
 
-    // Render loop for animating transitions on the canvas
     private Canvas fxCanvas;
     private AnimationTimer renderLoop;
     private boolean animating = false;
 
-    // Status message callback (pushes step descriptions to the UI)
-    private Consumer<String> statusCallback;
+    private Consumer<String> stepHighlightCallback;
 
-    // Callback to notify when all animations finish (to re-enable buttons etc.)
     private Runnable onAnimationFinished;
 
-    // Reference to the logical tree for rebuilding visual tree after mutations
     private AbstractTree<?> logicalTree;
 
-    // Canvas dimensions for layout
     private double canvasWidth;
     private double canvasHeight;
 
@@ -68,30 +63,18 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         this.animatorFactory = new StepAnimatorFactory();
     }
 
-    /**
-     * Sets the JavaFX Canvas so the AnimationTimer can continuously render during animations.
-     */
     public void setFxCanvas(Canvas fxCanvas) {
         this.fxCanvas = fxCanvas;
     }
 
-    /**
-     * Sets a callback that receives status messages for each animation step.
-     */
-    public void setStatusCallback(Consumer<String> statusCallback) {
-        this.statusCallback = statusCallback;
+    public void setStepHighlightCallback(Consumer<String> stepHighlightCallback) {
+        this.stepHighlightCallback = stepHighlightCallback;
     }
 
-    /**
-     * Sets a callback invoked when all animations complete.
-     */
     public void setOnAnimationFinished(Runnable onAnimationFinished) {
         this.onAnimationFinished = onAnimationFinished;
     }
 
-    /**
-     * Returns true if animations are currently playing.
-     */
     public boolean isAnimating() {
         return animating;
     }
@@ -103,9 +86,10 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
 
         if (logicalTreeData instanceof AbstractTree) {
             AbstractTree<?> tree = (AbstractTree<?>) logicalTreeData;
+
             this.logicalTree = tree;
-            // Listen to tree's operation steps
             tree.setListener(this);
+
             Node root = tree.getRoot();
             if (root != null) {
                 mapLogicalNodeToVisual(root, null);
@@ -179,30 +163,11 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         return visualTree;
     }
 
-    private VisualNode findVisualNodeByValue(int value) {
-        String targetLabel = String.valueOf(value);
-        for (VisualNode vNode : this.visualTree.getNodes()) {
-            if (vNode.getLabel().equals(targetLabel)) {
-                return vNode;
-            }
-        }
-        return null;
-    }
-
-    // --- TreeOperationListener Implementation ---
-
     @Override
     public void onStep(StepType type, int nodeValue, String message) {
         this.recordedSteps.add(new AnimationStep(type, nodeValue, message));
     }
 
-    /**
-     * Builds the animation sequence from recorded steps and plays them with a
-     * continuous render loop so that color/position interpolations are visible on the canvas.
-     *
-     * After all step-based animations finish, the visual tree is rebuilt from the
-     * logical tree and nodes smoothly slide to their new layout positions.
-     */
     private void processRecordedStepsAndAnimate() {
         if (this.recordedSteps.isEmpty()) {
             if (onAnimationFinished != null) {
@@ -214,12 +179,24 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         List<TreeAnimation> animationsToPlay = new ArrayList<>();
 
         for (AnimationStep step : this.recordedSteps) {
-            // Push status message to UI
-            if (statusCallback != null) {
-                String msg = step.getMessage();
-                // Create a status animation that fires the callback when played
-                animationsToPlay.add(new StatusAnimation(msg, statusCallback));
-            }
+            String message = step.getMessage();
+            
+            // Add a zero-duration animation that just fires the callback to insert and highlight the text
+            animationsToPlay.add(new TreeAnimation() {
+                private Runnable onFinished;
+                @Override
+                public void play() {
+                    if (stepHighlightCallback != null) {
+                        stepHighlightCallback.accept(message);
+                    }
+                    if (onFinished != null) {
+                        javafx.application.Platform.runLater(onFinished);
+                    }
+                }
+                @Override public void pause() {}
+                @Override public void stop() {}
+                @Override public void setOnFinished(Runnable action) { this.onFinished = action; }
+            });
 
             StepAnimationStrategy strategy = animatorFactory.getStrategy(step.getType());
             if (strategy != null) {
@@ -230,7 +207,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
             }
         }
 
-        // Clear steps for the next operation
         this.recordedSteps.clear();
 
         if (animationsToPlay.isEmpty()) {
@@ -240,58 +216,39 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
             return;
         }
 
-        // Start the render loop
         startRenderLoop();
 
-        // After all step animations complete: rebuild, re-layout, and animate positions
         this.animationManager.setOnAllFinished(() -> {
-            // Reset all node colors to default before rebuilding
             resetAllNodeColors();
 
-            // Capture old positions before rebuild
             Map<String, double[]> oldPositions = capturePositions();
 
-            // Rebuild visual tree from logical model
             rebuildVisualTree();
 
-            // Calculate new layout
             if (canvasWidth > 0 && canvasHeight > 0) {
                 updateLayout(canvasWidth, canvasHeight);
             }
 
-            // Animate nodes moving from old to new positions
             List<TreeAnimation> moveAnimations = createMoveAnimations(oldPositions);
             if (!moveAnimations.isEmpty()) {
-                this.animationManager.setOnAllFinished(() -> {
-                    stopRenderLoop();
-                    renderCurrentFrame();
-                    if (statusCallback != null) {
-                        statusCallback.accept("Done.");
-                    }
-                    if (onAnimationFinished != null) {
-                        onAnimationFinished.run();
-                    }
-                });
+                this.animationManager.setOnAllFinished(this::finishAnimationSequence);
                 this.animationManager.playParallel(moveAnimations);
             } else {
-                stopRenderLoop();
-                renderCurrentFrame();
-                if (statusCallback != null) {
-                    statusCallback.accept("Done.");
-                }
-                if (onAnimationFinished != null) {
-                    onAnimationFinished.run();
-                }
+                finishAnimationSequence();
             }
         });
 
-        // Play all step animations sequentially
         this.animationManager.playSequential(animationsToPlay);
     }
 
-    /**
-     * Resets all node colors back to white (default) before rebuilding.
-     */
+    private void finishAnimationSequence() {
+        stopRenderLoop();
+        renderCurrentFrame();
+        if (onAnimationFinished != null) {
+            onAnimationFinished.run();
+        }
+    }
+
     private void resetAllNodeColors() {
         for (VisualNode node : this.visualTree.getNodes()) {
             // Only reset non-RB nodes to white; RB nodes keep their color
@@ -301,9 +258,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         }
     }
 
-    /**
-     * Captures current positions of all visual nodes keyed by label.
-     */
     private Map<String, double[]> capturePositions() {
         Map<String, double[]> positions = new HashMap<>();
         for (VisualNode node : this.visualTree.getNodes()) {
@@ -312,9 +266,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         return positions;
     }
 
-    /**
-     * Rebuilds the visual tree from the logical tree.
-     */
     private void rebuildVisualTree() {
         this.visualTree.clear();
         if (this.logicalTree != null) {
@@ -325,11 +276,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         }
     }
 
-    /**
-     * Creates move animations for nodes that changed position.
-     * Nodes start at their old position and animate to their new (layout-computed) position.
-     * New nodes (not in oldPositions) fade in gradually with their parent edge.
-     */
     private List<TreeAnimation> createMoveAnimations(Map<String, double[]> oldPositions) {
         List<TreeAnimation> moves = new ArrayList<>();
         for (VisualNode node : this.visualTree.getNodes()) {
@@ -352,9 +298,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         return moves;
     }
 
-    /**
-     * Starts a JavaFX AnimationTimer that continuously re-renders the canvas.
-     */
     private void startRenderLoop() {
         if (renderLoop != null) {
             renderLoop.stop();
@@ -369,9 +312,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         renderLoop.start();
     }
 
-    /**
-     * Stops the render loop.
-     */
     private void stopRenderLoop() {
         animating = false;
         if (renderLoop != null) {
@@ -380,9 +320,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         }
     }
 
-    /**
-     * Renders the current state of the visual tree onto the canvas.
-     */
     private void renderCurrentFrame() {
         if (fxCanvas != null) {
             renderFrame(fxCanvas.getGraphicsContext2D());
@@ -394,42 +331,4 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         processRecordedStepsAndAnimate();
     }
 
-    // --- Inner class: StatusAnimation ---
-
-    /**
-     * A pseudo-animation that fires a status callback instantly and completes.
-     * Used to inject status messages into the sequential animation chain.
-     */
-    private static class StatusAnimation implements TreeAnimation {
-        private final String message;
-        private final Consumer<String> callback;
-        private Runnable onFinished;
-
-        StatusAnimation(String message, Consumer<String> callback) {
-            this.message = message;
-            this.callback = callback;
-        }
-
-        @Override
-        public void play() {
-            if (callback != null) {
-                callback.accept(message);
-            }
-            if (onFinished != null) {
-                // Use Platform.runLater to avoid stack overflow from deep chaining
-                javafx.application.Platform.runLater(onFinished);
-            }
-        }
-
-        @Override
-        public void pause() {}
-
-        @Override
-        public void stop() {}
-
-        @Override
-        public void setOnFinished(Runnable action) {
-            this.onFinished = action;
-        }
-    }
 }

@@ -24,6 +24,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -54,7 +56,9 @@ public class WorkspaceController {
     private Label treeTypeLabel;
 
     @FXML
-    private Label statusLabel;
+    private ListView<String> pseudoCodeListView;
+
+    private ListViewPseudoCodeDisplay pseudoCodeDisplay;
 
     @FXML
     private Button insertButton;
@@ -98,23 +102,32 @@ public class WorkspaceController {
         if (treeController.isAnimating())
             return;
 
-        int value = getValueFromTextField(valueTextField);
+        int value;
+        try {
+            value = getValueFromTextField(valueTextField);
+        } catch (Exception e) {
+            return;
+        }
+
+        if (pseudoCodeDisplay != null) {
+            pseudoCodeDisplay.clear();
+        }
+
+        int parentValue = 0;
+        if (!logicalTree.isEmpty() && (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY)) {
+            try {
+                parentValue = getValueFromTextField(parentValueTextField);
+            } catch (Exception e) {
+                return;
+            }
+        }
 
         setOperationButtonsDisabled(true);
-        if (statusLabel != null) {
-            statusLabel.setText("Inserting " + value + "...");
-        }
 
         if (logicalTree.isEmpty()) {
             logicalTree.create(value);
         } else {
             if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
-                String parentStr = parentValueTextField.getText();
-                if (parentStr == null || parentStr.trim().isEmpty()) {
-                    setOperationButtonsDisabled(false);
-                    return;
-                }
-                int parentValue = Integer.parseInt(parentStr.trim());
                 logicalTree.insert(parentValue, value);
             } else {
                 logicalTree.insert(0, value);
@@ -131,12 +144,18 @@ public class WorkspaceController {
         if (treeController.isAnimating())
             return;
 
-        int value = getValueFromTextField(valueTextField);
+        int value;
+        try {
+            value = getValueFromTextField(valueTextField);
+        } catch (Exception e) {
+            return;
+        }
+
+        if (pseudoCodeDisplay != null) {
+            pseudoCodeDisplay.clear();
+        }
 
         setOperationButtonsDisabled(true);
-        if (statusLabel != null) {
-            statusLabel.setText("Deleting " + value + "...");
-        }
 
         logicalTree.delete(value);
         treeController.playAnimations();
@@ -147,12 +166,18 @@ public class WorkspaceController {
         if (treeController.isAnimating())
             return;
 
-        int value = getValueFromTextField(valueTextField);
+        int value;
+        try {
+            value = getValueFromTextField(valueTextField);
+        } catch (Exception e) {
+            return;
+        }
+
+        if (pseudoCodeDisplay != null) {
+            pseudoCodeDisplay.clear();
+        }
 
         setOperationButtonsDisabled(true);
-        if (statusLabel != null) {
-            statusLabel.setText("Searching for " + value + "...");
-        }
 
         logicalTree.search(value);
         treeController.playAnimations();
@@ -200,13 +225,14 @@ public class WorkspaceController {
         // Pass the canvas reference so the AnimationTimer can render
         treeController.setFxCanvas(fxCanvas);
 
-        // Wire up status callback
-        if (statusLabel != null) {
-            treeController.setStatusCallback(msg -> statusLabel.setText(msg));
-        }
-
         // Wire up animation finished callback to re-enable buttons
         treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
+
+        // Wire up pseudo code UI
+        if (pseudoCodeListView != null) {
+            pseudoCodeDisplay = new ListViewPseudoCodeDisplay(pseudoCodeListView);
+            treeController.setStepHighlightCallback(pseudoCodeDisplay::addAndHighlightStep);
+        }
 
         // 3. Initialize logical tree based on the selected static state
         logicalTree = TreeFactory.create(currentTreeType);

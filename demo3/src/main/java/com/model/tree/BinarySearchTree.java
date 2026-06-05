@@ -9,7 +9,6 @@ public class BinarySearchTree extends BinaryTree {
         return new BinaryNode(value);
     }
 
-
     @Override
     public void create(int value) {
         if (!isEmpty()) {
@@ -41,10 +40,12 @@ public class BinarySearchTree extends BinaryTree {
 
         fireStep(StepType.COMPARE, current.getValue(), "So sánh " + newNode.getValue() + " với " + current.getValue());
         if (newNode.getValue() < current.getValue()) {
-            fireStep(StepType.GO_LEFT, current.getValue(), newNode.getValue() + " < " + current.getValue() + " -> Đi trái");
+            fireStep(StepType.GO_LEFT, current.getValue(),
+                    newNode.getValue() + " < " + current.getValue() + " -> Đi trái");
             current.setLeft(insertRec(current.getLeft(), newNode));
         } else if (newNode.getValue() > current.getValue()) {
-            fireStep(StepType.GO_RIGHT, current.getValue(), newNode.getValue() + " > " + current.getValue() + " -> Đi phải");
+            fireStep(StepType.GO_RIGHT, current.getValue(),
+                    newNode.getValue() + " > " + current.getValue() + " -> Đi phải");
             current.setRight(insertRec(current.getRight(), newNode));
         }
 
@@ -89,7 +90,8 @@ public class BinarySearchTree extends BinaryTree {
         }
 
         BinaryNode successor = minimum(current.getRight());
-        fireStep(StepType.REPLACE_VALUE, current.getValue(), "Thay thế " + current.getValue() + " bằng successor " + successor.getValue());
+        fireStep(StepType.REPLACE_VALUE, current.getValue(),
+                "Thay thế " + current.getValue() + " bằng successor " + successor.getValue());
         current.setValue(successor.getValue());
         current.setRight(deleteMinimum(current.getRight()));
         return current;
