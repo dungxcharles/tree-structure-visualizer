@@ -28,13 +28,6 @@ import javafx.scene.control.ListView;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 
-/**
- * A new controller for workspace.fxml to test the tree visualization
- * without modifying the existing WorkspaceController.java.
- * 
- * To use this, update your workspace.fxml to point to this controller:
- * fx:controller="com.controller.workspace.DemoWorkspaceController"
- */
 public class WorkspaceController {
 
     @FXML
@@ -61,6 +54,15 @@ public class WorkspaceController {
     private ListViewPseudoCodeDisplay pseudoCodeDisplay;
 
     @FXML
+    private Label heightLabel;
+
+    @FXML
+    private Label numNodesLabel;
+
+    @FXML
+    private Label rootValueLabel;
+
+    @FXML
     private Button insertButton;
 
     @FXML
@@ -75,12 +77,6 @@ public class WorkspaceController {
 
     // Static state to pass data between controllers without a new class
     public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
-
-    @FXML
-    void handleSelectTreeType(ActionEvent event) {
-        // Redundant since TreeSelection UI handles this, but kept to prevent FXML
-        // LoadException.
-    }
 
     private int getValueFromTextField(TextField textField) throws NullPointerException, NumberFormatException {
         if (textField == null)
@@ -249,7 +245,18 @@ public class WorkspaceController {
             treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
         }
         if (treeTypeComboBox != null) {
+            treeTypeComboBox.getItems().clear();
+            for (TreeType type : TreeType.values()) {
+                treeTypeComboBox.getItems().add(type.name().replace("_", " "));
+            }
             treeTypeComboBox.setValue(currentTreeType.name().replace("_", " "));
+            treeTypeComboBox.setOnAction(event -> {
+                String selected = treeTypeComboBox.getValue();
+                if (selected != null) {
+                    WorkspaceController.currentTreeType = TreeType.valueOf(selected.replace(" ", "_"));
+                    NavigationManager.getInstance().navigateTo("/com/view/workspace.fxml");
+                }
+            });
         }
 
         // 4. Force a layout and render when pane is resized
@@ -268,10 +275,29 @@ public class WorkspaceController {
             treeController.updateLayout(width, height);
             treeController.renderFrame(fxCanvas.getGraphicsContext2D());
         }
+        updateStatistics();
+    }
+
+    private void updateStatistics() {
+        if (logicalTree == null)
+            return;
+
+        if (heightLabel != null)
+            heightLabel.setText(String.valueOf(logicalTree.getHeight()));
+        if (numNodesLabel != null)
+            numNodesLabel.setText(String.valueOf(logicalTree.getNumberOfNodes()));
+
+        if (rootValueLabel != null) {
+            if (logicalTree.getRoot() == null) {
+                rootValueLabel.setText("None");
+            } else {
+                rootValueLabel.setText(String.valueOf(logicalTree.getRoot().getValue()));
+            }
+        }
     }
 
     @FXML
     void homeButtonClicked(MouseEvent event) {
-        NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/tree-selection-view.fxml");
     }
 }
