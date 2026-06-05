@@ -1,11 +1,9 @@
 package com.controller.workspace;
 
-import com.model.vis.VisualNode;
 import com.model.tree.AbstractTree;
+import com.model.tree.TraversalType;
 import com.model.tree.TreeFactory;
 import com.model.tree.TreeType;
-import com.model.vis.VisualEdge;
-import com.model.vis.VisualTree;
 import com.view.vis.layout.GeneralTreeLayout;
 import com.view.vis.TreeCanvas;
 import com.view.vis.animation.AnimationManager;
@@ -16,6 +14,7 @@ import com.controller.vis.TreeVisualizationController;
 import com.view.vis.layout.BinaryTreeLayout;
 import com.view.vis.layout.LayoutStrategy;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -28,6 +27,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
+import com.util.InputValidator;
 
 public class WorkspaceController {
 
@@ -88,105 +88,66 @@ public class WorkspaceController {
     // Static state to pass data between controllers without a new class
     public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
 
-    private int getValueFromTextField(TextField textField) throws NullPointerException, NumberFormatException {
-        if (textField == null)
-            throw new NullPointerException("TextField is null");
+    private void executeTreeOperation(Runnable operation) {
+        if (treeController.isAnimating())
+            return;
 
-        String valueStr = textField.getText();
-        if (valueStr == null || valueStr.trim().isEmpty())
-            throw new NumberFormatException("TextField is empty");
+        if (pseudoCodeDisplay != null) {
+            pseudoCodeDisplay.clear();
+        }
+
+        setOperationButtonsDisabled(true);
 
         try {
-            return Integer.parseInt(valueStr.trim());
-        } catch (NumberFormatException e) {
-            throw e;
+            operation.run();
+        } catch (Exception e) {
+            // Re-enable if something failed before animation starts
+            setOperationButtonsDisabled(false);
+            return;
         }
+
+        treeController.playAnimations();
     }
 
     @FXML
     void handleInsertAction(ActionEvent event) {
-        if (treeController.isAnimating())
-            return;
+        executeTreeOperation(() -> {
+            int value = InputValidator.getValidInt(valueTextField);
 
-        int value;
-        try {
-            value = getValueFromTextField(valueTextField);
-        } catch (Exception e) {
-            return;
-        }
-
-        if (pseudoCodeDisplay != null) {
-            pseudoCodeDisplay.clear();
-        }
-
-        int parentValue = 0;
-        if (!logicalTree.isEmpty() && (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY)) {
-            try {
-                parentValue = getValueFromTextField(parentValueTextField);
-            } catch (Exception e) {
-                return;
+            int parentValue = 0;
+            if (!logicalTree.isEmpty() && (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY)) {
+                parentValue = InputValidator.getValidInt(parentValueTextField);
             }
-        }
 
-        setOperationButtonsDisabled(true);
-
-        if (logicalTree.isEmpty()) {
-            logicalTree.create(value);
-        } else {
-            if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
-                logicalTree.insert(parentValue, value);
+            if (logicalTree.isEmpty()) {
+                logicalTree.create(value);
             } else {
-                logicalTree.insert(0, value);
+                if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
+                    logicalTree.insert(parentValue, value);
+                } else {
+                    logicalTree.insert(0, value);
+                }
             }
-        }
 
-        treeController.setTreeData(logicalTree);
-        redrawTree();
-        treeController.playAnimations();
+            treeController.setTreeData(logicalTree);
+            redrawTree();
+        });
     }
 
     @FXML
     void handleDeleteAction(ActionEvent event) {
-        if (treeController.isAnimating())
-            return;
-
-        int value;
-        try {
-            value = getValueFromTextField(valueTextField);
-        } catch (Exception e) {
-            return;
-        }
-
-        if (pseudoCodeDisplay != null) {
-            pseudoCodeDisplay.clear();
-        }
-
-        setOperationButtonsDisabled(true);
-
-        logicalTree.delete(value);
-        treeController.playAnimations();
+        executeTreeOperation(() -> {
+            int value = InputValidator.getValidInt(valueTextField);
+            logicalTree.delete(value);
+        });
     }
 
     @FXML
     void handleSearchAction(ActionEvent event) {
-        if (treeController.isAnimating())
-            return;
-
-        int value;
-        try {
-            value = getValueFromTextField(valueTextField);
-        } catch (Exception e) {
-            return;
-        }
-
-        if (pseudoCodeDisplay != null) {
-            pseudoCodeDisplay.clear();
-        }
-
-        setOperationButtonsDisabled(true);
-
-        logicalTree.search(value);
-        treeController.playAnimations();
+        executeTreeOperation(() -> {
+            int value = InputValidator.getValidInt(valueTextField);
+            logicalTree.search(value);
+        });
     }
 
     /**
@@ -207,6 +168,17 @@ public class WorkspaceController {
             return;
         }
 
+        setupVisualization();
+        setupControls();
+        setupLogicalTree();
+        setupComboBoxes();
+
+        // 4. Force a layout and render when pane is resized
+        visualizerPane.widthProperty().addListener((obs, oldVal, newVal) -> redrawTree());
+        visualizerPane.heightProperty().addListener((obs, oldVal, newVal) -> redrawTree());
+    }
+
+    private void setupVisualization() {
         // 1. Create the physical JavaFX Canvas and bind its size to the Pane
         fxCanvas = new Canvas();
         fxCanvas.widthProperty().bind(visualizerPane.widthProperty());
@@ -216,32 +188,20 @@ public class WorkspaceController {
         // 2. Setup the MVC Visualization components
         TreeCanvas treeCanvas = new TreeCanvas(new DefaultNodeRenderer(), new DefaultEdgeRenderer());
 
-        LayoutStrategy layoutStrategy;
-        if (currentTreeType == TreeType.GENERAL) {
-            layoutStrategy = new GeneralTreeLayout();
-        } else {
-            layoutStrategy = new BinaryTreeLayout();
-        }
+        LayoutStrategy layoutStrategy = (currentTreeType == TreeType.GENERAL) ? new GeneralTreeLayout()
+                : new BinaryTreeLayout();
 
-        treeController = new TreeVisualizationController(
-                treeCanvas,
-                new AnimationManager(),
-                layoutStrategy);
-
-        // Pass the canvas reference so the AnimationTimer can render
+        treeController = new TreeVisualizationController(treeCanvas, new AnimationManager(), layoutStrategy);
         treeController.setFxCanvas(fxCanvas);
-
-        // Wire up animation finished callback to re-enable buttons
         treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
+    }
 
+    private void setupControls() {
         // Connect animation speed slider
         if (speedSlider != null) {
-            // Set initial speed
             treeController.setAnimationSpeed(speedSlider.getValue());
-            // Listen for slider changes
-            speedSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                treeController.setAnimationSpeed(newVal.doubleValue());
-            });
+            speedSlider.valueProperty()
+                    .addListener((obs, oldVal, newVal) -> treeController.setAnimationSpeed(newVal.doubleValue()));
         }
 
         // Wire up pseudo code UI
@@ -249,35 +209,6 @@ public class WorkspaceController {
             pseudoCodeDisplay = new ListViewPseudoCodeDisplay(pseudoCodeListView);
             treeController.setStepHighlightCallback(pseudoCodeDisplay::addAndHighlightStep);
         }
-
-        // Initialize traversal combobox
-        if (traversalComboBox != null) {
-            traversalComboBox.getItems().clear();
-            for (com.model.tree.TraversalType type : com.model.tree.TraversalType.values()) {
-                traversalComboBox.getItems().add(type.name().replace("_", " "));
-            }
-            traversalComboBox.setOnAction(event -> {
-                if (treeController.isAnimating())
-                    return;
-                String selected = traversalComboBox.getValue();
-                if (selected != null) {
-                    com.model.tree.TraversalType type = com.model.tree.TraversalType
-                            .valueOf(selected.replace(" ", "_"));
-                    if (pseudoCodeDisplay != null) {
-                        pseudoCodeDisplay.clear();
-                    }
-                    setOperationButtonsDisabled(true);
-                    logicalTree.traverse(type);
-                    treeController.playAnimations();
-                    javafx.application.Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
-                }
-            });
-        }
-
-        // 3. Initialize logical tree based on the selected static state
-        logicalTree = TreeFactory.create(currentTreeType);
-        logicalTree.setListener(treeController);
-        treeController.setTreeData(logicalTree);
 
         // Setup UI dynamically based on the selected tree type
         boolean needsParent = (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY);
@@ -288,6 +219,40 @@ public class WorkspaceController {
         if (treeTypeLabel != null) {
             treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
         }
+    }
+
+    private void setupLogicalTree() {
+        // 3. Initialize logical tree based on the selected static state
+        logicalTree = TreeFactory.create(currentTreeType);
+        logicalTree.setListener(treeController);
+        treeController.setTreeData(logicalTree);
+    }
+
+    private void setupComboBoxes() {
+        // Initialize traversal combobox
+        if (traversalComboBox != null) {
+            traversalComboBox.getItems().clear();
+            for (TraversalType type : TraversalType.values()) {
+                traversalComboBox.getItems().add(type.name().replace("_", " "));
+            }
+            traversalComboBox.setOnAction(event -> {
+                if (treeController.isAnimating())
+                    return;
+                String selected = traversalComboBox.getValue();
+                if (selected != null) {
+                    TraversalType type = TraversalType
+                            .valueOf(selected.replace(" ", "_"));
+                    if (pseudoCodeDisplay != null) {
+                        pseudoCodeDisplay.clear();
+                    }
+                    setOperationButtonsDisabled(true);
+                    logicalTree.traverse(type);
+                    treeController.playAnimations();
+                    Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
+                }
+            });
+        }
+
         if (treeTypeComboBox != null) {
             treeTypeComboBox.getItems().clear();
             for (TreeType type : TreeType.values()) {
@@ -302,10 +267,6 @@ public class WorkspaceController {
                 }
             });
         }
-
-        // 4. Force a layout and render when pane is resized
-        visualizerPane.widthProperty().addListener((obs, oldVal, newVal) -> redrawTree());
-        visualizerPane.heightProperty().addListener((obs, oldVal, newVal) -> redrawTree());
     }
 
     /**
