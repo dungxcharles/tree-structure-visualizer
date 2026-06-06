@@ -23,9 +23,6 @@ public class AVLTree extends BinarySearchTree {
 
     @Override
     public boolean insert(int value) {
-        if (search(value)) {
-            return false;
-        }
 
         nodeInserted = false;
         this.root = insertRec(getRoot(), value);
@@ -40,7 +37,10 @@ public class AVLTree extends BinarySearchTree {
         }
 
         fireStep(StepType.COMPARE, node.getValue(), "So sánh " + value + " với " + node.getValue());
-        if (value < node.getValue()) {
+        if (value == node.getValue()) {
+            fireStep(StepType.FOUND, node.getValue(), "Node " + node.getValue() + " đã tồn tại!");
+            return node;
+        } else if (value < node.getValue()) {
             fireStep(StepType.GO_LEFT, node.getValue(), value + " < " + node.getValue() + " -> Đi trái");
             node.setLeft(insertRec(node.getLeft(), value));
         } else if (value > node.getValue()) {
@@ -94,10 +94,26 @@ public class AVLTree extends BinarySearchTree {
 
     @Override
     public boolean update(int currentValue, int newValue) {
+        com.model.step.TreeOperationListener temp = this.listener;
+        this.listener = null;
+        boolean existsCurrent = search(currentValue);
+        boolean existsNew = search(newValue);
+        this.listener = temp;
+
         if (currentValue == newValue) {
-            return search(currentValue);
+            if (existsCurrent) {
+                fireStep(StepType.FOUND, currentValue, "Node " + currentValue + " không cần đổi");
+                return true;
+            }
+            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue);
+            return false;
         }
-        if (!search(currentValue) || search(newValue)) {
+        if (!existsCurrent) {
+            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue + " để cập nhật");
+            return false;
+        }
+        if (existsNew) {
+            fireStep(StepType.FOUND, newValue, "Giá trị mới " + newValue + " đã tồn tại trong cây");
             return false;
         }
 

@@ -208,14 +208,18 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
             return;
         }
 
-        fireStep(StepType.GO_LEFT, node.getValue(), "In-order: Đi sang nhánh trái của " + node.getValue());
+        if (node.getLeft() != null) {
+            fireStep(StepType.GO_LEFT, node.getValue(), "In-order: Đi sang nhánh trái của " + node.getValue());
+        }
         inOrderRec(node.getLeft(), result);
 
         fireStep(StepType.VISIT, node.getValue(), "In-order: Thăm node " + node.getValue());
         fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
 
-        fireStep(StepType.GO_RIGHT, node.getValue(), "In-order: Đi sang nhánh phải của " + node.getValue());
+        if (node.getRight() != null) {
+            fireStep(StepType.GO_RIGHT, node.getValue(), "In-order: Đi sang nhánh phải của " + node.getValue());
+        }
         inOrderRec(node.getRight(), result);
     }
 
@@ -228,10 +232,14 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
 
-        fireStep(StepType.GO_LEFT, node.getValue(), "Pre-order: Đi sang nhánh trái của " + node.getValue());
+        if (node.getLeft() != null) {
+            fireStep(StepType.GO_LEFT, node.getValue(), "Pre-order: Đi sang nhánh trái của " + node.getValue());
+        }
         preOrderRec(node.getLeft(), result);
 
-        fireStep(StepType.GO_RIGHT, node.getValue(), "Pre-order: Đi sang nhánh phải của " + node.getValue());
+        if (node.getRight() != null) {
+            fireStep(StepType.GO_RIGHT, node.getValue(), "Pre-order: Đi sang nhánh phải của " + node.getValue());
+        }
         preOrderRec(node.getRight(), result);
     }
 
@@ -240,10 +248,14 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
             return;
         }
 
-        fireStep(StepType.GO_LEFT, node.getValue(), "Post-order: Đi sang nhánh trái của " + node.getValue());
+        if (node.getLeft() != null) {
+            fireStep(StepType.GO_LEFT, node.getValue(), "Post-order: Đi sang nhánh trái của " + node.getValue());
+        }
         postOrderRec(node.getLeft(), result);
 
-        fireStep(StepType.GO_RIGHT, node.getValue(), "Post-order: Đi sang nhánh phải của " + node.getValue());
+        if (node.getRight() != null) {
+            fireStep(StepType.GO_RIGHT, node.getValue(), "Post-order: Đi sang nhánh phải của " + node.getValue());
+        }
         postOrderRec(node.getRight(), result);
 
         fireStep(StepType.VISIT, node.getValue(), "Post-order: Thăm node " + node.getValue());

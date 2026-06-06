@@ -35,20 +35,27 @@ public class RedBlackTree extends BinarySearchTree {
 
     @Override
     public boolean insert(int value) {
-        if (search(value)) {
+        com.model.step.TreeOperationListener temp = this.listener;
+        this.listener = null;
+        boolean exists = search(value);
+        this.listener = temp;
+
+        if (exists) {
+            fireStep(StepType.FOUND, value, "Node " + value + " đã tồn tại!");
             return false;
+        }
+
+        if (this.root == null) {
+            RBNode newNode = createNode(value);
+            newNode.setColor(Color.BLACK);
+            fireStep(StepType.INSERT_NODE, value, "Tạo gốc (root) màu ĐEN với giá trị " + value);
+            this.root = newNode;
+            return true;
         }
 
         RBNode newNode = createNode(value);
         newNode.setColor(Color.RED);
         fireStep(StepType.INSERT_NODE, value, "Tạo node mới màu ĐỎ: " + value);
-
-        if (this.root == null) {
-            newNode.setColor(Color.BLACK);
-            fireStep(StepType.RECOLOR, value, "Đổi màu gốc thành ĐEN");
-            this.root = newNode;
-            return true;
-        }
 
         insertBST((RBNode) getRoot(), newNode);
         fireStep(StepType.FIX_START, value, "Bắt đầu quá trình Fix-up sau khi chèn");
@@ -204,10 +211,26 @@ public class RedBlackTree extends BinarySearchTree {
 
     @Override
     public boolean update(int currentValue, int newValue) {
+        com.model.step.TreeOperationListener temp = this.listener;
+        this.listener = null;
+        boolean existsCurrent = search(currentValue);
+        boolean existsNew = search(newValue);
+        this.listener = temp;
+
         if (currentValue == newValue) {
-            return search(currentValue);
+            if (existsCurrent) {
+                fireStep(StepType.FOUND, currentValue, "Node " + currentValue + " không cần đổi");
+                return true;
+            }
+            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue);
+            return false;
         }
-        if (!search(currentValue) || search(newValue)) {
+        if (!existsCurrent) {
+            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue + " để cập nhật");
+            return false;
+        }
+        if (existsNew) {
+            fireStep(StepType.FOUND, newValue, "Giá trị mới " + newValue + " đã tồn tại trong cây");
             return false;
         }
 
