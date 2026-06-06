@@ -128,9 +128,6 @@ public class WorkspaceController {
                     logicalTree.insert(0, value);
                 }
             }
-
-            treeController.setTreeData(logicalTree);
-            redrawTree();
         });
     }
 
@@ -140,6 +137,20 @@ public class WorkspaceController {
             int value = InputValidator.getValidInt(valueTextField);
             logicalTree.delete(value);
         });
+    }
+
+    @FXML
+    private Button pauseResumeButton;
+
+    @FXML
+    void handlePauseResumeAction(ActionEvent event) {
+        if (treeController.isAnimationPaused()) {
+            treeController.resumeAnimation();
+            pauseResumeButton.setText("Pause");
+        } else {
+            treeController.pauseAnimation();
+            pauseResumeButton.setText("Play");
+        }
     }
 
     @FXML
