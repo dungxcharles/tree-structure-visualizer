@@ -12,7 +12,7 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
     @Override
     public void create(int value) {
         if (!isEmpty()) {
-            return; // hoặc throw new IllegalStateException("Tree already has a root.");
+            return; // or throw new IllegalStateException("Tree already has a root.");
         }
         this.root = new BinaryNode(value);
     }
@@ -20,10 +20,10 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
     @Override
     public boolean insert(int parentValue, int value) {
         if (isEmpty()) {
-            return false; // hoặc throw new IllegalStateException("Tree is empty. Create one first.");
+            return false; // or throw new IllegalStateException("Tree is empty. Create one first.");
         }
         if (search(value)) {
-            return false; // hoặc throw new IllegalStateException("Value already exists in the tree.");
+            return false; // or throw new IllegalStateException("Value already exists in the tree.");
         }
 
         BinaryNode parentNode = findNode(this.root, parentValue);

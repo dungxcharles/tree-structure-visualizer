@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.treeselection.TreeSelectionController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -54,7 +54,7 @@
                                  <children>
                                     <TilePane alignment="CENTER" focusTraversable="true" prefHeight="180.0" prefWidth="180.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
-                                          <VBox alignment="CENTER" prefHeight="150.0" prefWidth="180.0">
+                                          <VBox id="generalTree" alignment="CENTER" onMouseClicked="#treeSelected" prefHeight="150.0" prefWidth="180.0">
                                              <children>
                                                 <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -72,7 +72,7 @@
                                     </TilePane>
                                     <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
-                                          <VBox alignment="CENTER" prefHeight="150.0" prefWidth="180.0">
+                                          <VBox id="binaryTree" alignment="CENTER" onMouseClicked="#treeSelected" prefHeight="150.0" prefWidth="180.0">
                                              <children>
                                                 <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -90,7 +90,7 @@
                                     </TilePane>
                                     <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
-                                          <VBox alignment="CENTER" prefHeight="150.0" prefWidth="180.0">
+                                          <VBox id="rbTree" alignment="CENTER" onMouseClicked="#treeSelected" prefHeight="150.0" prefWidth="180.0">
                                              <children>
                                                 <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -112,7 +112,7 @@
                                  <children>
                                     <TilePane alignment="CENTER" focusTraversable="true" prefHeight="180.0" prefWidth="180.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
-                                          <VBox alignment="CENTER" prefHeight="150.0" prefWidth="180.0">
+                                          <VBox id="AVL" alignment="CENTER" onMouseClicked="#treeSelected" prefHeight="150.0" prefWidth="180.0">
                                              <children>
                                                 <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -130,7 +130,7 @@
                                     </TilePane>
                                     <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5); -fx-background-color: WHITE;">
                                        <children>
-                                          <VBox alignment="CENTER" prefHeight="150.0" prefWidth="180.0">
+                                          <VBox id="BST" alignment="CENTER" onMouseClicked="#treeSelected" prefHeight="150.0" prefWidth="180.0">
                                              <children>
                                                 <ImageView fitHeight="80.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
