@@ -201,7 +201,7 @@ public class BinarySearchTree extends BinaryTree {
             fireStep(StepType.GO_LEFT, current.getValue(), "Đi trái");
             return findNode(current.getLeft(), value);
         }
-        
+
         if (current.getRight() == null) {
             fireStep(StepType.NOT_FOUND, current.getValue(), "Không tìm thấy " + value + " (nhánh phải rỗng)");
             return null;
