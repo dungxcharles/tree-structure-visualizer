@@ -1,5 +1,6 @@
-package com.view;
+package com.controller.credits;
 
+import com.controller.NavigationManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -51,14 +52,14 @@ public class CreditWindow {
      */
     private void setupPages() {
         // Page 1: Acknowledgements (Text)
-        pages.add(createTextPage(16, "Acknowledgements",
+        pages.add(createTextPage(18, "Acknowledgements",
             "This Tree Visualization application was developed as a final project for the OOP course. " +
             "Our goal is to provide an intuitive and interactive way to understand various tree data structures, " +
             "including Binary Trees, AVL Trees, Red-Black Trees and so on. We hope this tool helps students and " +
             "enthusiasts alike to grasp the complexities of tree algorithms through visualization."));
 
         // Page 2: Credits (Text)
-        pages.add(createTextPage(16, "About us",
+        pages.add(createTextPage(18, "About us",
             "Developed by Group-14 as the Capstone Project of Object-Oriented Programming class, All members are majoring in Global ICT, School of Information and Communication technology - Hanoi University of Science and Technology\n\n" +
             "Our team members:\n" +
             "• Nguyen Tien Dung - StudentID: 202417116\n" +
@@ -66,10 +67,10 @@ public class CreditWindow {
             "• Tran Quang Thang - StudentID: 202417196\n" +
             "• Vu Khanh Toan - StudentID: 202417204\n" +
             "• Nguyen Xuan Thuy - StudentID: 202417202\n\n" +
-            "To make this project successfully, specially thanks to our teacher Ph.D. Nguyen Thi Thu Trang and our teaching assistants Nguyen Huu Hoang Hai Anh and Dang Van Nhan for their guidance throughout the semester. ありがとう　ツ"));
+            "To make this project successfully, specially thanks to our teacher Ph.D. Nguyen Thi Thu Trang and our teaching assistants Nguyen Huu Hoang Hai Anh and Dang Van Nhan for their guidance throughout the semester. ありがとう"));
 
         // Page 3: How to use? (Text)
-        pages.add(createTextPage(16, "How to use?",
+        pages.add(createTextPage(18, "How to use?",
             "Navigating the application is simple:\n\n" +
             "1. Select a tree type from the main menu.\n" +
             "2. Use the 'Insert' button to add nodes to the tree.\n" +
@@ -185,6 +186,6 @@ public class CreditWindow {
 
     @FXML
     private void handleBack() {
-        System.out.println("Returning to main menu...");
+        NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
     }
 }

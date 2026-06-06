@@ -1,10 +1,12 @@
 package com.model.tree;
 
 import com.model.node.BinaryNode;
+import com.model.step.StepType;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 public class BinaryTree extends AbstractTree<BinaryNode> {
@@ -12,72 +14,114 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
     @Override
     public void create(int value) {
         if (!isEmpty()) {
-            return; // or throw new IllegalStateException("Tree already has a root.");
+            return;
         }
+        fireStep(StepType.INSERT_NODE, value, "Tạo gốc (root) với giá trị " + value);
         this.root = new BinaryNode(value);
     }
 
     @Override
     public boolean insert(int parentValue, int value) {
-        if (isEmpty()) {
-            return false; // or throw new IllegalStateException("Tree is empty. Create one first.");
-        }
-        if (search(value)) {
-            return false; // or throw new IllegalStateException("Value already exists in the tree.");
+        if (this.isEmpty()) {
+            fireStep(StepType.NOT_FOUND, parentValue, "Cây rỗng");
+            return false;
         }
 
         BinaryNode parentNode = findNode(this.root, parentValue);
 
         if (parentNode == null) {
-            return false; // Không tìm thấy node cha
+            fireStep(StepType.NOT_FOUND, parentValue, "Không tìm thấy parent " + parentValue);
+            return false;
         }
 
-        // Chèn vào vị trí trống của parent (ưu tiên Trái, sau đó Phải)
-        if (parentNode.getLeft() == null) {
-            parentNode.setLeft(new BinaryNode(value));
-        } else if (parentNode.getRight() == null) {
-            parentNode.setRight(new BinaryNode(value));
-        } else {
-            // Node cha đã đủ 2 con
-            return false; // hoặc throw new IllegalStateException("Parent node already has 2 children.");
+        if (findNode(this.root, value) != null) {
+            fireStep(StepType.COMPARE, value, "Giá trị " + value + " đã tồn tại");
+            return false;
         }
-        return true;
+
+        if (parentNode.getLeft() == null) {
+            fireStep(StepType.INSERT_NODE, value, "Thêm " + value + " làm con trái của " + parentValue);
+            parentNode.setLeft(new BinaryNode(value));
+            return true;
+        }
+
+        if (parentNode.getRight() == null) {
+            fireStep(StepType.INSERT_NODE, value, "Thêm " + value + " làm con phải của " + parentValue);
+            parentNode.setRight(new BinaryNode(value));
+            return true;
+        }
+
+        fireStep(StepType.NOT_FOUND, parentValue, "Node " + parentValue + " đã đủ 2 con");
+        return false;
     }
 
     @Override
     public boolean delete(int value) {
-        if (this.root == null) {
+        if (isEmpty()) {
             return false;
         }
 
-        // Nếu root chính là node cần xóa, cắt bỏ toàn bộ cây
+        fireStep(StepType.COMPARE, this.root.getValue(), "So sánh root với " + value);
         if (this.root.getValue() == value) {
+            fireStep(StepType.DELETE_NODE, value, "Xóa gốc (root) " + value);
             this.root = null;
             return true;
         }
 
-        return deleteSubtree(this.root, value);
+        return deleteNode(this.root, value);
     }
 
-    private boolean deleteSubtree(BinaryNode current, int value) {
+    private boolean deleteNode(BinaryNode current, int value) {
         if (current == null) {
             return false;
         }
 
-        // Kiểm tra con trái
-        if (current.getLeft() != null && current.getLeft().getValue() == value) {
-            current.setLeft(null); // Cắt đứt toàn bộ nhánh trái
+        if (current.getLeft() != null) {
+            fireStep(StepType.COMPARE, current.getLeft().getValue(), "So sánh con trái với " + value);
+            if (current.getLeft().getValue() == value) {
+                fireStep(StepType.DELETE_NODE, value, "Xóa con trái " + value + " của " + current.getValue());
+                current.setLeft(null);
+                return true;
+            }
+        }
+
+        if (current.getRight() != null) {
+            fireStep(StepType.COMPARE, current.getRight().getValue(), "So sánh con phải với " + value);
+            if (current.getRight().getValue() == value) {
+                fireStep(StepType.DELETE_NODE, value, "Xóa con phải " + value + " của " + current.getValue());
+                current.setRight(null);
+                return true;
+            }
+        }
+
+        fireStep(StepType.GO_LEFT, current.getValue(), "Duyệt nhánh trái của " + current.getValue() + " để xóa");
+        if (deleteNode(current.getLeft(), value)) {
             return true;
         }
 
-        // Kiểm tra con phải
-        if (current.getRight() != null && current.getRight().getValue() == value) {
-            current.setRight(null); // Cắt đứt toàn bộ nhánh phải
-            return true;
+        fireStep(StepType.GO_RIGHT, current.getValue(), "Duyệt nhánh phải của " + current.getValue() + " để xóa");
+        return deleteNode(current.getRight(), value);
+    }
+
+    @Override
+    public boolean update(int currentValue, int newValue) {
+        if (isEmpty()) {
+            return false;
+        }
+        if (currentValue != newValue && findNode(this.root, newValue) != null) {
+            fireStep(StepType.COMPARE, newValue, "Giá trị thay thế " + newValue + " đã tồn tại");
+            return false;
         }
 
-        // Tiếp tục đệ quy tìm kiếm và xóa ở các nhánh con
-        return deleteSubtree(current.getLeft(), value) || deleteSubtree(current.getRight(), value);
+        BinaryNode node = findNode(this.root, currentValue);
+        if (node == null) {
+            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue + " để cập nhật");
+            return false;
+        }
+
+        fireStep(StepType.REPLACE_VALUE, currentValue, "Cập nhật giá trị " + currentValue + " thành " + newValue);
+        node.setValue(newValue);
+        return true;
     }
 
     @Override
@@ -85,17 +129,25 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         return findNode(this.root, value) != null;
     }
 
-    private BinaryNode findNode(BinaryNode root, int value) {
-        if (root == null || root.getValue() == value) {
-            return root;
+    protected BinaryNode findNode(BinaryNode current, int value) {
+        if (current == null) {
+            return null;
         }
 
-        BinaryNode leftResult = findNode(root.getLeft(), value);
+        fireStep(StepType.COMPARE, current.getValue(), "So sánh với " + current.getValue());
+        if (current.getValue() == value) {
+            fireStep(StepType.FOUND, current.getValue(), "Tìm thấy " + current.getValue());
+            return current;
+        }
+
+        fireStep(StepType.GO_LEFT, current.getValue(), "Tìm nhánh trái của " + current.getValue());
+        BinaryNode leftResult = findNode(current.getLeft(), value);
         if (leftResult != null) {
             return leftResult;
         }
 
-        return findNode(root.getRight(), value);
+        fireStep(StepType.GO_RIGHT, current.getValue(), "Tìm nhánh phải của " + current.getValue());
+        return findNode(current.getRight(), value);
     }
 
     @Override
@@ -103,9 +155,10 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         return getHeightRec(this.root);
     }
 
-    private int getHeightRec(BinaryNode node) {
-        if (node == null)
+    protected int getHeightRec(BinaryNode node) {
+        if (node == null) {
             return 0;
+        }
         return 1 + Math.max(getHeightRec(node.getLeft()), getHeightRec(node.getRight()));
     }
 
@@ -114,17 +167,23 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         return countNodes(this.root);
     }
 
-    private int countNodes(BinaryNode node) {
-        if (node == null)
+    protected int countNodes(BinaryNode node) {
+        if (node == null) {
             return 0;
+        }
         return 1 + countNodes(node.getLeft()) + countNodes(node.getRight());
     }
 
     @Override
     public List<Integer> traverse(TraversalType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Traversal type cannot be null.");
+        }
+
         List<Integer> result = new ArrayList<>();
-        if (isEmpty())
+        if (isEmpty()) {
             return result;
+        }
 
         switch (type) {
             case IN_ORDER:
@@ -140,50 +199,80 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
                 bfsTraverse(this.root, result);
                 break;
         }
+
         return result;
     }
 
-    // in , pre , post order
-    private void inOrderRec(BinaryNode root, List<Integer> result) {
-        if (root == null)
+    protected void inOrderRec(BinaryNode node, List<Integer> result) {
+        if (node == null) {
             return;
-        inOrderRec(root.getLeft(), result);
-        result.add(root.getValue());
-        inOrderRec(root.getRight(), result);
+        }
+
+        fireStep(StepType.GO_LEFT, node.getValue(), "In-order: Đi sang nhánh trái của " + node.getValue());
+        inOrderRec(node.getLeft(), result);
+
+        fireStep(StepType.VISIT, node.getValue(), "In-order: Thăm node " + node.getValue());
+        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
+        result.add(node.getValue());
+
+        fireStep(StepType.GO_RIGHT, node.getValue(), "In-order: Đi sang nhánh phải của " + node.getValue());
+        inOrderRec(node.getRight(), result);
     }
 
-    private void preOrderRec(BinaryNode root, List<Integer> result) {
-        if (root == null)
+    protected void preOrderRec(BinaryNode node, List<Integer> result) {
+        if (node == null) {
             return;
-        result.add(root.getValue());
-        preOrderRec(root.getLeft(), result);
-        preOrderRec(root.getRight(), result);
+        }
 
+        fireStep(StepType.VISIT, node.getValue(), "Pre-order: Thăm node " + node.getValue());
+        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
+        result.add(node.getValue());
+
+        fireStep(StepType.GO_LEFT, node.getValue(), "Pre-order: Đi sang nhánh trái của " + node.getValue());
+        preOrderRec(node.getLeft(), result);
+
+        fireStep(StepType.GO_RIGHT, node.getValue(), "Pre-order: Đi sang nhánh phải của " + node.getValue());
+        preOrderRec(node.getRight(), result);
     }
 
-    private void postOrderRec(BinaryNode root, List<Integer> result) {
-        if (root == null)
+    protected void postOrderRec(BinaryNode node, List<Integer> result) {
+        if (node == null) {
             return;
-        postOrderRec(root.getLeft(), result);
-        postOrderRec(root.getRight(), result);
-        result.add(root.getValue());
+        }
+
+        fireStep(StepType.GO_LEFT, node.getValue(), "Post-order: Đi sang nhánh trái của " + node.getValue());
+        postOrderRec(node.getLeft(), result);
+
+        fireStep(StepType.GO_RIGHT, node.getValue(), "Post-order: Đi sang nhánh phải của " + node.getValue());
+        postOrderRec(node.getRight(), result);
+
+        fireStep(StepType.VISIT, node.getValue(), "Post-order: Thăm node " + node.getValue());
+        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
+        result.add(node.getValue());
     }
 
-    // levelOrder
-    private void bfsTraverse(BinaryNode root, List<Integer> result) {
-        if (root == null)
-            return;
-        Queue<BinaryNode> queue = new LinkedList<>();
+    protected void bfsTraverse(BinaryNode root, List<Integer> result) {
+        Queue<BinaryNode> queue = new ArrayDeque<>();
         queue.add(root);
 
         while (!queue.isEmpty()) {
             BinaryNode current = queue.poll();
+            fireStep(StepType.VISIT, current.getValue(), "BFS: Lấy node " + current.getValue() + " từ Queue và thăm");
+            fireStep(StepType.ADD_TO_RESULT, current.getValue(),
+                    "Thêm " + current.getValue() + " vào danh sách kết quả");
             result.add(current.getValue());
 
-            if (current.getLeft() != null)
+            if (current.getLeft() != null) {
+                fireStep(StepType.GO_LEFT, current.getValue(),
+                        "Đưa con trái " + current.getLeft().getValue() + " vào Queue");
                 queue.add(current.getLeft());
-            if (current.getRight() != null)
+            }
+            if (current.getRight() != null) {
+                fireStep(StepType.GO_RIGHT, current.getValue(),
+                        "Đưa con phải " + current.getRight().getValue() + " vào Queue");
                 queue.add(current.getRight());
+            }
         }
     }
+
 }

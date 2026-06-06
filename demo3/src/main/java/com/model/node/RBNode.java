@@ -28,6 +28,30 @@ public class RBNode extends BinaryNode {
         return (RBNode) super.getRight();
     }
 
+    @Override
+    public void setLeft(BinaryNode left) {
+        if (left != null && !(left instanceof RBNode)) {
+            throw new IllegalArgumentException("RBNode can only use RBNode children.");
+        }
+        super.setLeft(left);
+    }
+
+    @Override
+    public void setRight(BinaryNode right) {
+        if (right != null && !(right instanceof RBNode)) {
+            throw new IllegalArgumentException("RBNode can only use RBNode children.");
+        }
+        super.setRight(right);
+    }
+
+    public void setLeft(RBNode left) {
+        super.setLeft(left);
+    }
+
+    public void setRight(RBNode right) {
+        super.setRight(right);
+    }
+
     public RBNode getParent() {
         return this.parent;
     }

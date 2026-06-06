@@ -2,21 +2,20 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.CreditWindow">
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.credits.CreditWindow">
     
     <!-- Top Bar: Back Button -->
     <top>
         <AnchorPane prefHeight="50.0">
-            <Button fx:id="btnBack" layoutX="15.0" layoutY="10.0" onAction="#handleBack" 
-                    style="-fx-background-color: transparent; -fx-cursor: hand;" text="← Back">
+            <Button fx:id="btnBack" layoutX="15.0" layoutY="10.0" onAction="#handleBack" style="-fx-background-color: transparent; -fx-cursor: hand;" text="⬅Back">
                 <font>
-                    <Font name="System Bold" size="14.0" />
+                    <Font size="18.0" />
                 </font>
             </Button>
         </AnchorPane>
@@ -25,10 +24,9 @@
     <!-- Left Navigation Button -->
     <left>
         <StackPane alignment="CENTER" prefWidth="60.0">
-            <Button fx:id="btnLeft" onAction="#handleLeft" prefHeight="100.0" prefWidth="40.0" 
-                    style="-fx-background-color: transparent; -fx-cursor: hand;" text="❮">
+            <Button fx:id="btnLeft" onAction="#handleLeft" prefHeight="100.0" prefWidth="40.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="❮">
                 <font>
-                    <Font size="36.0" />
+                    <Font size="40.0" />
                 </font>
             </Button>
         </StackPane>
@@ -49,10 +47,9 @@
     <!-- Right Navigation Button -->
     <right>
         <StackPane alignment="CENTER" prefWidth="60.0">
-            <Button fx:id="btnRight" onAction="#handleRight" prefHeight="100.0" prefWidth="40.0" 
-                    style="-fx-background-color: transparent; -fx-cursor: hand;" text="❯">
+            <Button fx:id="btnRight" onAction="#handleRight" prefHeight="100.0" prefWidth="40.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="❯">
                 <font>
-                    <Font size="36.0" />
+                    <Font size="40.0" />
                 </font>
             </Button>
         </StackPane>

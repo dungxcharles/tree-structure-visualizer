@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Feat: Opening the tree selection view.&#10;Refractor: Removed redundant packages">
-      <change afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/help/HelpController.java" afterDir="false" />
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Feat: Granting access to workspace from main menu.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/pseudo/AlgorithmStep.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AVLTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AbstractTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AbstractTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,63 +32,70 @@
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="a909cc71-9f0e-422f-ac22-7ac309d8446d" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="4.527141640943771E-89" />
-      <entry key="S5" value="4.595524902992414E-36" />
-      <entry key="S10" value="2.1544734498585697E-18" />
-      <entry key="S30" value="1.6398781600768106E-6" />
-      <entry key="S60" value="0.0019727251745288474" />
-      <entry key="M2" value="0.07461678110639022" />
-      <entry key="M5" value="0.680174119624356" />
-      <entry key="M10" value="1.5432979401777225" />
-      <entry key="M15" value="2.7531650605016194" />
-      <entry key="M30" value="10.826263760179815" />
-      <entry key="H1" value="30.064517583513698" />
-      <entry key="H2" value="52.99518192747259" />
-      <entry key="H4" value="71.1098198662713" />
-      <entry key="D1" value="91.27982692027761" />
-      <entry key="W1" value="95.31013198389724" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.000000035865681" />
+      <entry key="S10" value="1.0002210530347897" />
+      <entry key="S30" value="1.1516729279221687" />
+      <entry key="S60" value="2.229584559958056" />
+      <entry key="M2" value="5.36078662027409" />
+      <entry key="M5" value="12.721457507950847" />
+      <entry key="M10" value="21.820764411560805" />
+      <entry key="M15" value="29.029195292987318" />
+      <entry key="M30" value="42.282777798870484" />
+      <entry key="H1" value="53.18633273442588" />
+      <entry key="H2" value="60.33785396377468" />
+      <entry key="H4" value="64.45831807268519" />
+      <entry key="D1" value="68.2117183873461" />
+      <entry key="W1" value="68.88659203076331" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0000000000005485" />
-      <entry key="S2" value="1.0009765694343267" />
-      <entry key="S5" value="1.0860758133286614" />
-      <entry key="S10" value="1.4070321092255522" />
-      <entry key="S30" value="2.1712372377806615" />
-      <entry key="S60" value="2.530834864150319" />
-      <entry key="M2" value="2.783101429959903" />
-      <entry key="M5" value="3.154908833804559" />
-      <entry key="M10" value="3.508640586637781" />
-      <entry key="M15" value="4.062027731272421" />
-      <entry key="M30" value="8.213808165125485" />
-      <entry key="H1" value="18.140662646955178" />
-      <entry key="H2" value="29.74242192032718" />
-      <entry key="H4" value="38.76483828279654" />
-      <entry key="D1" value="48.69248743369694" />
-      <entry key="W1" value="50.66309766015388" />
+      <entry key="MS100" value="3.301836488433967E-38" />
+      <entry key="MS500" value="3.3793682508795866E-8" />
+      <entry key="S2" value="0.020488170260536058" />
+      <entry key="S5" value="0.3609544239786841" />
+      <entry key="S10" value="1.0111869591180251" />
+      <entry key="S30" value="2.5676405318960027" />
+      <entry key="S60" value="4.943338439098431" />
+      <entry key="M2" value="9.189708467733421" />
+      <entry key="M5" value="16.77301831116867" />
+      <entry key="M10" value="23.63742254246149" />
+      <entry key="M15" value="27.84179909408203" />
+      <entry key="M30" value="34.28174282226377" />
+      <entry key="H1" value="38.906503130095935" />
+      <entry key="H2" value="41.73475486195251" />
+      <entry key="H4" value="43.30752224158019" />
+      <entry key="D1" value="44.70911453571446" />
+      <entry key="W1" value="44.958222496160644" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="2.779962136837789E-13" />
-      <entry key="MS500" value="0.0030818235971110932" />
-      <entry key="S2" value="0.2360828433243799" />
-      <entry key="S5" value="0.6242673248693613" />
-      <entry key="S10" value="1.0971310418834168" />
-      <entry key="S30" value="2.0191730420105847" />
-      <entry key="S60" value="2.4457123950123396" />
-      <entry key="M2" value="2.8094273156757814" />
-      <entry key="M5" value="3.810694716446097" />
-      <entry key="M10" value="5.036961914410636" />
-      <entry key="M15" value="6.803443915370738" />
-      <entry key="M30" value="19.029418898885364" />
-      <entry key="H1" value="48.19433987746464" />
-      <entry key="H2" value="82.72892252231038" />
-      <entry key="H4" value="109.86903509642384" />
-      <entry key="D1" value="139.97113999288706" />
-      <entry key="W1" value="145.97305512054666" />
+      <entry key="MS100" value="0.9138314502294005" />
+      <entry key="MS500" value="0.9821396049614634" />
+      <entry key="S2" value="1.0081226793523148" />
+      <entry key="S5" value="1.2873291069764572" />
+      <entry key="S10" value="1.9028478318243358" />
+      <entry key="S30" value="3.6265733070481647" />
+      <entry key="S60" value="7.079720065454427" />
+      <entry key="M2" value="14.45505029762446" />
+      <entry key="M5" value="29.416180756994574" />
+      <entry key="M10" value="45.397309316960786" />
+      <entry key="M15" value="56.820388352095655" />
+      <entry key="M30" value="76.53091199499016" />
+      <entry key="H1" value="92.07287073642269" />
+      <entry key="H2" value="102.06163044494843" />
+      <entry key="H4" value="107.76007000193165" />
+      <entry key="D1" value="112.91982905485577" />
+      <entry key="W1" value="113.84467004163518" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -109,14 +119,14 @@
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feature/controller",
+    "git-widget-placeholder": "fix/pseudo-code",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/PC/IdeaProjects/OOP.20252-14",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -167,15 +177,7 @@
       <option name="project" value="LOCAL" />
       <updated>1779328485268</updated>
     </task>
-    <task id="LOCAL-00003" summary="Feat: Opening the tree selection view.&#10;Refractor: Removed redundant packages">
-      <option name="closed" value="true" />
-      <created>1779503843569</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1779503843569</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,7 +197,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Reorganize the files" />
     <MESSAGE value="Feat: Granting access to workspace from main menu." />
-    <MESSAGE value="Feat: Opening the tree selection view.&#10;Refractor: Removed redundant packages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: Opening the tree selection view.&#10;Refractor: Removed redundant packages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: Granting access to workspace from main menu." />
   </component>
 </project>

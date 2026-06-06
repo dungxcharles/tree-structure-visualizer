@@ -2,14 +2,19 @@ package com.model.tree;
 
 import com.model.node.RBNode;
 import com.model.node.RBNode.Color;
+import com.model.step.StepType;
 
-import java.util.List;
+public class RedBlackTree extends BinarySearchTree {
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Queue;
+    @Override
+    protected RBNode createNode(int value) {
+        return new RBNode(value);
+    }
 
-public class RedBlackTree extends AbstractTree<RBNode> {
+    @Override
+    public RBNode getRoot() {
+        return (RBNode) this.root;
+    }
 
     @Override
     public void create(int value) {
@@ -17,47 +22,58 @@ public class RedBlackTree extends AbstractTree<RBNode> {
             return;
         }
 
-        RBNode node = new RBNode(value);
+        RBNode node = createNode(value);
         node.setColor(Color.BLACK);
+        fireStep(StepType.INSERT_NODE, value, "Tạo gốc (root) màu ĐEN với giá trị " + value);
         this.root = node;
     }
 
     @Override
     public boolean insert(int parentValue, int value) {
-        // parentValue is ignored because Red-Black Tree inserts by BST rule.
+        return insert(value);
+    }
 
+    @Override
+    public boolean insert(int value) {
         if (search(value)) {
             return false;
         }
 
-        RBNode newNode = new RBNode(value);
+        RBNode newNode = createNode(value);
         newNode.setColor(Color.RED);
+        fireStep(StepType.INSERT_NODE, value, "Tạo node mới màu ĐỎ: " + value);
 
         if (this.root == null) {
             newNode.setColor(Color.BLACK);
+            fireStep(StepType.RECOLOR, value, "Đổi màu gốc thành ĐEN");
             this.root = newNode;
             return true;
         }
 
-        insertBST(this.root, newNode);
+        insertBST((RBNode) getRoot(), newNode);
+        fireStep(StepType.FIX_START, value, "Bắt đầu quá trình Fix-up sau khi chèn");
         fixInsert(newNode);
-
         return true;
     }
 
     private void insertBST(RBNode current, RBNode newNode) {
+        fireStep(StepType.COMPARE, current.getValue(), "So sánh " + newNode.getValue() + " với " + current.getValue());
         if (newNode.getValue() < current.getValue()) {
             if (current.getLeft() == null) {
+                fireStep(StepType.INSERT_NODE, newNode.getValue(), "Chèn " + newNode.getValue() + " làm con trái của " + current.getValue());
                 current.setLeft(newNode);
                 newNode.setParent(current);
             } else {
+                fireStep(StepType.GO_LEFT, current.getValue(), "Đi trái");
                 insertBST((RBNode) current.getLeft(), newNode);
             }
         } else {
             if (current.getRight() == null) {
+                fireStep(StepType.INSERT_NODE, newNode.getValue(), "Chèn " + newNode.getValue() + " làm con phải của " + current.getValue());
                 current.setRight(newNode);
                 newNode.setParent(current);
             } else {
+                fireStep(StepType.GO_RIGHT, current.getValue(), "Đi phải");
                 insertBST((RBNode) current.getRight(), newNode);
             }
         }
@@ -72,6 +88,7 @@ public class RedBlackTree extends AbstractTree<RBNode> {
                 RBNode uncle = (RBNode) grandParent.getRight();
 
                 if (colorOf(uncle) == Color.RED) {
+                    fireStep(StepType.RECOLOR, parent.getValue(), "Case 1: Uncle màu ĐỎ. Đổi màu Parent, Uncle thành ĐEN, GrandParent thành ĐỎ");
                     parent.setColor(Color.BLACK);
                     uncle.setColor(Color.BLACK);
                     grandParent.setColor(Color.RED);
@@ -79,9 +96,11 @@ public class RedBlackTree extends AbstractTree<RBNode> {
                 } else {
                     if (node == parent.getRight()) {
                         node = parent;
+                        fireStep(StepType.ROTATE_LEFT, node.getValue(), "Case 2: Node là con phải -> Xoay trái tại Parent");
                         leftRotate(node);
                     }
 
+                    fireStep(StepType.RECOLOR, parentOf(node).getValue(), "Case 3: Node là con trái -> Đổi màu Parent (ĐEN), GrandParent (ĐỎ) và Xoay phải");
                     parentOf(node).setColor(Color.BLACK);
                     parentOf(parentOf(node)).setColor(Color.RED);
                     rightRotate(parentOf(parentOf(node)));
@@ -90,6 +109,7 @@ public class RedBlackTree extends AbstractTree<RBNode> {
                 RBNode uncle = (RBNode) grandParent.getLeft();
 
                 if (colorOf(uncle) == Color.RED) {
+                    fireStep(StepType.RECOLOR, parent.getValue(), "Case 1: Uncle màu ĐỎ. Đổi màu Parent, Uncle thành ĐEN, GrandParent thành ĐỎ");
                     parent.setColor(Color.BLACK);
                     uncle.setColor(Color.BLACK);
                     grandParent.setColor(Color.RED);
@@ -97,9 +117,11 @@ public class RedBlackTree extends AbstractTree<RBNode> {
                 } else {
                     if (node == parent.getLeft()) {
                         node = parent;
+                        fireStep(StepType.ROTATE_RIGHT, node.getValue(), "Case 2: Node là con trái -> Xoay phải tại Parent");
                         rightRotate(node);
                     }
 
+                    fireStep(StepType.RECOLOR, parentOf(node).getValue(), "Case 3: Node là con phải -> Đổi màu Parent (ĐEN), GrandParent (ĐỎ) và Xoay trái");
                     parentOf(node).setColor(Color.BLACK);
                     parentOf(parentOf(node)).setColor(Color.RED);
                     leftRotate(parentOf(parentOf(node)));
@@ -107,20 +129,23 @@ public class RedBlackTree extends AbstractTree<RBNode> {
             }
         }
 
-        this.root.setColor(Color.BLACK);
+        if (getRoot().getColor() != Color.BLACK) {
+            fireStep(StepType.RECOLOR, getRoot().getValue(), "Đổi màu Root thành ĐEN");
+            getRoot().setColor(Color.BLACK);
+        }
     }
 
     private void leftRotate(RBNode x) {
         if (x == null || x.getRight() == null) {
             return;
         }
+        fireStep(StepType.ROTATE_LEFT, x.getValue(), "Xoay trái tại " + x.getValue());
 
-        RBNode y = (RBNode) x.getRight();
-
+        RBNode y = x.getRight();
         x.setRight(y.getLeft());
 
         if (y.getLeft() != null) {
-            ((RBNode) y.getLeft()).setParent(x);
+            y.getLeft().setParent(x);
         }
 
         y.setParent(x.getParent());
@@ -141,13 +166,13 @@ public class RedBlackTree extends AbstractTree<RBNode> {
         if (x == null || x.getLeft() == null) {
             return;
         }
+        fireStep(StepType.ROTATE_RIGHT, x.getValue(), "Xoay phải tại " + x.getValue());
 
-        RBNode y = (RBNode) x.getLeft();
-
+        RBNode y = x.getLeft();
         x.setLeft(y.getRight());
 
         if (y.getRight() != null) {
-            ((RBNode) y.getRight()).setParent(x);
+            y.getRight().setParent(x);
         }
 
         y.setParent(x.getParent());
@@ -166,14 +191,28 @@ public class RedBlackTree extends AbstractTree<RBNode> {
 
     @Override
     public boolean delete(int value) {
-        RBNode z = findNode(this.root, value);
-
+        RBNode z = (RBNode) findNode(this.root, value);
         if (z == null) {
+            fireStep(StepType.NOT_FOUND, value, "Không tìm thấy " + value + " để xóa");
             return false;
         }
 
+        fireStep(StepType.DELETE_NODE, z.getValue(), "Bắt đầu xóa node " + z.getValue());
         deleteNode(z);
         return true;
+    }
+
+    @Override
+    public boolean update(int currentValue, int newValue) {
+        if (currentValue == newValue) {
+            return search(currentValue);
+        }
+        if (!search(currentValue) || search(newValue)) {
+            return false;
+        }
+
+        delete(currentValue);
+        return insert(newValue);
     }
 
     private void deleteNode(RBNode z) {
@@ -186,52 +225,51 @@ public class RedBlackTree extends AbstractTree<RBNode> {
         if (z.getLeft() == null) {
             x = (RBNode) z.getRight();
             xParent = z.getParent();
+            fireStep(StepType.TRANSPLANT, z.getValue(), "Nhổ node và thay bằng con phải");
             transplant(z, (RBNode) z.getRight());
         } else if (z.getRight() == null) {
             x = (RBNode) z.getLeft();
             xParent = z.getParent();
+            fireStep(StepType.TRANSPLANT, z.getValue(), "Nhổ node và thay bằng con trái");
             transplant(z, (RBNode) z.getLeft());
         } else {
-            y = minimum((RBNode) z.getRight());
+            y = (RBNode) minimum(z.getRight());
             originalColor = y.getColor();
-
             x = (RBNode) y.getRight();
 
             if (y.getParent() == z) {
                 xParent = y;
-
                 if (x != null) {
                     x.setParent(y);
                 }
             } else {
                 xParent = y.getParent();
-
                 transplant(y, (RBNode) y.getRight());
-
                 y.setRight(z.getRight());
 
                 if (y.getRight() != null) {
-                    ((RBNode) y.getRight()).setParent(y);
+                    y.getRight().setParent(y);
                 }
             }
 
+            fireStep(StepType.TRANSPLANT, z.getValue(), "Nhổ node và thay bằng successor " + y.getValue());
             transplant(z, y);
-
             y.setLeft(z.getLeft());
 
             if (y.getLeft() != null) {
-                ((RBNode) y.getLeft()).setParent(y);
+                y.getLeft().setParent(y);
             }
 
             y.setColor(z.getColor());
         }
 
         if (originalColor == Color.BLACK) {
+            fireStep(StepType.FIX_START, (x != null) ? x.getValue() : -1, "Node bị xóa/thay thế mang màu ĐEN -> Kích hoạt Fix-up");
             fixDelete(x, xParent);
         }
 
         if (this.root != null) {
-            this.root.setColor(Color.BLACK);
+            getRoot().setColor(Color.BLACK);
         }
     }
 
@@ -242,13 +280,13 @@ public class RedBlackTree extends AbstractTree<RBNode> {
             }
 
             if (x == parent.getLeft()) {
-                RBNode sibling = (RBNode) parent.getRight();
+                RBNode sibling = parent.getRight();
 
                 if (colorOf(sibling) == Color.RED) {
                     sibling.setColor(Color.BLACK);
                     parent.setColor(Color.RED);
                     leftRotate(parent);
-                    sibling = (RBNode) parent.getRight();
+                    sibling = parent.getRight();
                 }
 
                 if (colorOf(leftOf(sibling)) == Color.BLACK
@@ -270,7 +308,7 @@ public class RedBlackTree extends AbstractTree<RBNode> {
                             rightRotate(sibling);
                         }
 
-                        sibling = (RBNode) parent.getRight();
+                        sibling = parent.getRight();
                     }
 
                     if (sibling != null) {
@@ -284,18 +322,17 @@ public class RedBlackTree extends AbstractTree<RBNode> {
                     }
 
                     leftRotate(parent);
-
-                    x = this.root;
+                    x = getRoot();
                     parent = null;
                 }
             } else {
-                RBNode sibling = (RBNode) parent.getLeft();
+                RBNode sibling = parent.getLeft();
 
                 if (colorOf(sibling) == Color.RED) {
                     sibling.setColor(Color.BLACK);
                     parent.setColor(Color.RED);
                     rightRotate(parent);
-                    sibling = (RBNode) parent.getLeft();
+                    sibling = parent.getLeft();
                 }
 
                 if (colorOf(rightOf(sibling)) == Color.BLACK
@@ -317,7 +354,7 @@ public class RedBlackTree extends AbstractTree<RBNode> {
                             leftRotate(sibling);
                         }
 
-                        sibling = (RBNode) parent.getLeft();
+                        sibling = parent.getLeft();
                     }
 
                     if (sibling != null) {
@@ -331,8 +368,7 @@ public class RedBlackTree extends AbstractTree<RBNode> {
                     }
 
                     rightRotate(parent);
-
-                    x = this.root;
+                    x = getRoot();
                     parent = null;
                 }
             }
@@ -357,154 +393,10 @@ public class RedBlackTree extends AbstractTree<RBNode> {
         }
     }
 
-    private RBNode minimum(RBNode node) {
-        while (node.getLeft() != null) {
-            node = (RBNode) node.getLeft();
-        }
-
-        return node;
-    }
-
-    @Override
-    public boolean search(int value) {
-        return findNode(this.root, value) != null;
-    }
-
-    private RBNode findNode(RBNode current, int value) {
-        if (current == null || current.getValue() == value) {
-            return current;
-        }
-
-        if (value < current.getValue()) {
-            return findNode((RBNode) current.getLeft(), value);
-        }
-
-        return findNode((RBNode) current.getRight(), value);
-    }
-
-    @Override
-    public int getHeight() {
-        return getHeightRec(this.root);
-    }
-
-    private int getHeightRec(RBNode node) {
-        if (node == null) {
-            return 0;
-        }
-
-        return 1 + Math.max(
-                getHeightRec((RBNode) node.getLeft()),
-                getHeightRec((RBNode) node.getRight()));
-    }
-
-    @Override
-    public int getNumberOfNodes() {
-        return countNodes(this.root);
-    }
-
-    private int countNodes(RBNode node) {
-        if (node == null) {
-            return 0;
-        }
-
-        return 1
-                + countNodes((RBNode) node.getLeft())
-                + countNodes((RBNode) node.getRight());
-    }
-
-    @Override
-    public List<Integer> traverse(TraversalType type) {
-        if (type == null) {
-            throw new IllegalArgumentException("Traversal type cannot be null.");
-        }
-
-        List<Integer> result = new ArrayList<>();
-
-        if (isEmpty()) {
-            return result;
-        }
-
-        switch (type) {
-            case IN_ORDER:
-                inOrderRec(this.root, result);
-                break;
-
-            case PRE_ORDER:
-                preOrderRec(this.root, result);
-                break;
-
-            case POST_ORDER:
-                postOrderRec(this.root, result);
-                break;
-
-            case BFS:
-                bfsTraverse(this.root, result);
-                break;
-
-            default:
-                throw new UnsupportedOperationException("Unsupported traversal type: " + type);
-        }
-
-        return result;
-    }
-
-    private void inOrderRec(RBNode node, List<Integer> result) {
-        if (node == null) {
-            return;
-        }
-
-        inOrderRec((RBNode) node.getLeft(), result);
-        result.add(node.getValue());
-        inOrderRec((RBNode) node.getRight(), result);
-    }
-
-    private void preOrderRec(RBNode node, List<Integer> result) {
-        if (node == null) {
-            return;
-        }
-
-        result.add(node.getValue());
-        preOrderRec((RBNode) node.getLeft(), result);
-        preOrderRec((RBNode) node.getRight(), result);
-    }
-
-    private void postOrderRec(RBNode node, List<Integer> result) {
-        if (node == null) {
-            return;
-        }
-
-        postOrderRec((RBNode) node.getLeft(), result);
-        postOrderRec((RBNode) node.getRight(), result);
-        result.add(node.getValue());
-    }
-
-    private void bfsTraverse(RBNode root, List<Integer> result) {
-        if (root == null) {
-            return;
-        }
-
-        Queue<RBNode> queue = new ArrayDeque<>();
-        queue.add(root);
-
-        while (!queue.isEmpty()) {
-            RBNode current = queue.poll();
-            result.add(current.getValue());
-
-            if (current.getLeft() != null) {
-                queue.add((RBNode) current.getLeft());
-            }
-
-            if (current.getRight() != null) {
-                queue.add((RBNode) current.getRight());
-            }
-        }
-    }
-
     private Color colorOf(RBNode node) {
         if (node == null) {
             return Color.BLACK;
         }
-
         return node.getColor();
     }
 
@@ -512,7 +404,6 @@ public class RedBlackTree extends AbstractTree<RBNode> {
         if (node == null) {
             return null;
         }
-
         return node.getParent();
     }
 
@@ -520,15 +411,14 @@ public class RedBlackTree extends AbstractTree<RBNode> {
         if (node == null) {
             return null;
         }
-
-        return (RBNode) node.getLeft();
+        return node.getLeft();
     }
 
     private RBNode rightOf(RBNode node) {
         if (node == null) {
             return null;
         }
-
-        return (RBNode) node.getRight();
+        return node.getRight();
     }
+
 }
