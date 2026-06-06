@@ -1,21 +1,13 @@
 package com.view.vis.animation;
 
 import com.model.vis.VisualEdge;
-import com.model.vis.VisualNode;
-import com.model.vis.VisualTree;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 
-public class FadeAnimation implements TreeAnimation {
+public class EdgeGrowthAnimation implements TreeAnimation {
     private final Transition transition;
 
-    public FadeAnimation(VisualNode node, VisualTree tree, double startOpacity, double endOpacity, double durationMs) {
-        VisualEdge parentEdge = findIncomingEdge(node, tree);
-
-        node.setOpacity(startOpacity);
-
-        final VisualEdge edge = parentEdge;
-
+    public EdgeGrowthAnimation(VisualEdge edge, double startProgress, double endProgress, double durationMs) {
         this.transition = new Transition() {
             {
                 setCycleDuration(Duration.millis(durationMs));
@@ -23,21 +15,12 @@ public class FadeAnimation implements TreeAnimation {
 
             @Override
             protected void interpolate(double frac) {
-                double opacity = startOpacity + (endOpacity - startOpacity) * frac;
-                node.setOpacity(opacity);
+                if (edge != null) {
+                    double progress = startProgress + (endProgress - startProgress) * frac;
+                    edge.setProgress(progress);
+                }
             }
         };
-    }
-
-    private VisualEdge findIncomingEdge(VisualNode node, VisualTree tree) {
-        if (tree == null)
-            return null;
-        for (VisualEdge edge : tree.getEdges()) {
-            if (edge.getTarget().equals(node)) {
-                return edge;
-            }
-        }
-        return null;
     }
 
     @Override
