@@ -1,5 +1,6 @@
 package com.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,8 +12,8 @@ public class NavigationManager {
 
     private Stage stage;
     private static NavigationManager instance;
-    private double currentWidth = -1;
-    private double currentHeight = -1;
+    private double currentWidth = 1280;
+    private double currentHeight = 720;
 
     private NavigationManager() {
     }
@@ -30,6 +31,14 @@ public class NavigationManager {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public double getCurrentWidth() {
+        return currentWidth;
+    }
+
+    public double getCurrentHeight() {
+        return currentHeight;
     }
 
     public void setResolution(double width, double height) {
@@ -52,6 +61,9 @@ public class NavigationManager {
     public void setFullScreen(boolean isFullScreen) {
         if (stage != null) {
             stage.setFullScreen(isFullScreen);
+            if (!isFullScreen) {
+                Platform.runLater(() -> setResolution(currentWidth, currentHeight));
+            }
         }
     }
 

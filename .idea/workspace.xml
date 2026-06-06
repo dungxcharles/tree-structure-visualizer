@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/pom.xml" afterDir="false" />
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixed fullscreen bug when switching between screens.">
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/main-menu-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/main-menu-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,61 +35,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.000000035865681" />
-      <entry key="S10" value="1.0002210530347897" />
-      <entry key="S30" value="1.1516729279221687" />
-      <entry key="S60" value="2.229584559958056" />
-      <entry key="M2" value="5.36078662027409" />
-      <entry key="M5" value="12.721457507950847" />
-      <entry key="M10" value="21.820764411560805" />
-      <entry key="M15" value="29.029195292987318" />
-      <entry key="M30" value="42.282777798870484" />
-      <entry key="H1" value="53.18633273442588" />
-      <entry key="H2" value="60.33785396377468" />
-      <entry key="H4" value="64.45831807268519" />
-      <entry key="D1" value="68.2117183873461" />
-      <entry key="W1" value="68.88659203076331" />
+      <entry key="MS100" value="1.000082228621743" />
+      <entry key="MS500" value="1.1604867706165565" />
+      <entry key="S2" value="2.3486302339663743" />
+      <entry key="S5" value="4.1145258033569805" />
+      <entry key="S10" value="5.514476794647137" />
+      <entry key="S30" value="7.665437624063191" />
+      <entry key="S60" value="10.316378690979619" />
+      <entry key="M2" value="14.869547848887732" />
+      <entry key="M5" value="24.220832895594935" />
+      <entry key="M10" value="34.62539429419792" />
+      <entry key="M15" value="42.48870341394882" />
+      <entry key="M30" value="56.83183635814429" />
+      <entry key="H1" value="68.68027378201721" />
+      <entry key="H2" value="76.49255834748902" />
+      <entry key="H4" value="81.0090436822051" />
+      <entry key="D1" value="85.13279206049566" />
+      <entry key="W1" value="85.87521281385331" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="3.301836488433967E-38" />
-      <entry key="MS500" value="3.3793682508795866E-8" />
-      <entry key="S2" value="0.020488170260536058" />
-      <entry key="S5" value="0.3609544239786841" />
-      <entry key="S10" value="1.0111869591180251" />
-      <entry key="S30" value="2.5676405318960027" />
-      <entry key="S60" value="4.943338439098431" />
-      <entry key="M2" value="9.189708467733421" />
-      <entry key="M5" value="16.77301831116867" />
-      <entry key="M10" value="23.63742254246149" />
-      <entry key="M15" value="27.84179909408203" />
-      <entry key="M30" value="34.28174282226377" />
-      <entry key="H1" value="38.906503130095935" />
-      <entry key="H2" value="41.73475486195251" />
-      <entry key="H4" value="43.30752224158019" />
-      <entry key="D1" value="44.70911453571446" />
-      <entry key="W1" value="44.958222496160644" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="2.3089179021834623E-85" />
+      <entry key="S2" value="1.0474816349762717E-21" />
+      <entry key="S5" value="6.932815875571906E-9" />
+      <entry key="S10" value="1.4013935316971023E-4" />
+      <entry key="S30" value="0.13287515135163722" />
+      <entry key="S60" value="1.1245405481427448" />
+      <entry key="M2" value="4.383077215027156" />
+      <entry key="M5" value="12.473897643297878" />
+      <entry key="M10" value="20.38429032571232" />
+      <entry key="M15" value="25.22479315048298" />
+      <entry key="M30" value="32.63082481948249" />
+      <entry key="H1" value="37.95812732737825" />
+      <entry key="H2" value="41.22295846123032" />
+      <entry key="H4" value="43.041161440030606" />
+      <entry key="D1" value="44.663166439401465" />
+      <entry key="W1" value="44.95161900029878" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9138314502294005" />
-      <entry key="MS500" value="0.9821396049614634" />
-      <entry key="S2" value="1.0081226793523148" />
-      <entry key="S5" value="1.2873291069764572" />
-      <entry key="S10" value="1.9028478318243358" />
-      <entry key="S30" value="3.6265733070481647" />
-      <entry key="S60" value="7.079720065454427" />
-      <entry key="M2" value="14.45505029762446" />
-      <entry key="M5" value="29.416180756994574" />
-      <entry key="M10" value="45.397309316960786" />
-      <entry key="M15" value="56.820388352095655" />
-      <entry key="M30" value="76.53091199499016" />
-      <entry key="H1" value="92.07287073642269" />
-      <entry key="H2" value="102.06163044494843" />
-      <entry key="H4" value="107.76007000193165" />
-      <entry key="D1" value="112.91982905485577" />
-      <entry key="W1" value="113.84467004163518" />
+      <entry key="MS100" value="0.9593440994008895" />
+      <entry key="MS500" value="1.151292776942849" />
+      <entry key="S2" value="2.344197981126605" />
+      <entry key="S5" value="4.11137865895791" />
+      <entry key="S10" value="5.512473322961903" />
+      <entry key="S30" value="7.792343764651392" />
+      <entry key="S60" value="11.41867844857223" />
+      <entry key="M2" value="19.206283177448174" />
+      <entry key="M5" value="36.6360509798776" />
+      <entry key="M10" value="54.95693167214591" />
+      <entry key="M15" value="67.66747144902642" />
+      <entry key="M30" value="89.43057962608472" />
+      <entry key="H1" value="106.61887602177899" />
+      <entry key="H2" value="117.70464951242784" />
+      <entry key="H4" value="124.04445846934799" />
+      <entry key="D1" value="129.79495368345118" />
+      <entry key="W1" value="130.82668706703794" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -189,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780737300634</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fix: Fixed fullscreen bug when switching between screens.">
+      <option name="closed" value="true" />
+      <created>1780738827454</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1780738827454</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,6 +216,7 @@
     <MESSAGE value="Reorganize the files" />
     <MESSAGE value="Feat: Granting access to workspace from main menu." />
     <MESSAGE value="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml" />
+    <MESSAGE value="Fix: Fixed fullscreen bug when switching between screens." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Fixed fullscreen bug when switching between screens." />
   </component>
 </project>
