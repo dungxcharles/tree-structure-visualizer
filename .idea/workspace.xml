@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixed fullscreen bug when switching between screens.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/settings-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/settings-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +119,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feature/controller",
+    "git-widget-placeholder": "feature/workspace",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
