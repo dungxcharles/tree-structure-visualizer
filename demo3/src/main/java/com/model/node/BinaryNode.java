@@ -1,29 +1,30 @@
-package com.demo3.model.node;
+package com.model.node;
 
 public class BinaryNode extends Node {
 
     private BinaryNode left;
     private BinaryNode right;
 
-    //constructor
-    public BinaryNode(int value){
+    // constructor
+    public BinaryNode(int value) {
         super(value);
     }
 
     // getter
-    public BinaryNode getLeft(){
+    public BinaryNode getLeft() {
         return this.left;
     }
-    public BinaryNode getRight(){
+
+    public BinaryNode getRight() {
         return this.right;
     }
 
-    //setter
-    public void setLeft(BinaryNode left){
+    // setter
+    public void setLeft(BinaryNode left) {
         this.left = left;
     }
 
-    public void setRight(BinaryNode right){
+    public void setRight(BinaryNode right) {
         this.right = right;
     }
 
