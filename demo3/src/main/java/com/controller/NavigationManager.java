@@ -1,18 +1,22 @@
 package com.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class NavigationManager {
 
     private Stage stage;
     private static NavigationManager instance;
-    private double currentWidth = -1;
-    private double currentHeight = -1;
+    private double currentWidth = 1280;
+    private double currentHeight = 720;
 
     private NavigationManager() {
     }
@@ -32,6 +36,14 @@ public class NavigationManager {
         this.stage = stage;
     }
 
+    public double getCurrentWidth() {
+        return currentWidth;
+    }
+
+    public double getCurrentHeight() {
+        return currentHeight;
+    }
+
     public void setResolution(double width, double height) {
         this.currentWidth = width;
         this.currentHeight = height;
@@ -42,8 +54,31 @@ public class NavigationManager {
                 double widthDiff = stage.getWidth() - scene.getWidth();
                 double heightDiff = stage.getHeight() - scene.getHeight();
 
-                stage.setWidth(width + widthDiff);
-                stage.setHeight(height + heightDiff);
+                double targetStageWidth = width + widthDiff;
+                double targetStageHeight = height + heightDiff;
+
+                Screen screen = Screen.getPrimary();
+                if (stage.getWidth() > 0 && stage.getHeight() > 0) {
+                    List<Screen> screens = Screen.getScreensForRectangle(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
+                    if (!screens.isEmpty()) {
+                        screen = screens.get(0);
+                    }
+                }
+                Rectangle2D screenBounds = screen.getVisualBounds();
+                double maxStageWidth = screenBounds.getWidth();
+                double maxStageHeight = screenBounds.getHeight();
+
+                if (targetStageWidth > maxStageWidth) {
+                    targetStageWidth = maxStageWidth;
+                    this.currentWidth = maxStageWidth - widthDiff;
+                }
+                if (targetStageHeight > maxStageHeight) {
+                    targetStageHeight = maxStageHeight;
+                    this.currentHeight = maxStageHeight - heightDiff;
+                }
+
+                stage.setWidth(targetStageWidth);
+                stage.setHeight(targetStageHeight);
                 stage.centerOnScreen();
             }
         }
@@ -52,6 +87,9 @@ public class NavigationManager {
     public void setFullScreen(boolean isFullScreen) {
         if (stage != null) {
             stage.setFullScreen(isFullScreen);
+            if (!isFullScreen) {
+                Platform.runLater(() -> setResolution(currentWidth, currentHeight));
+            }
         }
     }
 
@@ -66,22 +104,19 @@ public class NavigationManager {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            Scene scene;
-            if (currentWidth > 0 && currentHeight > 0) {
-                scene = new Scene(root, currentWidth, currentHeight);
-            } else if (stage.getScene() != null) {
-                scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
+            if (stage.getScene() != null) {
+                stage.getScene().setRoot(root);
+                if (wasFullScreen) {
+                    stage.setFullScreen(true);
+                }
             } else {
-                scene = new Scene(root);
+                Scene scene = new Scene(root, currentWidth, currentHeight);
+                stage.setScene(scene);
+                if (wasFullScreen) {
+                    stage.setFullScreen(true);
+                }
+                stage.show();
             }
-
-            stage.setScene(scene);
-
-            if (wasFullScreen) {
-                stage.setFullScreen(true);
-            }
-
-            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

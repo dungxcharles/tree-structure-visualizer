@@ -112,21 +112,21 @@
                   </RadioButton>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#backButtonClicked" style="-fx-background-color: TRANSPARENT;" text="⬅Back">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <GridPane.margin>
-                  <Insets bottom="100.0" left="20.0" />
-               </GridPane.margin>
-            </Button>
          </children>
          <StackPane.margin>
             <Insets />
          </StackPane.margin>
       </GridPane>
+      <Button mnemonicParsing="false" onAction="#backButtonClicked" style="-fx-background-color: TRANSPARENT;" text="⬅Back" StackPane.alignment="TOP_LEFT">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <StackPane.margin>
+            <Insets top="20.0" left="20.0" />
+         </StackPane.margin>
+      </Button>
    </children>
 </StackPane>
