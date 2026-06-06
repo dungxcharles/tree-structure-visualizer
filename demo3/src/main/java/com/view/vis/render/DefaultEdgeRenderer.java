@@ -6,8 +6,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class DefaultEdgeRenderer implements EdgeRenderer {
-    public DefaultEdgeRenderer() {
-    }
 
     @Override
     public void render(GraphicsContext gc, VisualEdge edge) {

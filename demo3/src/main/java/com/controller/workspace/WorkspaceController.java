@@ -197,7 +197,7 @@ public class WorkspaceController {
         visualizerPane.getChildren().add(fxCanvas);
 
         // 2. Setup the MVC Visualization components
-        TreeCanvas treeCanvas = new TreeCanvas(new DefaultNodeRenderer(), new DefaultEdgeRenderer());
+        TreeCanvas treeCanvas = new TreeCanvas(fxCanvas, new DefaultNodeRenderer(), new DefaultEdgeRenderer());
 
         LayoutStrategy layoutStrategy = (currentTreeType == TreeType.GENERAL) ? new GeneralTreeLayout()
                 : new BinaryTreeLayout();
@@ -205,6 +205,12 @@ public class WorkspaceController {
         treeController = new TreeVisualizationController(treeCanvas, new AnimationManager(), layoutStrategy);
         treeController.setFxCanvas(fxCanvas);
         treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
+
+        treeCanvas.setRedrawCallback(() -> {
+            if (!treeController.isAnimating()) {
+                treeController.renderFrame(fxCanvas.getGraphicsContext2D());
+            }
+        });
     }
 
     private void setupControls() {
