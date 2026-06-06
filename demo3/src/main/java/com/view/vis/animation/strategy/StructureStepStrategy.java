@@ -8,6 +8,8 @@ import com.view.vis.animation.FadeAnimation;
 import com.view.vis.animation.NodeColorAnimation;
 import com.view.vis.animation.NodeLabelAnimation;
 import com.view.vis.animation.TreeAnimation;
+import com.view.vis.animation.EdgeGrowthAnimation;
+import com.model.vis.VisualEdge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +41,12 @@ public class StructureStepStrategy implements StepAnimationStrategy {
         switch (step.getType()) {
             case INSERT_NODE:
             case ADD_CHILD:
-                // Fade in: node + parent edge appear gradually (0 → 1) with green flash
                 targetNode.setOpacity(0.0);
+                VisualEdge incomingEdge = findIncomingEdge(tree, targetNode);
+                if (incomingEdge != null) {
+                    incomingEdge.setProgress(0.0);
+                    animations.add(new EdgeGrowthAnimation(incomingEdge, 0.0, 1.0, DURATION_MS));
+                }
                 animations.add(new FadeAnimation(targetNode, tree, 0.0, 1.0, DURATION_MS));
                 animations.add(new NodeColorAnimation(targetNode, "#FFFFFF", INSERT_COLOR, DURATION_MS / 2));
                 animations.add(new NodeColorAnimation(targetNode, INSERT_COLOR, targetNode.getColorHex(), DURATION_MS / 2));
@@ -51,6 +57,10 @@ public class StructureStepStrategy implements StepAnimationStrategy {
                 // Red flash, then fade out: node + parent edge disappear gradually (1 → 0)
                 animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), DELETE_COLOR, DURATION_MS));
                 animations.add(new FadeAnimation(targetNode, tree, 1.0, 0.0, DURATION_MS));
+                VisualEdge incomingEdgeDelete = findIncomingEdge(tree, targetNode);
+                if (incomingEdgeDelete != null) {
+                    animations.add(new EdgeGrowthAnimation(incomingEdgeDelete, 1.0, 0.0, DURATION_MS));
+                }
                 break;
 
             case REPLACE_VALUE:
@@ -113,6 +123,16 @@ public class StructureStepStrategy implements StepAnimationStrategy {
         for (VisualNode vNode : tree.getNodes()) {
             if (vNode.getLabel().equals(targetLabel)) {
                 return vNode;
+            }
+        }
+        return null;
+    }
+
+    private VisualEdge findIncomingEdge(VisualTree tree, VisualNode node) {
+        if (tree == null || node == null) return null;
+        for (VisualEdge edge : tree.getEdges()) {
+            if (edge.getTarget().equals(node)) {
+                return edge;
             }
         }
         return null;

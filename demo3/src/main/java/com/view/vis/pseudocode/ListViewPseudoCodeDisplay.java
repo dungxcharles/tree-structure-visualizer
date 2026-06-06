@@ -25,15 +25,15 @@ public class ListViewPseudoCodeDisplay implements PseudoCodeDisplay {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
-                    setTextFill(Color.BLACK);
+                    setStyle("-fx-background-color: transparent;");
                 } else {
                     setText(item);
                     if (getIndex() == activeIndex) {
-                        setTextFill(Color.web("#e74c3c")); // Red for active step
-                        setStyle("-fx-font-weight: bold; -fx-font-family: monospace; -fx-font-size: 12px;");
+                        setTextFill(Color.BLACK); // Black text for readability on yellow
+                        setStyle("-fx-background-color: #ffeb3b; -fx-font-weight: bold; -fx-font-family: monospace; -fx-font-size: 12px;"); // Bright yellow
                     } else {
                         setTextFill(Color.web("#555555")); // Gray for past steps
-                        setStyle("-fx-font-weight: normal; -fx-font-family: monospace; -fx-font-size: 12px;");
+                        setStyle("-fx-background-color: transparent; -fx-font-weight: normal; -fx-font-family: monospace; -fx-font-size: 12px;");
                     }
                 }
             }

@@ -23,8 +23,24 @@ public class DefaultEdgeRenderer implements EdgeRenderer {
 
         gc.setGlobalAlpha(edge.getOpacity());
 
+        double startX = source.getX();
+        double startY = source.getY();
+        double targetX = target.getX();
+        double targetY = target.getY();
+
+        double currentX = startX + (targetX - startX) * edge.getProgress();
+        double currentY = startY + (targetY - startY) * edge.getProgress();
+
         gc.setStroke(Color.web(edge.getColorHex()));
         gc.setLineWidth(2.0);
-        gc.strokeLine(source.getX(), source.getY(), target.getX(), target.getY());
+        gc.strokeLine(startX, startY, currentX, currentY);
+
+        if (edge.getHighlightProgress() > 0.0) {
+            gc.setStroke(Color.web(edge.getHighlightColor()));
+            gc.setLineWidth(3.0);
+            double hX = startX + (targetX - startX) * edge.getHighlightProgress();
+            double hY = startY + (targetY - startY) * edge.getHighlightProgress();
+            gc.strokeLine(startX, startY, hX, hY);
+        }
     }
 }

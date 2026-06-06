@@ -3,8 +3,10 @@ package com.view.vis.animation.strategy;
 import com.model.step.AnimationStep;
 import com.model.vis.VisualNode;
 import com.model.vis.VisualTree;
+import com.model.vis.VisualEdge;
 import com.view.vis.animation.NodeColorAnimation;
 import com.view.vis.animation.TreeAnimation;
+import com.view.vis.animation.EdgeTraversalAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,11 @@ public class SearchStepStrategy implements StepAnimationStrategy {
                         .add(new NodeColorAnimation(targetNode, originalColor, TRAVERSAL_COLOR, STEP_DURATION_MS / 2));
                 animations
                         .add(new NodeColorAnimation(targetNode, TRAVERSAL_COLOR, originalColor, STEP_DURATION_MS / 2));
+                
+                VisualEdge outgoingEdge = findOutgoingEdge(tree, targetNode, step.getType());
+                if (outgoingEdge != null && outgoingEdge.getTarget().getOpacity() > 0.0) {
+                    animations.add(new EdgeTraversalAnimation(outgoingEdge, TRAVERSAL_COLOR, STEP_DURATION_MS));
+                }
                 break;
 
             case ADD_TO_RESULT:
@@ -80,6 +87,22 @@ public class SearchStepStrategy implements StepAnimationStrategy {
         for (VisualNode vNode : tree.getNodes()) {
             if (vNode.getLabel().equals(targetLabel)) {
                 return vNode;
+            }
+        }
+        return null;
+    }
+
+    private VisualEdge findOutgoingEdge(VisualTree tree, VisualNode source, com.model.step.StepType direction) {
+        if (tree == null || source == null) return null;
+        for (VisualEdge edge : tree.getEdges()) {
+            if (edge.getSource().equals(source)) {
+                if (direction == com.model.step.StepType.GO_LEFT && edge.getTarget().getX() <= source.getX()) {
+                    return edge;
+                } else if (direction == com.model.step.StepType.GO_RIGHT && edge.getTarget().getX() >= source.getX()) {
+                    return edge;
+                } else if (direction == com.model.step.StepType.GO_CHILD) {
+                    return edge;
+                }
             }
         }
         return null;
