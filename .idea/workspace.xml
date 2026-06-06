@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Feat: Granting access to workspace from main menu.">
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/pseudo/AlgorithmStep.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AVLTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AbstractTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/AbstractTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/main-menu-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/main-menu-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +120,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "fix/pseudo-code",
+    "git-widget-placeholder": "feature/controller",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -177,7 +173,23 @@
       <option name="project" value="LOCAL" />
       <updated>1779328485268</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Feat: Granting access to workspace from main menu.">
+      <option name="closed" value="true" />
+      <created>1780737282254</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1780737282255</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml">
+      <option name="closed" value="true" />
+      <created>1780737300634</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1780737300634</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +209,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Reorganize the files" />
     <MESSAGE value="Feat: Granting access to workspace from main menu." />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: Granting access to workspace from main menu." />
+    <MESSAGE value="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml" />
   </component>
 </project>

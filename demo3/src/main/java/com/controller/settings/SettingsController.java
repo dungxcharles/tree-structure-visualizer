@@ -12,6 +12,15 @@ public class SettingsController {
     private ToggleButton fullscreenToggle;
 
     @FXML
+    public void initialize() {
+        if (NavigationManager.getInstance().getStage() != null) {
+            boolean isFullScreen = NavigationManager.getInstance().getStage().isFullScreen();
+            fullscreenToggle.setSelected(isFullScreen);
+            fullscreenToggle.setText(isFullScreen ? "ON" : "OFF");
+        }
+    }
+
+    @FXML
     void changeResolution(ActionEvent event) {
         RadioButton selectedButton = (RadioButton) event.getSource();
         String[] res = selectedButton.getText().split(" x ");
