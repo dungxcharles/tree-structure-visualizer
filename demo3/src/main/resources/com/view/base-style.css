@@ -1,0 +1,60 @@
+/* Base/Light Mode Styles */
+
+.root {
+    -fx-background-color: #f4f4f4;
+}
+
+/* Settings root */
+.settings-root {
+    -fx-background-color: transparent;
+}
+
+/* Credit/Help Root */
+.credit-root {
+    -fx-background-color: #f4f4f4;
+}
+
+/* Tree Tiles in Tree Selection View */
+.tree-tile {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);
+}
+
+.tree-tile:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Content Card in Help/Credit View */
+.content-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+/* Buttons */
+.back-button, .navigation-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2c3e50;
+    -fx-cursor: hand;
+}
+
+.back-button:hover, .navigation-button:hover {
+    -fx-text-fill: #3498db;
+}
+
+.transparent-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.transparent-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Detail Popup Container */
+.detail-popup-root {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5);
+}

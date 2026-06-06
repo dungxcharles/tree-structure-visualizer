@@ -22,12 +22,18 @@ public class DefaultNodeRenderer implements NodeRenderer {
         gc.setGlobalAlpha(node.getOpacity());
 
         gc.setFill(Color.web(node.getColorHex()));
-        gc.setStroke(Color.BLACK);
+        boolean isDark = com.controller.NavigationManager.getInstance().isDarkMode();
+        gc.setStroke(isDark ? Color.WHITE : Color.BLACK);
         gc.setLineWidth(2.0);
         gc.fillOval(x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
         gc.strokeOval(x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
 
-        gc.setFill(Color.BLACK);
+        String fillHex = node.getColorHex();
+        if ("#333333".equals(fillHex) || "#000000".equals(fillHex)) {
+            gc.setFill(Color.WHITE);
+        } else {
+            gc.setFill(Color.BLACK);
+        }
         gc.setFont(new Font("System", 14));
         gc.fillText(node.getLabel(), x - 8, y + 5);
     }

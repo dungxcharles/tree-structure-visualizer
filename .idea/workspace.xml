@@ -7,6 +7,13 @@
     <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/credits/CreditWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/credits/CreditWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultEdgeRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultEdgeRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultNodeRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultNodeRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/credit-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/credit-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/settings-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/settings-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-detail-popup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-detail-popup.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +29,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/workspace" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubDefaultAccount">
@@ -36,61 +48,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.000021529678746" />
-      <entry key="MS500" value="1.1617362739724457" />
-      <entry key="S2" value="2.815116561111266" />
-      <entry key="S5" value="5.707130228456427" />
-      <entry key="S10" value="8.42071687725096" />
-      <entry key="S30" value="11.644686782576379" />
-      <entry key="S60" value="12.745395850157028" />
-      <entry key="M2" value="13.54176839962511" />
-      <entry key="M5" value="17.97932900107354" />
-      <entry key="M10" value="28.361217120152325" />
-      <entry key="M15" value="37.68739134258758" />
-      <entry key="M30" value="56.46906433673721" />
-      <entry key="H1" value="73.37960504851189" />
-      <entry key="H2" value="85.12713071429032" />
-      <entry key="H4" value="92.1168285176725" />
-      <entry key="D1" value="98.61859116405485" />
-      <entry key="W1" value="99.80092426995417" />
+      <entry key="MS100" value="1.2520877869744504" />
+      <entry key="MS500" value="3.0850918826622187" />
+      <entry key="S2" value="6.39795092250959" />
+      <entry key="S5" value="10.628863043988359" />
+      <entry key="S10" value="14.508407144052972" />
+      <entry key="S30" value="19.320659850573524" />
+      <entry key="S60" value="21.021959970935796" />
+      <entry key="M2" value="22.158837964155015" />
+      <entry key="M5" value="26.78606819169852" />
+      <entry key="M10" value="37.21851210300682" />
+      <entry key="M15" value="46.56469591871653" />
+      <entry key="M30" value="65.37997073522693" />
+      <entry key="H1" value="82.32256653715505" />
+      <entry key="H2" value="94.09427216990954" />
+      <entry key="H4" value="101.09910824962174" />
+      <entry key="D1" value="107.61543763261692" />
+      <entry key="W1" value="108.80046856570702" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
-      <entry key="S2" value="3.6647829783979546E-135" />
-      <entry key="S5" value="2.873891738132703E-54" />
-      <entry key="S10" value="2.853254280444509E-27" />
-      <entry key="S30" value="3.6283059013314814E-9" />
-      <entry key="S60" value="1.8582544483716824E-4" />
-      <entry key="M2" value="0.0563435429229546" />
-      <entry key="M5" value="2.1858894215682168" />
-      <entry key="M10" value="8.533134721330542" />
-      <entry key="M15" value="14.115717267930938" />
-      <entry key="M30" value="24.409884273123236" />
-      <entry key="H1" value="32.83020636418688" />
-      <entry key="H2" value="38.33748101205669" />
-      <entry key="H4" value="41.507463108983416" />
-      <entry key="D1" value="44.39389096005233" />
-      <entry key="W1" value="44.912802220447446" />
+      <entry key="S2" value="9.70787721929812E-136" />
+      <entry key="S5" value="1.6892767671821533E-54" />
+      <entry key="S10" value="2.1875383736623613E-27" />
+      <entry key="S30" value="3.320796755470333E-9" />
+      <entry key="S60" value="1.7777651221464235E-4" />
+      <entry key="M2" value="0.055109789538895046" />
+      <entry key="M5" value="2.166616411280699" />
+      <entry key="M10" value="8.495433063542219" />
+      <entry key="M15" value="14.074108596117886" />
+      <entry key="M30" value="24.373881411460943" />
+      <entry key="H1" value="32.80598630805319" />
+      <entry key="H2" value="38.323336914866886" />
+      <entry key="H4" value="41.499805592942494" />
+      <entry key="D1" value="44.3925258518647" />
+      <entry key="W1" value="44.912604922895554" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9726758876919888" />
-      <entry key="MS500" value="1.15524506306095" />
-      <entry key="S2" value="2.8104528582313617" />
-      <entry key="S5" value="5.702676202710211" />
-      <entry key="S10" value="8.4172375376652" />
-      <entry key="S30" value="11.643033885591878" />
-      <entry key="S60" value="12.744668051850116" />
-      <entry key="M2" value="13.5970382558514" />
-      <entry key="M5" value="20.154738583014655" />
-      <entry key="M10" value="36.872169258996095" />
-      <entry key="M15" value="51.777286541411755" />
-      <entry key="M30" value="80.85491622657054" />
-      <entry key="H1" value="106.19290732732019" />
-      <entry key="H2" value="123.45449673813732" />
-      <entry key="H4" value="133.61874555993427" />
-      <entry key="D1" value="143.01148266781598" />
-      <entry key="W1" value="144.71358176857237" />
+      <entry key="MS100" value="1.199639914862213" />
+      <entry key="MS500" value="3.059946560937172" />
+      <entry key="S2" value="6.3782964884654465" />
+      <entry key="S5" value="10.614013720555372" />
+      <entry key="S10" value="14.49832523535314" />
+      <entry key="S30" value="19.31632100606718" />
+      <entry key="S60" value="21.019801548695753" />
+      <entry key="M2" value="22.212153831220704" />
+      <entry key="M5" value="28.941996573216862" />
+      <entry key="M10" value="45.69170977738084" />
+      <entry key="M15" value="60.61295790172044" />
+      <entry key="M30" value="89.72980482183107" />
+      <entry key="H1" value="115.11163602226482" />
+      <entry key="H2" value="132.40748522055878" />
+      <entry key="H4" value="142.59336249420417" />
+      <entry key="D1" value="152.0069630079965" />
+      <entry key="W1" value="153.71292861727355" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -105,35 +117,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainMenuApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/workspace&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Launcher.executor": "Run",
+    "Application.MainMenuApplication.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "feature/dark-mode",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\view" />
@@ -205,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780740484692</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug.">
+      <option name="closed" value="true" />
+      <created>1780741955920</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1780741955920</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

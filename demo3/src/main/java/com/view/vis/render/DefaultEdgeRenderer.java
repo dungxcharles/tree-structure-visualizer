@@ -31,7 +31,12 @@ public class DefaultEdgeRenderer implements EdgeRenderer {
         double currentX = startX + (targetX - startX) * edge.getProgress();
         double currentY = startY + (targetY - startY) * edge.getProgress();
 
-        gc.setStroke(Color.web(edge.getColorHex()));
+        String colorHex = edge.getColorHex();
+        if (com.controller.NavigationManager.getInstance().isDarkMode() && "#000000".equals(colorHex)) {
+            gc.setStroke(Color.WHITE);
+        } else {
+            gc.setStroke(Color.web(colorHex));
+        }
         gc.setLineWidth(2.0);
         gc.strokeLine(startX, startY, currentX, currentY);
 

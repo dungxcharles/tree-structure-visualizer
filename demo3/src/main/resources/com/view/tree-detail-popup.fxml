@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="576.0" maxWidth="1024.0" opacity="0.95" prefHeight="576.0" prefWidth="1024.0" spacing="20.0" style="-fx-background-color: WHITE; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5);" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.treeselection.TreeDetailPopupController">
+<VBox alignment="TOP_CENTER" maxHeight="576.0" maxWidth="1024.0" opacity="0.95" prefHeight="576.0" prefWidth="1024.0" spacing="20.0" styleClass="detail-popup-root" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.treeselection.TreeDetailPopupController">
    <children>
       <Label fx:id="lblTitle" text="Tree Title" wrapText="true">
          <font>

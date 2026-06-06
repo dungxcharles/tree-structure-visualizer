@@ -17,6 +17,7 @@ public class NavigationManager {
     private static NavigationManager instance;
     private double currentWidth = 1280;
     private double currentHeight = 720;
+    private boolean isDarkMode = false;
 
     private NavigationManager() {
     }
@@ -34,6 +35,39 @@ public class NavigationManager {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public boolean isDarkMode() {
+        return isDarkMode;
+    }
+
+    public void setDarkMode(boolean isDarkMode) {
+        this.isDarkMode = isDarkMode;
+        if (stage != null && stage.getScene() != null) {
+            applyTheme(stage.getScene());
+        }
+    }
+
+    public void applyTheme(Scene scene) {
+        if (scene == null) return;
+        try {
+            String baseStyle = getClass().getResource("/com/view/base-style.css").toExternalForm();
+            String darkStyle = getClass().getResource("/com/view/dark-mode.css").toExternalForm();
+
+            if (!scene.getStylesheets().contains(baseStyle)) {
+                scene.getStylesheets().add(baseStyle);
+            }
+
+            if (isDarkMode) {
+                if (!scene.getStylesheets().contains(darkStyle)) {
+                    scene.getStylesheets().add(darkStyle);
+                }
+            } else {
+                scene.getStylesheets().remove(darkStyle);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public double getCurrentWidth() {
@@ -104,11 +138,13 @@ public class NavigationManager {
 
             if (stage.getScene() != null) {
                 stage.getScene().setRoot(root);
+                applyTheme(stage.getScene());
                 if (wasFullScreen) {
                     stage.setFullScreen(true);
                 }
             } else {
                 Scene scene = new Scene(root, currentWidth, currentHeight);
+                applyTheme(scene);
                 stage.setScene(scene);
                 if (wasFullScreen) {
                     stage.setFullScreen(true);
