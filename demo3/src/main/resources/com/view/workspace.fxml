@@ -79,6 +79,11 @@
             
             <Separator orientation="VERTICAL" />
             
+            <Button fx:id="undoButton" onAction="#handleUndoAction" styleClass="action-btn" text="Undo" disable="true" />
+            <Button fx:id="redoButton" onAction="#handleRedoAction" styleClass="action-btn" text="Redo" disable="true" />
+            
+            <Separator orientation="VERTICAL" />
+            
             <Button fx:id="pauseResumeButton" onAction="#handlePauseResumeAction" styleClass="action-btn, btn-pause" text="Pause" />
             
             <Separator orientation="VERTICAL" />

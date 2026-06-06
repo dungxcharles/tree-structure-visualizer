@@ -14,6 +14,8 @@ import com.controller.vis.TreeVisualizationController;
 import com.view.vis.layout.BinaryTreeLayout;
 import com.view.vis.layout.LayoutStrategy;
 
+import java.util.List;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -81,6 +83,14 @@ public class WorkspaceController {
     @FXML
     private Button searchButton;
 
+    @FXML
+    private Button undoButton;
+
+    @FXML
+    private Button redoButton;
+
+    private HistoryManager historyManager;
+
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
     private AbstractTree<?> logicalTree;
@@ -121,13 +131,17 @@ public class WorkspaceController {
 
             if (logicalTree.isEmpty()) {
                 logicalTree.create(value);
+                historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.CREATE, 0, value));
             } else {
                 if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
                     logicalTree.insert(parentValue, value);
+                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, parentValue, value));
                 } else {
                     logicalTree.insert(0, value);
+                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, 0, value));
                 }
             }
+            updateUndoRedoButtons();
         });
     }
 
@@ -136,6 +150,8 @@ public class WorkspaceController {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
             logicalTree.delete(value);
+            historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.DELETE, 0, value));
+            updateUndoRedoButtons();
         });
     }
 
@@ -161,6 +177,58 @@ public class WorkspaceController {
         });
     }
 
+    @FXML
+    void handleUndoAction(ActionEvent event) {
+        if (historyManager == null || !historyManager.canUndo() || treeController.isAnimating()) return;
+        historyManager.undo();
+        replayHistory();
+    }
+
+    @FXML
+    void handleRedoAction(ActionEvent event) {
+        if (historyManager == null || !historyManager.canRedo() || treeController.isAnimating()) return;
+        historyManager.redo();
+        replayHistory();
+    }
+
+    private void replayHistory() {
+        setOperationButtonsDisabled(true);
+        
+        // 1. Tạm thời ngắt kết nối màn hình để chạy ngầm
+        logicalTree.setListener(null);
+        
+        // 2. Tạo cây mới trắng tinh
+        logicalTree = TreeFactory.create(currentTreeType);
+        
+        // 3. Phát lại toàn bộ lịch sử trong nháy mắt
+        List<HistoryOperation> operations = historyManager.getActiveHistory();
+        for (HistoryOperation op : operations) {
+            switch (op.getType()) {
+                case CREATE:
+                    logicalTree.create(op.getValue());
+                    break;
+                case INSERT:
+                    logicalTree.insert(op.getParentValue(), op.getValue());
+                    break;
+                case DELETE:
+                    logicalTree.delete(op.getValue());
+                    break;
+            }
+        }
+        
+        // 4. Gắn lại màn hình và yêu cầu vẽ lại ngay lập tức
+        logicalTree.setListener(treeController);
+        treeController.setTreeData(logicalTree);
+        redrawTree();
+        
+        setOperationButtonsDisabled(false);
+    }
+
+    private void updateUndoRedoButtons() {
+        if (undoButton != null) undoButton.setDisable(!historyManager.canUndo());
+        if (redoButton != null) redoButton.setDisable(!historyManager.canRedo());
+    }
+
     /**
      * Disables or enables the Insert, Delete, Search buttons.
      */
@@ -171,6 +239,13 @@ public class WorkspaceController {
             deleteButton.setDisable(disabled);
         if (searchButton != null)
             searchButton.setDisable(disabled);
+            
+        if (disabled) {
+            if (undoButton != null) undoButton.setDisable(true);
+            if (redoButton != null) redoButton.setDisable(true);
+        } else {
+            updateUndoRedoButtons();
+        }
     }
 
     @FXML
@@ -243,6 +318,9 @@ public class WorkspaceController {
         logicalTree = TreeFactory.create(currentTreeType);
         logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
+        
+        historyManager = new HistoryManager();
+        updateUndoRedoButtons();
     }
 
     private void setupComboBoxes() {
