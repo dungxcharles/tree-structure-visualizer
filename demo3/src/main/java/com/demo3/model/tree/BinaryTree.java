@@ -1,9 +1,6 @@
 package com.demo3.model.tree;
 
 import com.demo3.model.node.BinaryNode;
-import com.demo3.model.pseudocode.PseudocodeTemplate;
-import com.demo3.model.step.TreeOperation;
-import com.demo3.model.pseudocode.PseudocodeRepository;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -204,53 +201,5 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
                 queue.add(current.getRight());
             }
         }
-    }
-
-    @Override
-    protected BinaryNode cloneSubtree(BinaryNode node) {
-        if (node == null) {
-            return null;
-        }
-
-        BinaryNode copy = new BinaryNode(node.getValue());
-        copy.setLeft(cloneSubtree(node.getLeft()));
-        copy.setRight(cloneSubtree(node.getRight()));
-        return copy;
-    }
-
-    @Override
-    protected List<Integer> getSearchPath(int value) {
-        List<Integer> path = new ArrayList<>();
-        fillDepthFirstPath(this.root, value, path);
-        return path;
-    }
-
-    @Override
-    protected PseudocodeTemplate getPseudocodeTemplate(TreeOperation operation, TraversalType traversalType) {
-        if (operation == TreeOperation.INSERT) {
-            return PseudocodeRepository.getBinaryInsert();
-        }
-        if (operation == TreeOperation.DELETE) {
-            return PseudocodeRepository.getBinaryDelete();
-        }
-        if (operation == TreeOperation.SEARCH) {
-            return PseudocodeRepository.getBinarySearch();
-        }
-        return super.getPseudocodeTemplate(operation, traversalType);
-    }
-
-    private boolean fillDepthFirstPath(BinaryNode node, int value, List<Integer> path) {
-        if (node == null) {
-            return false;
-        }
-
-        path.add(node.getValue());
-        if (node.getValue() == value) {
-            return true;
-        }
-        if (fillDepthFirstPath(node.getLeft(), value, path)) {
-            return true;
-        }
-        return fillDepthFirstPath(node.getRight(), value, path);
     }
 }
