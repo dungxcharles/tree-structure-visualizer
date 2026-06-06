@@ -1,7 +1,7 @@
 package com.model.tree;
 
-
 import com.model.node.GenericNode;
+import com.model.step.StepType;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -16,12 +16,14 @@ public class GeneralTree extends AbstractTree<GenericNode> {
             return;
             // hoặc throw new IllegalArgumentException("Tree is not empty.");
         }
+        fireStep(StepType.INSERT_NODE, value, "Tạo gốc (root) với giá trị " + value);
         this.root = new GenericNode(value);
     }
 
     @Override
     public boolean insert(int parentValue, int childValue) {
         if (this.isEmpty()) {
+            fireStep(StepType.NOT_FOUND, parentValue, "Cây rỗng, không thể chèn");
             return false;
             // hoặc throw new IllegalArgumentException("Tree is empty. Create one first.");
         }
@@ -29,27 +31,34 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         GenericNode parentNode = findNode(this.root, parentValue);
 
         if (parentNode == null) {
+            fireStep(StepType.NOT_FOUND, parentValue, "Không tìm thấy parent " + parentValue);
             return false;
             // hoặc throw new IllegalArgumentException("Parent node with value " +
             // parentValue + " not found.");
         }
 
         if (findNode(this.root, childValue) != null) {
+            fireStep(StepType.COMPARE, childValue, "Giá trị " + childValue + " đã tồn tại");
             return false;
             // hoặc throw new IllegalArgumentException("Node with value " + childValue + "
             // already exists.");
         }
 
-        parentNode.addChild(new GenericNode(childValue));
-        return true;
+        fireStep(StepType.ADD_CHILD, childValue, "Thêm con " + childValue + " vào parent " + parentValue);
+        return parentNode.addChild(new GenericNode(childValue));
     }
 
     private GenericNode findNode(GenericNode current, int value) {
         if (current == null)
             return null;
-        if (current.getValue() == value)
+            
+        fireStep(StepType.COMPARE, current.getValue(), "So sánh với " + current.getValue());
+        if (current.getValue() == value) {
+            fireStep(StepType.FOUND, current.getValue(), "Đã tìm thấy " + current.getValue());
             return current;
+        }
 
+        fireStep(StepType.ITERATE_CHILDREN, current.getValue(), "Duyệt các con của " + current.getValue());
         for (GenericNode child : current.getChildren()) {
             GenericNode found = findNode(child, value);
             if (found != null)
@@ -62,7 +71,10 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     public boolean delete(int value) {
         if (isEmpty())
             return false;
+            
+        fireStep(StepType.COMPARE, this.root.getValue(), "So sánh root với " + value);
         if (this.root.getValue() == value) {
+            fireStep(StepType.DELETE_NODE, value, "Xóa gốc (root) " + value);
             this.root = null;
             return true;
         }
@@ -70,8 +82,11 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     }
 
     private boolean deleteNode(GenericNode current, int value) {
+        fireStep(StepType.ITERATE_CHILDREN, current.getValue(), "Duyệt các con của " + current.getValue() + " để tìm xóa " + value);
         for (GenericNode child : current.getChildren()) {
+            fireStep(StepType.COMPARE, child.getValue(), "So sánh con với " + value);
             if (child.getValue() == value) {
+                fireStep(StepType.REMOVE_CHILD, value, "Xóa con " + value + " khỏi " + current.getValue());
                 current.removeChild(child);
                 return true;
             }
@@ -80,6 +95,27 @@ public class GeneralTree extends AbstractTree<GenericNode> {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean update(int currentValue, int newValue) {
+        if (isEmpty()) {
+            return false;
+        }
+        if (currentValue != newValue && findNode(this.root, newValue) != null) {
+            fireStep(StepType.COMPARE, newValue, "Giá trị thay thế " + newValue + " đã tồn tại");
+            return false;
+        }
+
+        GenericNode node = findNode(this.root, currentValue);
+        if (node == null) {
+            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue + " để cập nhật");
+            return false;
+        }
+
+        fireStep(StepType.REPLACE_VALUE, currentValue, "Cập nhật giá trị " + currentValue + " thành " + newValue);
+        node.setValue(newValue);
+        return true;
     }
 
     @Override
@@ -102,6 +138,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         return 1 + maxChildHeight;
     }
 
+    // provide an interface for user not to pass the node root
     @Override
     public int getNumberOfNodes() {
         return countNodes(this.root);
@@ -119,6 +156,10 @@ public class GeneralTree extends AbstractTree<GenericNode> {
 
     @Override
     public List<Integer> traverse(TraversalType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Traversal type cannot be null.");
+        }
+
         List<Integer> result = new ArrayList<>();
         if (isEmpty())
             return result;
@@ -143,8 +184,14 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     private void preOrderTraverse(GenericNode node, List<Integer> result) {
         if (node == null)
             return;
+            
+        fireStep(StepType.VISIT, node.getValue(), "Pre-order: Thăm node " + node.getValue());
+        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
+        
+        fireStep(StepType.ITERATE_CHILDREN, node.getValue(), "Bắt đầu duyệt các con của " + node.getValue());
         for (GenericNode child : node.getChildren()) {
+            fireStep(StepType.GO_CHILD, child.getValue(), "Đi xuống nhánh con " + child.getValue());
             preOrderTraverse(child, result);
         }
     }
@@ -152,9 +199,15 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     private void postOrderTraverse(GenericNode node, List<Integer> result) {
         if (node == null)
             return;
+            
+        fireStep(StepType.ITERATE_CHILDREN, node.getValue(), "Bắt đầu duyệt các con của " + node.getValue());
         for (GenericNode child : node.getChildren()) {
+            fireStep(StepType.GO_CHILD, child.getValue(), "Đi xuống nhánh con " + child.getValue());
             postOrderTraverse(child, result);
         }
+        
+        fireStep(StepType.VISIT, node.getValue(), "Post-order: Thăm node " + node.getValue());
+        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
     }
 
@@ -166,8 +219,19 @@ public class GeneralTree extends AbstractTree<GenericNode> {
 
         while (!queue.isEmpty()) {
             GenericNode current = queue.poll();
+            fireStep(StepType.VISIT, current.getValue(), "BFS: Lấy node " + current.getValue() + " từ Queue và thăm");
+            fireStep(StepType.ADD_TO_RESULT, current.getValue(), "Thêm " + current.getValue() + " vào danh sách kết quả");
             result.add(current.getValue());
-            queue.addAll(current.getChildren());
+            
+            if (!current.getChildren().isEmpty()) {
+                fireStep(StepType.ITERATE_CHILDREN, current.getValue(), "Đưa các con của " + current.getValue() + " vào Queue");
+                for (GenericNode child : current.getChildren()) {
+                    fireStep(StepType.GO_CHILD, child.getValue(), "Đưa con " + child.getValue() + " vào Queue");
+                    queue.add(child);
+                }
+            }
         }
     }
+
+    // delete will erase the subtree
 }

@@ -4,10 +4,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -27,8 +27,7 @@
             </padding>
             <Button fx:id="homeButton" onMouseClicked="#homeButtonClicked" text="Home" />
             <Label text="Tree Type:" />
-         <TextField fx:id="treeTypeTF" />
-         <Button mnemonicParsing="false" text="Select" />
+         <ComboBox fx:id="treeTypeComboBox" promptText="Select Tree Type" />
         </HBox>
     </top>
 
@@ -44,7 +43,7 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
             <Label style="-fx-font-weight: bold;" text="Pseudo code" />
-            <TextArea editable="false" prefHeight="242.0" prefWidth="279.0" style="-fx-font-family: monospace; -fx-font-size: 12px;" text="&#10;" VBox.vgrow="NEVER" />
+            <ListView fx:id="pseudoCodeListView" prefHeight="242.0" prefWidth="279.0" VBox.vgrow="NEVER" />
          <Label text="Tree's statistics">
             <font>
                <Font name="System Bold" size="13.0" />
@@ -59,51 +58,49 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
             <children>
                <Label text="Height:" GridPane.rowIndex="1" />
                <Label text="Number of nodes:" GridPane.rowIndex="2" />
-               <Label text="Leaf nodes:" GridPane.rowIndex="3" />
-               <Label text="Root value:" GridPane.rowIndex="4" />
-               <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-               <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               <Label text="Root value:" GridPane.rowIndex="3" />
+               <Label fx:id="heightLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <Label fx:id="numNodesLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <Label fx:id="rootValueLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                <Label text="Tree type:" />
-               <Label text="null" GridPane.columnIndex="1" />
+               <Label fx:id="treeTypeLabel" text="null" GridPane.columnIndex="1" />
             </children>
          </GridPane>
         </VBox>
     </right>
 
     <bottom>
-        <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-border-color: #cccccc; -fx-border-width: 1 0 0 0; -fx-background-color: #ffffff;">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-            
-            <TextField prefWidth="60.0" />
-            <Button style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;" text="Insert" />
-            <Button style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
-            <Button style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="Search" />
-            
-            <Separator orientation="VERTICAL" />
-            
-            <Button text="Random" />
-            <Button text="&lt;&lt;" />
-            <Button text="Replay" />
-            <Button text="&gt;&gt;" />
-            
-            <Separator orientation="VERTICAL" />
-            
-            <Label text="Traverse" />
-            <ComboBox prefWidth="120.0" />
-            
-            <Label text="Speed:" />
-            <Slider value="50.0" />
-        </HBox>
+        <VBox style="-fx-border-color: #cccccc; -fx-border-width: 1 0 0 0; -fx-background-color: #ffffff;">
+            <!-- Operation toolbar -->
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+                
+                <TextField fx:id="parentValueTextField" managed="false" prefWidth="60.0" promptText="Parent" visible="false" />
+                <TextField fx:id="valueTextField" prefWidth="60.0" promptText="Value" />
+                <Button fx:id="insertButton" onAction="#handleInsertAction" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;" text="Insert" />
+                <Button fx:id="deleteButton" onAction="#handleDeleteAction" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
+                <Button fx:id="searchButton" onAction="#handleSearchAction" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="Search" />
+                
+                <Button text="&lt;&lt;" />
+                <Button text="Replay" />
+                <Button text="&gt;&gt;" />
+                
+                <Separator orientation="VERTICAL" />
+                
+                <Label text="Traverse" />
+                <ComboBox fx:id="traversalComboBox" prefWidth="120.0" promptText="Select" />
+                
+                <Label text="Speed:" />
+                <Slider fx:id="speedSlider" min="0.5" max="1.5" value="1.0" majorTickUnit="0.5" minorTickCount="4" showTickMarks="true" showTickLabels="true" />
+            </HBox>
+        </VBox>
     </bottom>
 
 </BorderPane>
