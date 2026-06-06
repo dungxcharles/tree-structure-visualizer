@@ -2,14 +2,9 @@ package com.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.List;
 
 public class NavigationManager {
 
@@ -18,13 +13,9 @@ public class NavigationManager {
     private double currentWidth = 1280;
     private double currentHeight = 720;
 
-    private NavigationManager() {
-    }
-
     public static NavigationManager getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new NavigationManager();
-        }
         return instance;
     }
 
@@ -54,29 +45,8 @@ public class NavigationManager {
                 double widthDiff = stage.getWidth() - scene.getWidth();
                 double heightDiff = stage.getHeight() - scene.getHeight();
 
-                double targetStageWidth = width + widthDiff;
-                double targetStageHeight = height + heightDiff;
-
-                Screen screen = Screen.getPrimary();
-                if (stage.getWidth() > 0 && stage.getHeight() > 0) {
-                    List<Screen> screens = Screen.getScreensForRectangle(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
-                    if (!screens.isEmpty()) {
-                        screen = screens.get(0);
-                    }
-                }
-                Rectangle2D screenBounds = screen.getVisualBounds();
-                double maxStageWidth = screenBounds.getWidth();
-                double maxStageHeight = screenBounds.getHeight();
-
-                if (targetStageWidth > maxStageWidth) {
-                    targetStageWidth = maxStageWidth;
-                }
-                if (targetStageHeight > maxStageHeight) {
-                    targetStageHeight = maxStageHeight;
-                }
-
-                stage.setWidth(targetStageWidth);
-                stage.setHeight(targetStageHeight);
+                stage.setWidth(width + widthDiff);
+                stage.setHeight(height + heightDiff);
                 stage.centerOnScreen();
             }
         }
@@ -85,37 +55,30 @@ public class NavigationManager {
     public void setFullScreen(boolean isFullScreen) {
         if (stage != null) {
             stage.setFullScreen(isFullScreen);
-            if (!isFullScreen) {
+            if (!isFullScreen)
                 Platform.runLater(() -> setResolution(currentWidth, currentHeight));
-            }
         }
     }
 
     public void navigateTo(String fxmlPath) {
-        if (stage == null) {
-            System.err.println("Stage is not set in NavigationManager.");
-            return;
-        }
         try {
             boolean wasFullScreen = stage.isFullScreen();
-            
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
             if (stage.getScene() != null) {
                 stage.getScene().setRoot(root);
-                if (wasFullScreen) {
+                if (wasFullScreen)
                     stage.setFullScreen(true);
-                }
             } else {
                 Scene scene = new Scene(root, currentWidth, currentHeight);
                 stage.setScene(scene);
-                if (wasFullScreen) {
+                if (wasFullScreen)
                     stage.setFullScreen(true);
-                }
                 stage.show();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -8,9 +8,6 @@ import javafx.scene.text.Font;
 public class DefaultNodeRenderer implements NodeRenderer {
     private static final double RADIUS = 20.0;
 
-    public DefaultNodeRenderer() {
-    }
-
     @Override
     public void render(GraphicsContext gc, VisualNode node) {
         if (!node.isVisible())

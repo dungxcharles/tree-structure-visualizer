@@ -49,9 +49,7 @@ public class AnimationManager {
         for (int i = 0; i < animations.size() - 1; i++) {
             TreeAnimation current = animations.get(i);
             TreeAnimation next = animations.get(i + 1);
-            
-            Runnable originalOnFinished = null; // In case we need to preserve existing, though usually there isn't one
-            
+
             current.setOnFinished(() -> {
                 currentRunningAnimations.remove(current);
                 currentRunningAnimations.add(next);
@@ -87,7 +85,7 @@ public class AnimationManager {
         currentRunningAnimations.clear();
         currentRunningAnimations.addAll(animations);
 
-        int[] finishedCount = {0};
+        int[] finishedCount = { 0 };
         Runnable checkFinished = () -> {
             finishedCount[0]++;
             if (finishedCount[0] == animations.size()) {

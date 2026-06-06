@@ -14,8 +14,6 @@ public class FadeAnimation implements TreeAnimation {
 
         node.setOpacity(startOpacity);
 
-        final VisualEdge edge = parentEdge;
-
         this.transition = new Transition() {
             {
                 setCycleDuration(Duration.millis(durationMs));
