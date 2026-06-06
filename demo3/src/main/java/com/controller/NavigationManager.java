@@ -70,11 +70,9 @@ public class NavigationManager {
 
                 if (targetStageWidth > maxStageWidth) {
                     targetStageWidth = maxStageWidth;
-                    this.currentWidth = maxStageWidth - widthDiff;
                 }
                 if (targetStageHeight > maxStageHeight) {
                     targetStageHeight = maxStageHeight;
-                    this.currentHeight = maxStageHeight - heightDiff;
                 }
 
                 stage.setWidth(targetStageWidth);

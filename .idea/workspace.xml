@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixed fullscreen bug when switching between screens.">
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/settings-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/settings-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,61 +36,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.000082228621743" />
-      <entry key="MS500" value="1.1604867706165565" />
-      <entry key="S2" value="2.3486302339663743" />
-      <entry key="S5" value="4.1145258033569805" />
-      <entry key="S10" value="5.514476794647137" />
-      <entry key="S30" value="7.665437624063191" />
-      <entry key="S60" value="10.316378690979619" />
-      <entry key="M2" value="14.869547848887732" />
-      <entry key="M5" value="24.220832895594935" />
-      <entry key="M10" value="34.62539429419792" />
-      <entry key="M15" value="42.48870341394882" />
-      <entry key="M30" value="56.83183635814429" />
-      <entry key="H1" value="68.68027378201721" />
-      <entry key="H2" value="76.49255834748902" />
-      <entry key="H4" value="81.0090436822051" />
-      <entry key="D1" value="85.13279206049566" />
-      <entry key="W1" value="85.87521281385331" />
+      <entry key="MS100" value="1.000021529678746" />
+      <entry key="MS500" value="1.1617362739724457" />
+      <entry key="S2" value="2.815116561111266" />
+      <entry key="S5" value="5.707130228456427" />
+      <entry key="S10" value="8.42071687725096" />
+      <entry key="S30" value="11.644686782576379" />
+      <entry key="S60" value="12.745395850157028" />
+      <entry key="M2" value="13.54176839962511" />
+      <entry key="M5" value="17.97932900107354" />
+      <entry key="M10" value="28.361217120152325" />
+      <entry key="M15" value="37.68739134258758" />
+      <entry key="M30" value="56.46906433673721" />
+      <entry key="H1" value="73.37960504851189" />
+      <entry key="H2" value="85.12713071429032" />
+      <entry key="H4" value="92.1168285176725" />
+      <entry key="D1" value="98.61859116405485" />
+      <entry key="W1" value="99.80092426995417" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="2.3089179021834623E-85" />
-      <entry key="S2" value="1.0474816349762717E-21" />
-      <entry key="S5" value="6.932815875571906E-9" />
-      <entry key="S10" value="1.4013935316971023E-4" />
-      <entry key="S30" value="0.13287515135163722" />
-      <entry key="S60" value="1.1245405481427448" />
-      <entry key="M2" value="4.383077215027156" />
-      <entry key="M5" value="12.473897643297878" />
-      <entry key="M10" value="20.38429032571232" />
-      <entry key="M15" value="25.22479315048298" />
-      <entry key="M30" value="32.63082481948249" />
-      <entry key="H1" value="37.95812732737825" />
-      <entry key="H2" value="41.22295846123032" />
-      <entry key="H4" value="43.041161440030606" />
-      <entry key="D1" value="44.663166439401465" />
-      <entry key="W1" value="44.95161900029878" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="3.6647829783979546E-135" />
+      <entry key="S5" value="2.873891738132703E-54" />
+      <entry key="S10" value="2.853254280444509E-27" />
+      <entry key="S30" value="3.6283059013314814E-9" />
+      <entry key="S60" value="1.8582544483716824E-4" />
+      <entry key="M2" value="0.0563435429229546" />
+      <entry key="M5" value="2.1858894215682168" />
+      <entry key="M10" value="8.533134721330542" />
+      <entry key="M15" value="14.115717267930938" />
+      <entry key="M30" value="24.409884273123236" />
+      <entry key="H1" value="32.83020636418688" />
+      <entry key="H2" value="38.33748101205669" />
+      <entry key="H4" value="41.507463108983416" />
+      <entry key="D1" value="44.39389096005233" />
+      <entry key="W1" value="44.912802220447446" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9593440994008895" />
-      <entry key="MS500" value="1.151292776942849" />
-      <entry key="S2" value="2.344197981126605" />
-      <entry key="S5" value="4.11137865895791" />
-      <entry key="S10" value="5.512473322961903" />
-      <entry key="S30" value="7.792343764651392" />
-      <entry key="S60" value="11.41867844857223" />
-      <entry key="M2" value="19.206283177448174" />
-      <entry key="M5" value="36.6360509798776" />
-      <entry key="M10" value="54.95693167214591" />
-      <entry key="M15" value="67.66747144902642" />
-      <entry key="M30" value="89.43057962608472" />
-      <entry key="H1" value="106.61887602177899" />
-      <entry key="H2" value="117.70464951242784" />
-      <entry key="H4" value="124.04445846934799" />
-      <entry key="D1" value="129.79495368345118" />
-      <entry key="W1" value="130.82668706703794" />
+      <entry key="MS100" value="0.9726758876919888" />
+      <entry key="MS500" value="1.15524506306095" />
+      <entry key="S2" value="2.8104528582313617" />
+      <entry key="S5" value="5.702676202710211" />
+      <entry key="S10" value="8.4172375376652" />
+      <entry key="S30" value="11.643033885591878" />
+      <entry key="S60" value="12.744668051850116" />
+      <entry key="M2" value="13.5970382558514" />
+      <entry key="M5" value="20.154738583014655" />
+      <entry key="M10" value="36.872169258996095" />
+      <entry key="M15" value="51.777286541411755" />
+      <entry key="M30" value="80.85491622657054" />
+      <entry key="H1" value="106.19290732732019" />
+      <entry key="H2" value="123.45449673813732" />
+      <entry key="H4" value="133.61874555993427" />
+      <entry key="D1" value="143.01148266781598" />
+      <entry key="W1" value="144.71358176857237" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -105,34 +105,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Launcher.executor": "Run",
-    "Application.MainMenuApplication.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feature/workspace",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainMenuApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/workspace&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\view" />
@@ -143,8 +144,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.24374.151" />
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.24374.151" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
       </set>
     </attachedChunks>
   </component>
@@ -196,7 +197,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780738827454</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug.">
+      <option name="closed" value="true" />
+      <created>1780740484692</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1780740484692</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,6 +227,7 @@
     <MESSAGE value="Feat: Granting access to workspace from main menu." />
     <MESSAGE value="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml" />
     <MESSAGE value="Fix: Fixed fullscreen bug when switching between screens." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: Fixed fullscreen bug when switching between screens." />
+    <MESSAGE value="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug." />
   </component>
 </project>
