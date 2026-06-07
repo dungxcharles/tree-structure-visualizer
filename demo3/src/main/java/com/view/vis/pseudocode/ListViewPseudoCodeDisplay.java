@@ -1,11 +1,9 @@
 package com.view.vis.pseudocode;
 
-import com.controller.NavigationManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.paint.Color;
 import javafx.application.Platform;
 
 public class ListViewPseudoCodeDisplay implements PseudoCodeDisplay {
@@ -19,32 +17,27 @@ public class ListViewPseudoCodeDisplay implements PseudoCodeDisplay {
         this.items = FXCollections.observableArrayList();
         this.listView.setItems(this.items);
 
-        // Custom CellFactory to change text color based on active index and active theme
+        // Custom CellFactory to manage style classes instead of inline styles
         this.listView.setCellFactory(lv -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
-                    setStyle("-fx-background-color: transparent;");
+                    setGraphic(null);
+                    getStyleClass().remove("pseudo-step-cell");
+                    getStyleClass().remove("active-step");
                 } else {
                     setText(item);
-                    boolean isDark = NavigationManager.getInstance().isDarkMode();
+                    if (!getStyleClass().contains("pseudo-step-cell")) {
+                        getStyleClass().add("pseudo-step-cell");
+                    }
                     if (getIndex() == activeIndex) {
-                        if (isDark) {
-                            setTextFill(Color.web("#ffd54f")); // Gold/amber text in dark mode
-                            setStyle("-fx-background-color: #5e4a00; -fx-font-weight: bold; -fx-font-family: monospace; -fx-font-size: 12px;"); // Dark gold highlight
-                        } else {
-                            setTextFill(Color.BLACK); // Black text for readability on yellow
-                            setStyle("-fx-background-color: #ffeb3b; -fx-font-weight: bold; -fx-font-family: monospace; -fx-font-size: 12px;"); // Bright yellow
+                        if (!getStyleClass().contains("active-step")) {
+                            getStyleClass().add("active-step");
                         }
                     } else {
-                        if (isDark) {
-                            setTextFill(Color.web("#dddddd")); // Light grey in dark mode
-                        } else {
-                            setTextFill(Color.web("#555555")); // Gray for past steps in light mode
-                        }
-                        setStyle("-fx-background-color: transparent; -fx-font-weight: normal; -fx-font-family: monospace; -fx-font-size: 12px;");
+                        getStyleClass().remove("active-step");
                     }
                 }
             }

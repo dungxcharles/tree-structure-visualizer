@@ -41,7 +41,7 @@ public class SettingsController {
             }
         }
 
-        boolean isDark = NavigationManager.getInstance().isDarkMode();
+        boolean isDark = com.theme.ThemeManager.getInstance().isDarkMode();
         if (theme != null) {
             String targetTheme = isDark ? "Dark" : "Light";
             for (Toggle toggle : theme.getToggles()) {
@@ -70,7 +70,10 @@ public class SettingsController {
     void changeTheme(ActionEvent event) {
         RadioButton selectedButton = (RadioButton) event.getSource();
         boolean isDark = "Dark".equals(selectedButton.getText());
-        NavigationManager.getInstance().setDarkMode(isDark);
+        com.theme.ThemeManager.getInstance().setThemeType(isDark ? com.theme.ThemeType.DARK : com.theme.ThemeType.LIGHT);
+        if (NavigationManager.getInstance().getStage() != null && NavigationManager.getInstance().getStage().getScene() != null) {
+            com.theme.ThemeManager.getInstance().applyTheme(NavigationManager.getInstance().getStage().getScene());
+        }
     }
 
     @FXML

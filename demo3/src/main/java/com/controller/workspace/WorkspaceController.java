@@ -103,18 +103,9 @@ public class WorkspaceController {
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        // Apply dark mode styling to the dialog pane if dark mode is active
+        // Apply theme styling to the dialog pane
         javafx.scene.control.DialogPane dialogPane = alert.getDialogPane();
-        try {
-            String baseStyle = getClass().getResource("/com/view/base-style.css").toExternalForm();
-            dialogPane.getStylesheets().add(baseStyle);
-            if (NavigationManager.getInstance().isDarkMode()) {
-                String darkStyle = getClass().getResource("/com/view/dark-mode.css").toExternalForm();
-                dialogPane.getStylesheets().add(darkStyle);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        com.theme.ThemeManager.getInstance().applyThemeToDialogPane(dialogPane);
 
         alert.showAndWait();
     }

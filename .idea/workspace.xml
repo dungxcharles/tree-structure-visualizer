@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Improved the tree animation." />
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Added the exception classes.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/credits/CreditWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/credits/CreditWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/pseudocode/ListViewPseudoCodeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/pseudocode/ListViewPseudoCodeDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultEdgeRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultEdgeRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultNodeRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultNodeRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/base-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/base-style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/dark-mode.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/dark-mode.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,61 +50,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0037497781888003" />
-      <entry key="MS500" value="1.4360198160090099" />
-      <entry key="S2" value="3.1520362820659034" />
-      <entry key="S5" value="4.4788980936308604" />
-      <entry key="S10" value="5.152513228431597" />
-      <entry key="S30" value="5.695276150506864" />
-      <entry key="S60" value="5.844654391598579" />
-      <entry key="M2" value="5.925385828509759" />
-      <entry key="M5" value="6.763190605690981" />
-      <entry key="M10" value="11.303684335753172" />
-      <entry key="M15" value="17.106489053092282" />
-      <entry key="M30" value="35.81499735394152" />
-      <entry key="H1" value="66.65445313979448" />
-      <entry key="H2" value="99.65322211396307" />
-      <entry key="H4" value="124.86885431678093" />
-      <entry key="D1" value="152.5565961706262" />
-      <entry key="W1" value="158.05893034668637" />
+      <entry key="MS100" value="1.000012920308111" />
+      <entry key="MS500" value="1.1056291421268756" />
+      <entry key="S2" value="1.9851978476427434" />
+      <entry key="S5" value="4.486956274154575" />
+      <entry key="S10" value="7.239266292006906" />
+      <entry key="S30" value="10.578568492723749" />
+      <entry key="S60" value="11.711748341708162" />
+      <entry key="M2" value="12.338745730750505" />
+      <entry key="M5" value="13.504931051605695" />
+      <entry key="M10" value="18.120050709259832" />
+      <entry key="M15" value="23.937915408690408" />
+      <entry key="M30" value="42.65637715671861" />
+      <entry key="H1" value="73.51387170671484" />
+      <entry key="H2" value="106.55014122045543" />
+      <entry key="H4" value="131.80478313090873" />
+      <entry key="D1" value="159.54362408742378" />
+      <entry key="W1" value="165.05701207323412" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
       <entry key="S5" value="0.0" />
-      <entry key="S10" value="7.15880718209715E-184" />
-      <entry key="S30" value="2.2884282009002944E-61" />
-      <entry key="S60" value="1.4757808788572789E-30" />
-      <entry key="M2" value="5.021141972891847E-15" />
-      <entry key="M5" value="1.3170780983263074E-5" />
-      <entry key="M10" value="0.02094596011072648" />
-      <entry key="M15" value="0.25686054373986916" />
-      <entry key="M30" value="3.292781732256081" />
-      <entry key="H1" value="12.057915172044162" />
-      <entry key="H2" value="23.233940867725455" />
-      <entry key="H4" value="32.3128930735968" />
-      <entry key="D1" value="42.57926428802055" />
-      <entry key="W1" value="44.6458256198561" />
+      <entry key="S10" value="3.5018546948285364E-184" />
+      <entry key="S30" value="1.8031136864129642E-61" />
+      <entry key="S60" value="1.3099803719474147E-30" />
+      <entry key="M2" value="4.730684184128282E-15" />
+      <entry key="M5" value="1.2860566808123925E-5" />
+      <entry key="M10" value="0.02069781796587534" />
+      <entry key="M15" value="0.25482787041195704" />
+      <entry key="M30" value="3.279727092242472" />
+      <entry key="H1" value="12.033988886562655" />
+      <entry key="H2" value="23.210878093838538" />
+      <entry key="H4" value="32.29685167157265" />
+      <entry key="D1" value="42.575740553069785" />
+      <entry key="W1" value="44.64529777863446" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9695835692318191" />
-      <entry key="MS500" value="1.426675831456382" />
-      <entry key="S2" value="3.146906583054263" />
-      <entry key="S5" value="4.475885274968412" />
-      <entry key="S10" value="5.150755229083397" />
-      <entry key="S30" value="5.694621710750285" />
-      <entry key="S60" value="5.844317696145421" />
-      <entry key="M2" value="5.925214932300469" />
-      <entry key="M5" value="6.763126112083277" />
-      <entry key="M10" value="11.324512178169847" />
-      <entry key="M15" value="17.362817393635567" />
-      <entry key="M30" value="39.10448241140349" />
-      <entry key="H1" value="78.70612027995797" />
-      <entry key="H2" value="122.8810086843474" />
-      <entry key="H4" value="157.17741635899426" />
-      <entry key="D1" value="195.13489938407488" />
-      <entry key="W1" value="202.7046117460978" />
+      <entry key="MS100" value="0.9460699551020488" />
+      <entry key="MS500" value="1.0935807910816888" />
+      <entry key="S2" value="1.9791097890470053" />
+      <entry key="S5" value="4.479302935273516" />
+      <entry key="S10" value="7.23250148472629" />
+      <entry key="S30" value="10.575147335675208" />
+      <entry key="S60" value="11.709842753936604" />
+      <entry key="M2" value="12.337739487377897" />
+      <entry key="M5" value="13.50451947077814" />
+      <entry key="M10" value="18.14045571357844" />
+      <entry key="M15" value="24.192097489402855" />
+      <entry key="M30" value="45.93276154379844" />
+      <entry key="H1" value="85.54159535853323" />
+      <entry key="H2" value="129.75485631291497" />
+      <entry key="H4" value="164.09729851153347" />
+      <entry key="D1" value="202.11840241007465" />
+      <entry key="W1" value="209.70216545663502" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -107,35 +119,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Launcher.executor": "Run",
-    "Application.MainMenuApplication.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "release/v1.2",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainMenuApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;release/v1.2&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\view" />
@@ -255,7 +267,31 @@
       <option name="project" value="LOCAL" />
       <updated>1780818986610</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Fix: Improved the tree animation.">
+      <option name="closed" value="true" />
+      <created>1780819450042</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1780819450042</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fix: Added the exception classes.">
+      <option name="closed" value="true" />
+      <created>1780821327716</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1780821327716</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fix: Added the exception classes.">
+      <option name="closed" value="true" />
+      <created>1780821340778</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1780821340778</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,6 +319,7 @@
     <MESSAGE value="Fix: Disabling the the pause/play button when there is no operation running." />
     <MESSAGE value="Fix: Disabling the traverse operation when there is any operation running." />
     <MESSAGE value="Fix: Improved the tree animation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: Improved the tree animation." />
+    <MESSAGE value="Fix: Added the exception classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Added the exception classes." />
   </component>
 </project>

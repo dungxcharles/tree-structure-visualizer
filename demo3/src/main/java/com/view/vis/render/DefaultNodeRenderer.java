@@ -1,5 +1,7 @@
 package com.view.vis.render;
 
+import com.theme.Theme;
+import com.theme.ThemeManager;
 import com.view.vis.model.VisualNode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -18,37 +20,15 @@ public class DefaultNodeRenderer implements NodeRenderer {
 
         gc.setGlobalAlpha(node.getOpacity());
 
-        boolean isDark = com.controller.NavigationManager.getInstance().isDarkMode();
+        Theme theme = ThemeManager.getInstance().getCurrentTheme();
         String fillHex = node.getColorHex();
 
-        Color fill;
-        Color textFill;
-
-        if (isDark) {
-            if ("#ffffff".equalsIgnoreCase(fillHex) || "#333333".equals(fillHex) || "#000000".equals(fillHex)) {
-                // Standard/Black nodes match the grey canvas background
-                fill = Color.web("#2b2b2b");
-                textFill = Color.WHITE;
-            } else {
-                // Red nodes or active highlight/animation colors
-                fill = Color.web(fillHex);
-                if ("#ff0000".equalsIgnoreCase(fillHex)) {
-                    textFill = Color.WHITE; // Red node -> white text
-                } else {
-                    textFill = Color.BLACK; // Highlight colors -> black text
-                }
-            }
-        } else {
-            fill = Color.web(fillHex);
-            if ("#333333".equals(fillHex) || "#000000".equals(fillHex)) {
-                textFill = Color.WHITE;
-            } else {
-                textFill = Color.BLACK;
-            }
-        }
+        Color fill = theme.getNodeFillColor(fillHex);
+        Color stroke = theme.getNodeStrokeColor(fillHex);
+        Color textFill = theme.getNodeTextFillColor(fillHex);
 
         gc.setFill(fill);
-        gc.setStroke(isDark ? Color.WHITE : Color.BLACK);
+        gc.setStroke(stroke);
         gc.setLineWidth(2.0);
         gc.fillOval(x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
         gc.strokeOval(x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);

@@ -79,6 +79,12 @@
     -fx-background-radius: 4px;
 }
 
+.pseudo-code-list .list-cell.active-step {
+    -fx-background-color: #ffeb3b !important;
+    -fx-text-fill: #000000 !important;
+    -fx-font-weight: bold !important;
+}
+
 .stats-grid {
     -fx-hgap: 15px;
     -fx-vgap: 12px;

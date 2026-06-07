@@ -99,6 +99,12 @@
     -fx-text-fill: #ffd54f !important;
 }
 
+.pseudo-code-list .list-cell.active-step {
+    -fx-background-color: #5e4a00 !important;
+    -fx-text-fill: #ffd54f !important;
+    -fx-font-weight: bold !important;
+}
+
 .input-field {
     -fx-background-color: #444444 !important;
     -fx-border-color: #555555 !important;
@@ -259,6 +265,23 @@
 
 .progress-bar .bar {
     -fx-background-color: #64b5f6 !important; /* Premium light blue */
+}
+
+/* Credits & Page Builder elements overrides in Dark Mode */
+.credit-title {
+    -fx-text-fill: #ecf0f1 !important;
+}
+
+.credit-content {
+    -fx-text-fill: #bdc3c7 !important;
+}
+
+.pagination-dot {
+    -fx-fill: #555555 !important;
+}
+
+.pagination-dot-active {
+    -fx-fill: #3498db !important;
 }
 
 

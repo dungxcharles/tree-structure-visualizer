@@ -1,5 +1,7 @@
 package com.controller;
 
+import com.theme.ThemeManager;
+import com.theme.ThemeType;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -17,7 +19,6 @@ public class NavigationManager {
     private static NavigationManager instance;
     private double currentWidth = 1280;
     private double currentHeight = 720;
-    private boolean isDarkMode = false;
 
     private NavigationManager() {
     }
@@ -38,36 +39,18 @@ public class NavigationManager {
     }
 
     public boolean isDarkMode() {
-        return isDarkMode;
+        return ThemeManager.getInstance().isDarkMode();
     }
 
     public void setDarkMode(boolean isDarkMode) {
-        this.isDarkMode = isDarkMode;
+        ThemeManager.getInstance().setThemeType(isDarkMode ? ThemeType.DARK : ThemeType.LIGHT);
         if (stage != null && stage.getScene() != null) {
             applyTheme(stage.getScene());
         }
     }
 
     public void applyTheme(Scene scene) {
-        if (scene == null) return;
-        try {
-            String baseStyle = getClass().getResource("/com/view/base-style.css").toExternalForm();
-            String darkStyle = getClass().getResource("/com/view/dark-mode.css").toExternalForm();
-
-            if (!scene.getStylesheets().contains(baseStyle)) {
-                scene.getStylesheets().add(baseStyle);
-            }
-
-            if (isDarkMode) {
-                if (!scene.getStylesheets().contains(darkStyle)) {
-                    scene.getStylesheets().add(darkStyle);
-                }
-            } else {
-                scene.getStylesheets().remove(darkStyle);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ThemeManager.getInstance().applyTheme(scene);
     }
 
     public double getCurrentWidth() {
