@@ -167,7 +167,98 @@
     -fx-tick-label-fill: white !important;
 }
 
-/* ComboBox Prompt Text */
+/* ComboBox Prompt Text & Inner List Cell */
 .combo-box .list-cell {
+    -fx-background-color: transparent !important;
     -fx-text-fill: white !important;
 }
+
+/* =========================================================================
+   ComboBox Dropdown Popup Styling in Dark Mode
+   ========================================================================= */
+
+.combo-box-popup {
+    -fx-background-color: transparent !important;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #383838 !important;
+    -fx-border-color: #555555 !important;
+    -fx-border-width: 1px !important;
+    -fx-background-insets: 0 !important;
+    -fx-padding: 0 !important;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 5) !important;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #383838 !important;
+    -fx-text-fill: #e0e0e0 !important;
+    -fx-padding: 8px 16px !important;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #4a4a4a !important;
+    -fx-text-fill: white !important;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #1a73e8 !important;
+    -fx-text-fill: white !important;
+}
+
+/* =========================================================================
+   Dialog Pane / Alerts Styling in Dark Mode
+   ========================================================================= */
+
+.dialog-pane {
+    -fx-background-color: #2b2b2b !important;
+}
+
+.dialog-pane > *.layout {
+    -fx-background-color: #2b2b2b !important;
+}
+
+.dialog-pane .label {
+    -fx-text-fill: white !important;
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: #383838 !important;
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-text-fill: white !important;
+    -fx-font-weight: bold;
+}
+
+.dialog-pane .button-bar {
+    -fx-background-color: #2b2b2b !important;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #444444 !important;
+    -fx-text-fill: white !important;
+    -fx-border-color: #555555 !important;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 16px;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #555555 !important;
+}
+
+.dialog-pane .button:focused {
+    -fx-border-color: #64b5f6 !important;
+}
+
+/* Operation Progress Bar Dark Mode */
+.progress-bar .track {
+    -fx-background-color: #444444 !important;
+}
+
+.progress-bar .bar {
+    -fx-background-color: #64b5f6 !important; /* Premium light blue */
+}
+
+

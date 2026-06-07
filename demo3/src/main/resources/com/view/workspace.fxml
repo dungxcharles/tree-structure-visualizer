@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
@@ -85,6 +86,7 @@
             
             <Label style="-fx-font-weight: bold; -fx-text-fill: #5f6368;" text="Traverse:" />
             <ComboBox fx:id="traversalComboBox" prefWidth="140.0" promptText="Select Type" styleClass="input-field" />
+            <ProgressBar fx:id="operationProgressBar" prefWidth="120.0" progress="0.0" visible="false" managed="false" />
             
             <Pane HBox.hgrow="ALWAYS" /> <!-- Spacer -->
             

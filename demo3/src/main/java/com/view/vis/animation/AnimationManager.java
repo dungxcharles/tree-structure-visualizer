@@ -5,9 +5,14 @@ import java.util.List;
 public class AnimationManager {
 
     private Runnable onAllFinished;
+    private java.util.function.DoubleConsumer onProgressChanged;
 
     public void setOnAllFinished(Runnable onAllFinished) {
         this.onAllFinished = onAllFinished;
+    }
+
+    public void setOnProgressChanged(java.util.function.DoubleConsumer onProgressChanged) {
+        this.onProgressChanged = onProgressChanged;
     }
 
     private java.util.List<TreeAnimation> currentRunningAnimations = new java.util.ArrayList<>();
@@ -37,6 +42,9 @@ public class AnimationManager {
 
     public void playSequential(List<TreeAnimation> animations) {
         if (animations == null || animations.isEmpty()) {
+            if (onProgressChanged != null) {
+                onProgressChanged.accept(1.0);
+            }
             if (onAllFinished != null) {
                 onAllFinished.run();
             }
@@ -46,13 +54,22 @@ public class AnimationManager {
         isPaused = false;
         currentRunningAnimations.clear();
 
+        int total = animations.size();
+        if (onProgressChanged != null) {
+            onProgressChanged.accept(0.0);
+        }
+
         for (int i = 0; i < animations.size() - 1; i++) {
             TreeAnimation current = animations.get(i);
             TreeAnimation next = animations.get(i + 1);
+            final double progress = (double) (i + 1) / total;
 
             current.setOnFinished(() -> {
                 currentRunningAnimations.remove(current);
                 currentRunningAnimations.add(next);
+                if (onProgressChanged != null) {
+                    onProgressChanged.accept(progress);
+                }
                 if (!isPaused) {
                     next.play();
                 }
@@ -62,6 +79,9 @@ public class AnimationManager {
         TreeAnimation last = animations.get(animations.size() - 1);
         last.setOnFinished(() -> {
             currentRunningAnimations.remove(last);
+            if (onProgressChanged != null) {
+                onProgressChanged.accept(1.0);
+            }
             if (onAllFinished != null) {
                 onAllFinished.run();
             }
@@ -75,6 +95,9 @@ public class AnimationManager {
 
     public void playParallel(List<TreeAnimation> animations) {
         if (animations == null || animations.isEmpty()) {
+            if (onProgressChanged != null) {
+                onProgressChanged.accept(1.0);
+            }
             if (onAllFinished != null) {
                 onAllFinished.run();
             }
@@ -85,9 +108,17 @@ public class AnimationManager {
         currentRunningAnimations.clear();
         currentRunningAnimations.addAll(animations);
 
+        int total = animations.size();
+        if (onProgressChanged != null) {
+            onProgressChanged.accept(0.0);
+        }
+
         int[] finishedCount = { 0 };
         Runnable checkFinished = () -> {
             finishedCount[0]++;
+            if (onProgressChanged != null) {
+                onProgressChanged.accept((double) finishedCount[0] / total);
+            }
             if (finishedCount[0] == animations.size()) {
                 if (onAllFinished != null) {
                     onAllFinished.run();

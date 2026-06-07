@@ -48,6 +48,8 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     private double canvasWidth;
     private double canvasHeight;
 
+    private Consumer<Double> progressListener;
+
     public TreeVisualizationController(
             TreeCanvas canvas,
             AnimationManager animationManager,
@@ -58,8 +60,15 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         this.layoutStrategy = layoutStrategy;
         this.recordedSteps = new ArrayList<>();
         this.animatorFactory = new StepAnimatorFactory();
+
+        this.animationManager.setOnProgressChanged(progress -> {
+            if (progressListener != null) {
+                progressListener.accept(progress);
+            }
+        });
     }
 
+    public void setProgressListener(Consumer<Double> listener) { this.progressListener = listener; }
     public void setFxCanvas(Canvas fxCanvas) { this.fxCanvas = fxCanvas; }
     public void setStepHighlightCallback(Consumer<String> callback) { this.stepHighlightCallback = callback; }
     public void setAnimationSpeed(double speed) { this.animationSpeed = speed; }

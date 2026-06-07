@@ -149,3 +149,25 @@
 .slider {
     -fx-pref-width: 150px;
 }
+
+/* Operation Progress Bar */
+.progress-bar {
+    -fx-pref-height: 6px;
+    -fx-min-height: 6px;
+    -fx-max-height: 6px;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.progress-bar .track {
+    -fx-background-color: #e8eaed;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3px;
+}
+
+.progress-bar .bar {
+    -fx-background-color: #1a73e8; /* Sleek Google Blue */
+    -fx-background-insets: 0;
+    -fx-background-radius: 3px;
+}
+

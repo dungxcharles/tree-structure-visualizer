@@ -25,10 +25,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ProgressBar;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 import com.util.InputValidator;
 import com.model.tree.NullRootException;
+import com.model.tree.NullParentException;
+import com.model.tree.InvalidParentInputException;
 import com.model.tree.TreeEmptyException;
 import javafx.scene.control.Alert;
 
@@ -76,6 +79,9 @@ public class WorkspaceController {
     private ComboBox<String> traversalComboBox;
 
     @FXML
+    private ProgressBar operationProgressBar;
+
+    @FXML
     private Button insertButton;
 
     @FXML
@@ -96,6 +102,20 @@ public class WorkspaceController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
+        // Apply dark mode styling to the dialog pane if dark mode is active
+        javafx.scene.control.DialogPane dialogPane = alert.getDialogPane();
+        try {
+            String baseStyle = getClass().getResource("/com/view/base-style.css").toExternalForm();
+            dialogPane.getStylesheets().add(baseStyle);
+            if (NavigationManager.getInstance().isDarkMode()) {
+                String darkStyle = getClass().getResource("/com/view/dark-mode.css").toExternalForm();
+                dialogPane.getStylesheets().add(darkStyle);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         alert.showAndWait();
     }
 
@@ -108,16 +128,29 @@ public class WorkspaceController {
         }
 
         setOperationButtonsDisabled(true);
+        if (operationProgressBar != null) {
+            operationProgressBar.setProgress(0.0);
+            operationProgressBar.setVisible(true);
+            operationProgressBar.setManaged(true);
+        }
 
         try {
             operation.run();
-        } catch (NullRootException e) {
+        } catch (NullRootException | NullParentException | InvalidParentInputException e) {
             setOperationButtonsDisabled(false);
+            if (operationProgressBar != null) {
+                operationProgressBar.setVisible(false);
+                operationProgressBar.setManaged(false);
+            }
             showErrorAlert("Invalid Operation", e.getMessage());
             return;
         } catch (Exception e) {
             // Re-enable if something failed before animation starts
             setOperationButtonsDisabled(false);
+            if (operationProgressBar != null) {
+                operationProgressBar.setVisible(false);
+                operationProgressBar.setManaged(false);
+            }
             showErrorAlert("Error", e.getMessage());
             return;
         }
@@ -156,6 +189,12 @@ public class WorkspaceController {
     @FXML
     void handleDeleteAction(ActionEvent event) {
         executeTreeOperation(() -> {
+            if (parentValueTextField != null && parentValueTextField.isVisible()) {
+                String parentText = parentValueTextField.getText();
+                if (parentText != null && !parentText.trim().isEmpty()) {
+                    throw new InvalidParentInputException("Cannot perform: delete/search a node but the parent is not null in the text field");
+                }
+            }
             int value = InputValidator.getValidInt(valueTextField);
             logicalTree.delete(value);
         });
@@ -178,6 +217,12 @@ public class WorkspaceController {
     @FXML
     void handleSearchAction(ActionEvent event) {
         executeTreeOperation(() -> {
+            if (parentValueTextField != null && parentValueTextField.isVisible()) {
+                String parentText = parentValueTextField.getText();
+                if (parentText != null && !parentText.trim().isEmpty()) {
+                    throw new InvalidParentInputException("Cannot perform: delete/search a node but the parent is not null in the text field");
+                }
+            }
             int value = InputValidator.getValidInt(valueTextField);
             logicalTree.search(value);
         });
@@ -226,7 +271,14 @@ public class WorkspaceController {
 
         treeController = new TreeVisualizationController(treeCanvas, new AnimationManager(), layoutStrategy);
         treeController.setFxCanvas(fxCanvas);
-        treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
+        treeController.setOnAnimationFinished(() -> {
+            setOperationButtonsDisabled(false);
+            if (operationProgressBar != null) {
+                operationProgressBar.setProgress(0.0);
+                operationProgressBar.setVisible(false);
+                operationProgressBar.setManaged(false);
+            }
+        });
 
         treeCanvas.setRedrawCallback(() -> {
             if (!treeController.isAnimating()) {
@@ -265,6 +317,14 @@ public class WorkspaceController {
         logicalTree = TreeFactory.create(currentTreeType);
         logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
+
+        treeController.setProgressListener(progress -> {
+            Platform.runLater(() -> {
+                if (operationProgressBar != null) {
+                    operationProgressBar.setProgress(progress);
+                }
+            });
+        });
     }
 
     private void setupComboBoxes() {
@@ -285,14 +345,27 @@ public class WorkspaceController {
                         pseudoCodeDisplay.clear();
                     }
                     setOperationButtonsDisabled(true);
+                    if (operationProgressBar != null) {
+                        operationProgressBar.setProgress(0.0);
+                        operationProgressBar.setVisible(true);
+                        operationProgressBar.setManaged(true);
+                    }
                     try {
                         logicalTree.traverse(type);
                         treeController.playAnimations();
                     } catch (TreeEmptyException e) {
                         setOperationButtonsDisabled(false);
+                        if (operationProgressBar != null) {
+                            operationProgressBar.setVisible(false);
+                            operationProgressBar.setManaged(false);
+                        }
                         showErrorAlert("Empty Tree", e.getMessage());
                     } catch (Exception e) {
                         setOperationButtonsDisabled(false);
+                        if (operationProgressBar != null) {
+                            operationProgressBar.setVisible(false);
+                            operationProgressBar.setManaged(false);
+                        }
                         showErrorAlert("Error", e.getMessage());
                     } finally {
                         Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
