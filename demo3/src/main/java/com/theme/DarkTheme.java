@@ -12,7 +12,7 @@ public class DarkTheme implements Theme {
 
     @Override
     public String getStylesheetPath() {
-        return "/com/view/dark-mode.css";
+        return "/com/view/css/dark-mode.css";
     }
 
     @Override

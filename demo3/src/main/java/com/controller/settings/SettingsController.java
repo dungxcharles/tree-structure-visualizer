@@ -87,6 +87,6 @@ public class SettingsController {
 
     @FXML
     void backButtonClicked(ActionEvent event) {
-        NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/fxml/main-menu-view.fxml");
     }
 }

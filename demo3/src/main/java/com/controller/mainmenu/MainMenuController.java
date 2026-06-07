@@ -12,16 +12,16 @@ public class MainMenuController {
 
     @FXML
     void startButtonClicked(MouseEvent event) {
-        NavigationManager.getInstance().navigateTo("/com/view/tree-selection-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/fxml/tree-selection-view.fxml");
     }
 
     @FXML
     void settingsButtonClicked(MouseEvent event) {
-        NavigationManager.getInstance().navigateTo("/com/view/settings-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/fxml/settings-view.fxml");
     }
 
     @FXML
     void helpButtonClicked(MouseEvent event) {
-        NavigationManager.getInstance().navigateTo("/com/view/credit-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/fxml/credit-view.fxml");
     }
 }

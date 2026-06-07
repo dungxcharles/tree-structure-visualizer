@@ -49,8 +49,8 @@ public class ThemeManager {
     public void applyTheme(Scene scene) {
         if (scene == null) return;
         try {
-            String baseStyle = getClass().getResource("/com/view/base-style.css").toExternalForm();
-            String darkStyle = getClass().getResource("/com/view/dark-mode.css").toExternalForm();
+            String baseStyle = getClass().getResource("/com/view/css/base-style.css").toExternalForm();
+            String darkStyle = getClass().getResource("/com/view/css/dark-mode.css").toExternalForm();
 
             if (!scene.getStylesheets().contains(baseStyle)) {
                 scene.getStylesheets().add(baseStyle);
@@ -71,12 +71,12 @@ public class ThemeManager {
     public void applyThemeToDialogPane(DialogPane dialogPane) {
         if (dialogPane == null) return;
         try {
-            String baseStyle = getClass().getResource("/com/view/base-style.css").toExternalForm();
+            String baseStyle = getClass().getResource("/com/view/css/base-style.css").toExternalForm();
             if (!dialogPane.getStylesheets().contains(baseStyle)) {
                 dialogPane.getStylesheets().add(baseStyle);
             }
             if (isDarkMode()) {
-                String darkStyle = getClass().getResource("/com/view/dark-mode.css").toExternalForm();
+                String darkStyle = getClass().getResource("/com/view/css/dark-mode.css").toExternalForm();
                 if (!dialogPane.getStylesheets().contains(darkStyle)) {
                     dialogPane.getStylesheets().add(darkStyle);
                 }

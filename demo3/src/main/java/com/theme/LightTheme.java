@@ -11,7 +11,7 @@ public class LightTheme implements Theme {
 
     @Override
     public String getStylesheetPath() {
-        return "/com/view/base-style.css";
+        return "/com/view/css/base-style.css";
     }
 
     @Override

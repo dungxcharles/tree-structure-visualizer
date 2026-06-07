@@ -6,7 +6,6 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -55,7 +54,7 @@ public class TreeSelectionController {
 
     @FXML
     public void initWorkspace() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/tree-selection-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/fxml/tree-selection-view.fxml"));
         Stage stage = new Stage();
         Scene treeSelectionView = new Scene(loader.load());
         stage.setTitle("Tree Selection");
@@ -65,7 +64,7 @@ public class TreeSelectionController {
 
     @FXML
     void handleBack(ActionEvent event){
-        NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/fxml/main-menu-view.fxml");
     }
 
     @FXML
@@ -95,7 +94,7 @@ public class TreeSelectionController {
 
     private void showInformationPopUp(TreeDetailPopupController.TreeInfo info) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/tree-detail-popup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/fxml/tree-detail-popup.fxml"));
             Region popupContent = loader.load();
             TreeDetailPopupController controller = loader.getController();
 

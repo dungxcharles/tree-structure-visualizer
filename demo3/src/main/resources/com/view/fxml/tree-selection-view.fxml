@@ -71,7 +71,7 @@
                                              <children>
                                                 <ImageView fitHeight="123.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@treeselection/general_tree.png" />
+                                                      <Image url="@../images/treeselection/general_tree.png" />
                                                    </image>
                                                 </ImageView>
                                                 <Label text="General Tree">
@@ -92,7 +92,7 @@
                                              <children>
                                                 <ImageView fitHeight="123.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@treeselection/binary_tree.png" />
+                                                      <Image url="@../images/treeselection/binary_tree.png" />
                                                    </image>
                                                 </ImageView>
                                                 <Label text="Binary Tree">
@@ -113,7 +113,7 @@
                                              <children>
                                                 <ImageView fitHeight="135.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@treeselection/redblack_tree.png" />
+                                                      <Image url="@../images/treeselection/redblack_tree.png" />
                                                    </image>
                                                 </ImageView>
                                                 <Label text="Red-black Tree">
@@ -138,7 +138,7 @@
                                              <children>
                                                 <ImageView fitHeight="137.0" fitWidth="202.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@treeselection/avl_tree.png" />
+                                                      <Image url="@../images/treeselection/avl_tree.png" />
                                                    </image>
                                                 </ImageView>
                                                 <Label text="AVL Tree">
@@ -159,7 +159,7 @@
                                              <children>
                                                 <ImageView fitHeight="145.0" fitWidth="191.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@treeselection/binary_search_tree.png" />
+                                                      <Image url="@../images/treeselection/binary_search_tree.png" />
                                                    </image>
                                                 </ImageView>
                                                 <Label text="Binary Search Tree">

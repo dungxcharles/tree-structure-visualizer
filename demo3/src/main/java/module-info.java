@@ -5,7 +5,6 @@ module com.view {
     requires javafx.graphics;
 
     exports com;
-    exports com.view;
 
     exports com.model.tree;
     exports com.model.node;
@@ -18,7 +17,6 @@ module com.view {
     exports com.controller.credits;
 
     opens com to javafx.graphics;
-    opens com.view to javafx.fxml;
 
     opens com.model.tree to javafx.fxml;
 

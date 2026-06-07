@@ -60,7 +60,7 @@ public class TreeDetailPopupController {
             }
         }
 
-        NavigationManager.getInstance().navigateTo("/com/view/workspace.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/fxml/workspace.fxml");
     }
 
     public enum TreeInfo {

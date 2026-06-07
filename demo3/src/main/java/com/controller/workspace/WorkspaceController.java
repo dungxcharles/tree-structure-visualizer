@@ -29,7 +29,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.GridPane;
@@ -409,7 +408,7 @@ public class WorkspaceController {
                 String selected = treeTypeComboBox.getValue();
                 if (selected != null) {
                     WorkspaceController.currentTreeType = TreeType.valueOf(selected.replace(" ", "_"));
-                    NavigationManager.getInstance().navigateTo("/com/view/workspace.fxml");
+                    NavigationManager.getInstance().navigateTo("/com/view/fxml/workspace.fxml");
                 }
             });
         }
@@ -461,6 +460,6 @@ public class WorkspaceController {
 
     @FXML
     void homeButtonClicked(MouseEvent event) {
-        NavigationManager.getInstance().navigateTo("/com/view/tree-selection-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/fxml/tree-selection-view.fxml");
     }
 }

@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
@@ -79,10 +78,10 @@ public class CreditWindow {
             "5. Use the settings menu to adjust animation speed."));
 
         // Pages 4-7: Step-by-Step Instructions (Image-based)
-        pages.add(createImagePage("Choose tree type", "/com/view/help/instruction1.png"));
-        pages.add(createImagePage("Insert", "/com/view/help/instruction2.png"));
-        pages.add(createImagePage("Traverse", "/com/view/help/instruction3.png"));
-        pages.add(createImagePage("Update", "/com/view/help/instruction4.png"));
+        pages.add(createImagePage("Choose tree type", "/com/view/images/help/instruction1.png"));
+        pages.add(createImagePage("Insert", "/com/view/images/help/instruction2.png"));
+        pages.add(createImagePage("Traverse", "/com/view/images/help/instruction3.png"));
+        pages.add(createImagePage("Update", "/com/view/images/help/instruction4.png"));
     }
 
     /**
@@ -195,6 +194,6 @@ public class CreditWindow {
 
     @FXML
     private void handleBack() {
-        NavigationManager.getInstance().navigateTo("/com/view/main-menu-view.fxml");
+        NavigationManager.getInstance().navigateTo("/com/view/fxml/main-menu-view.fxml");
     }
 }
