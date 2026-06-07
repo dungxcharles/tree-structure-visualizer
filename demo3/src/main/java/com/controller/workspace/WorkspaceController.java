@@ -307,7 +307,10 @@ public class WorkspaceController {
 
         treeController = new TreeVisualizationController(treeCanvas, new AnimationManager(), layoutStrategy);
         treeController.setFxCanvas(fxCanvas);
-        treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
+        treeController.setOnAnimationFinished(() -> {
+            updateStatistics();
+            setOperationButtonsDisabled(false);
+        });
 
         treeCanvas.setRedrawCallback(() -> {
             if (!treeController.isAnimating()) {
