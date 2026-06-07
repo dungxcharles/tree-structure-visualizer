@@ -1,5 +1,6 @@
 package com.model.tree;
 
+// Creates the correct tree implementation from a selected tree type.
 public final class TreeFactory {
 
     private TreeFactory() {

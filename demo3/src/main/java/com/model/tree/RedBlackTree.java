@@ -5,6 +5,7 @@ import com.model.node.RBNode;
 import com.model.node.RBNode.Color;
 import com.model.step.StepType;
 
+// Red-black tree is a self-balancing BST using red/black node colors.
 public class RedBlackTree extends BinarySearchTree {
 
     @Override
@@ -39,6 +40,7 @@ public class RedBlackTree extends BinarySearchTree {
 
     @Override
     public boolean insert(int value) {
+        // First insert as a normal BST node, then fix red-black rules.
         com.model.step.TreeOperationListener temp = this.listener;
         this.listener = null;
         boolean exists = search(value);
@@ -68,6 +70,7 @@ public class RedBlackTree extends BinarySearchTree {
     }
 
     private void insertBST(RBNode current, RBNode newNode) {
+        // Place the new node by BST ordering and connect its parent pointer.
         fireStep(StepType.COMPARE, current.getValue(), "Compare " + newNode.getValue() + " with " + current.getValue());
         if (newNode.getValue() < current.getValue()) {
             if (current.getLeft() == null) {
@@ -91,6 +94,7 @@ public class RedBlackTree extends BinarySearchTree {
     }
 
     private void fixInsert(RBNode node) {
+        // Fix violations caused by inserting a red node under a red parent.
         while (node != this.root && colorOf(parentOf(node)) == Color.RED) {
             RBNode parent = parentOf(node);
             RBNode grandParent = parentOf(parent);
@@ -147,6 +151,7 @@ public class RedBlackTree extends BinarySearchTree {
     }
 
     private void leftRotate(RBNode x) {
+        // Rotate x down to the left and promote its right child.
         if (x == null || x.getRight() == null) {
             return;
         }
@@ -174,6 +179,7 @@ public class RedBlackTree extends BinarySearchTree {
     }
 
     private void rightRotate(RBNode x) {
+        // Rotate x down to the right and promote its left child.
         if (x == null || x.getLeft() == null) {
             return;
         }
@@ -243,6 +249,7 @@ public class RedBlackTree extends BinarySearchTree {
     }
 
     private void deleteNode(RBNode z) {
+        // Remove the node, remember the removed color, then fix if a black node was removed.
         RBNode y = z;
         Color originalColor = y.getColor();
 
@@ -301,6 +308,7 @@ public class RedBlackTree extends BinarySearchTree {
     }
 
     private void fixDelete(RBNode x, RBNode parent) {
+        // Restore red-black properties after deleting a black node.
         while (x != this.root && colorOf(x) == Color.BLACK) {
             if (parent == null) {
                 break;
@@ -407,6 +415,7 @@ public class RedBlackTree extends BinarySearchTree {
     }
 
     private void transplant(RBNode oldNode, RBNode newNode) {
+        // Replace one subtree with another and keep parent pointers correct.
         if (oldNode.getParent() == null) {
             this.root = newNode;
         } else if (oldNode == oldNode.getParent().getLeft()) {
