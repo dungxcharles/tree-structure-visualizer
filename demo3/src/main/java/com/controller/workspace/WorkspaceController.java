@@ -142,6 +142,9 @@ public class WorkspaceController {
                 operationProgressBar.setVisible(false);
                 operationProgressBar.setManaged(false);
             }
+            if (pauseResumeButton != null) {
+                pauseResumeButton.setDisable(true);
+            }
             showErrorAlert("Invalid Operation", e.getMessage());
             return;
         } catch (Exception e) {
@@ -151,11 +154,18 @@ public class WorkspaceController {
                 operationProgressBar.setVisible(false);
                 operationProgressBar.setManaged(false);
             }
+            if (pauseResumeButton != null) {
+                pauseResumeButton.setDisable(true);
+            }
             showErrorAlert("Error", e.getMessage());
             return;
         }
 
         treeController.playAnimations();
+        if (pauseResumeButton != null) {
+            pauseResumeButton.setDisable(!treeController.isAnimating());
+            pauseResumeButton.setText("Pause");
+        }
     }
 
     @FXML
@@ -192,7 +202,7 @@ public class WorkspaceController {
             if (parentValueTextField != null && parentValueTextField.isVisible()) {
                 String parentText = parentValueTextField.getText();
                 if (parentText != null && !parentText.trim().isEmpty()) {
-                    throw new InvalidParentInputException("Cannot perform: delete/search a node but the parent is not null in the text field");
+                    throw new InvalidParentInputException("Cannot delete/search a node but the parent is not null in the text field");
                 }
             }
             int value = InputValidator.getValidInt(valueTextField);
@@ -220,7 +230,7 @@ public class WorkspaceController {
             if (parentValueTextField != null && parentValueTextField.isVisible()) {
                 String parentText = parentValueTextField.getText();
                 if (parentText != null && !parentText.trim().isEmpty()) {
-                    throw new InvalidParentInputException("Cannot perform: delete/search a node but the parent is not null in the text field");
+                    throw new InvalidParentInputException("Cannot delete/search a node but the parent is not null in the text field");
                 }
             }
             int value = InputValidator.getValidInt(valueTextField);
@@ -278,6 +288,10 @@ public class WorkspaceController {
                 operationProgressBar.setVisible(false);
                 operationProgressBar.setManaged(false);
             }
+            if (pauseResumeButton != null) {
+                pauseResumeButton.setDisable(true);
+                pauseResumeButton.setText("Pause");
+            }
         });
 
         treeCanvas.setRedrawCallback(() -> {
@@ -307,6 +321,11 @@ public class WorkspaceController {
             parentValueTextField.setVisible(needsParent);
             parentValueTextField.setManaged(needsParent);
         }
+
+        if (pauseResumeButton != null) {
+            pauseResumeButton.setDisable(true);
+        }
+
         if (treeTypeLabel != null) {
             treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
         }
@@ -353,11 +372,18 @@ public class WorkspaceController {
                     try {
                         logicalTree.traverse(type);
                         treeController.playAnimations();
+                        if (pauseResumeButton != null) {
+                            pauseResumeButton.setDisable(!treeController.isAnimating());
+                            pauseResumeButton.setText("Pause");
+                        }
                     } catch (TreeEmptyException e) {
                         setOperationButtonsDisabled(false);
                         if (operationProgressBar != null) {
                             operationProgressBar.setVisible(false);
                             operationProgressBar.setManaged(false);
+                        }
+                        if (pauseResumeButton != null) {
+                            pauseResumeButton.setDisable(true);
                         }
                         showErrorAlert("Empty Tree", e.getMessage());
                     } catch (Exception e) {
@@ -365,6 +391,9 @@ public class WorkspaceController {
                         if (operationProgressBar != null) {
                             operationProgressBar.setVisible(false);
                             operationProgressBar.setManaged(false);
+                        }
+                        if (pauseResumeButton != null) {
+                            pauseResumeButton.setDisable(true);
                         }
                         showErrorAlert("Error", e.getMessage());
                     } finally {

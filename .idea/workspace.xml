@@ -4,18 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixing the UI in the workspace in dark mode.">
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/vis/TreeVisualizationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/vis/TreeVisualizationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/animation/AnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/animation/AnimationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/dark-mode.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/dark-mode.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,61 +45,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0001025790506022" />
-      <entry key="MS500" value="1.2629639326703659" />
-      <entry key="S2" value="2.6435757793834593" />
-      <entry key="S5" value="3.7634730114825645" />
-      <entry key="S10" value="4.923862561084077" />
-      <entry key="S30" value="8.740717609434665" />
-      <entry key="S60" value="11.191727434692027" />
-      <entry key="M2" value="12.897243209359534" />
-      <entry key="M5" value="15.173199133913343" />
-      <entry key="M10" value="21.476506114375162" />
-      <entry key="M15" value="29.431307054425318" />
-      <entry key="M30" value="50.16051659719329" />
-      <entry key="H1" value="72.95260338350316" />
-      <entry key="H2" value="90.66324090029738" />
-      <entry key="H4" value="101.84840470504253" />
-      <entry key="D1" value="112.65573147171715" />
-      <entry key="W1" value="114.66114732252458" />
+      <entry key="MS100" value="1.000000000002146" />
+      <entry key="MS500" value="1.0078415014101387" />
+      <entry key="S2" value="2.0293882459311705" />
+      <entry key="S5" value="4.616046552714447" />
+      <entry key="S10" value="6.848105296721136" />
+      <entry key="S30" value="9.297445979006856" />
+      <entry key="S60" value="10.09899552484809" />
+      <entry key="M2" value="10.5391902806199" />
+      <entry key="M5" value="11.349067786280118" />
+      <entry key="M10" value="14.948842197594374" />
+      <entry key="M15" value="20.605138654722577" />
+      <entry key="M30" value="39.71828657756469" />
+      <entry key="H1" value="66.21463278026211" />
+      <entry key="H2" value="89.87814403152396" />
+      <entry key="H4" value="105.9993571655571" />
+      <entry key="D1" value="122.35630437364355" />
+      <entry key="W1" value="125.47127232722622" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
-      <entry key="S2" value="1.305475E-318" />
-      <entry key="S5" value="1.1999353196767295E-127" />
-      <entry key="S10" value="5.8302099452806945E-64" />
-      <entry key="S30" value="2.1370686199835608E-21" />
-      <entry key="S60" value="1.4261410053678182E-10" />
-      <entry key="M2" value="4.93597322594676E-5" />
-      <entry key="M5" value="0.1308096084094224" />
-      <entry key="M10" value="2.0874415846368377" />
-      <entry key="M15" value="5.521284213377011" />
-      <entry key="M30" value="15.26631772137496" />
-      <entry key="H1" value="25.96318098384932" />
-      <entry key="H2" value="34.09303920874479" />
-      <entry key="H4" value="39.14238304537479" />
-      <entry key="D1" value="43.96192722621473" />
-      <entry key="W1" value="44.85010988961036" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="1.1452804313035364E-214" />
+      <entry key="S10" value="1.801196919999223E-107" />
+      <entry key="S30" value="6.705700224278054E-36" />
+      <entry key="S60" value="7.988685071333973E-18" />
+      <entry key="M2" value="1.1682323064611597E-8" />
+      <entry key="M5" value="0.004637695305498601" />
+      <entry key="M10" value="0.39304802133225003" />
+      <entry key="M15" value="1.813820442837331" />
+      <entry key="M30" value="8.750067254485112" />
+      <entry key="H1" value="19.656059040504935" />
+      <entry key="H2" value="29.664360584626507" />
+      <entry key="H4" value="36.511686974183625" />
+      <entry key="D1" value="43.45510755087051" />
+      <entry key="W1" value="44.77587670852161" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9660352798815393" />
-      <entry key="MS500" value="1.2539700402197067" />
-      <entry key="S2" value="2.638583316737438" />
-      <entry key="S5" value="3.760578545896285" />
-      <entry key="S10" value="4.921892671333674" />
-      <entry key="S30" value="8.739429434100165" />
-      <entry key="S60" value="11.19087534220304" />
-      <entry key="M2" value="12.896793212587806" />
-      <entry key="M5" value="15.303161447022866" />
-      <entry key="M10" value="23.558407356086256" />
-      <entry key="M15" value="34.94241432920516" />
-      <entry key="M30" value="65.41176526496515" />
-      <entry key="H1" value="98.90239654718008" />
-      <entry key="H2" value="124.74727518591608" />
-      <entry key="H4" value="140.98555279379516" />
-      <entry key="D1" value="156.61666814849883" />
-      <entry key="W1" value="159.51111257542243" />
+      <entry key="MS100" value="0.9726549474143729" />
+      <entry key="MS500" value="1.002266046022324" />
+      <entry key="S2" value="2.0262992210086224" />
+      <entry key="S5" value="4.612996866662124" />
+      <entry key="S10" value="6.8457838052883275" />
+      <entry key="S30" value="9.296379194255143" />
+      <entry key="S60" value="10.098414124135571" />
+      <entry key="M2" value="10.538886378873125" />
+      <entry key="M5" value="11.353550628373764" />
+      <entry key="M10" value="15.340784048891644" />
+      <entry key="M15" value="22.415573722928762" />
+      <entry key="M30" value="48.459695713027735" />
+      <entry key="H1" value="85.86054567130975" />
+      <entry key="H2" value="119.53466413974594" />
+      <entry key="H4" value="142.50615836961845" />
+      <entry key="D1" value="165.81043235352172" />
+      <entry key="W1" value="170.24700457539558" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -227,7 +222,23 @@
       <option name="project" value="LOCAL" />
       <updated>1780813573582</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations.">
+      <option name="closed" value="true" />
+      <created>1780816430030</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1780816430030</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations.">
+      <option name="closed" value="true" />
+      <created>1780816500766</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1780816500766</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,6 +262,7 @@
     <MESSAGE value="Fix: Fixed fullscreen bug when switching between screens." />
     <MESSAGE value="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug." />
     <MESSAGE value="Fix: Fixing the UI in the workspace in dark mode." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: Fixing the UI in the workspace in dark mode." />
+    <MESSAGE value="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations." />
   </component>
 </project>

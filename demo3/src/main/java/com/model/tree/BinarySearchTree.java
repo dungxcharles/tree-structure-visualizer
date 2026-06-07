@@ -21,7 +21,7 @@ public class BinarySearchTree extends BinaryTree {
     @Override
     public boolean insert(int parentValue, int value) {
         if (this.isEmpty()) {
-            throw new NullRootException("Cannot perform: create a new node with parent when the root is null.");
+            throw new NullRootException("Cannot create a new node with parent when the root is null.");
         }
         return insert(value);
     }

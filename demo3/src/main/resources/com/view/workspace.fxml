@@ -80,7 +80,7 @@
             
             <Separator orientation="VERTICAL" />
             
-            <Button fx:id="pauseResumeButton" onAction="#handlePauseResumeAction" styleClass="action-btn, btn-pause" text="Pause" />
+            <Button fx:id="pauseResumeButton" disable="true" onAction="#handlePauseResumeAction" styleClass="action-btn, btn-pause" text="Pause" />
             
             <Separator orientation="VERTICAL" />
             
