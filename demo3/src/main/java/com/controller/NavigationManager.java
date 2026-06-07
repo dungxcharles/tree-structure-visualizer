@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -36,6 +38,29 @@ public class NavigationManager {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+        configureCloseConfirmation(stage);
+    }
+
+    private void configureCloseConfirmation(Stage stage) {
+        if (stage == null) {
+            return;
+        }
+
+        stage.setOnCloseRequest(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(stage);
+            alert.setTitle("Exit");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to exit Tree Visualization?");
+            ThemeManager.getInstance().applyThemeToDialogPane(alert.getDialogPane());
+
+            boolean confirmed = alert.showAndWait()
+                    .filter(response -> response == ButtonType.OK)
+                    .isPresent();
+            if (!confirmed) {
+                event.consume();
+            }
+        });
     }
 
     public boolean isDarkMode() {

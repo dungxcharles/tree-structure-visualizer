@@ -9,6 +9,7 @@ module com.view {
 
     exports com.model.tree;
     exports com.model.node;
+    exports com.model.exception;
 
     exports com.controller;
     exports com.controller.mainmenu;

@@ -150,11 +150,29 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     }
 
     public void playAnimations() {
-        if (this.visualTree == null || this.recordedSteps.isEmpty())
+        if (this.visualTree == null || this.recordedSteps.isEmpty()) {
+            finishWithoutAnimation();
             return;
+        }
         if (progressCallback != null)
             progressCallback.accept(0.0);
         processRecordedStepsAndAnimate();
+    }
+
+    private void finishWithoutAnimation() {
+        if (this.visualTree != null && this.logicalTree != null) {
+            VisualTreeMapper.updateVisualTreeWithoutLayout(this.logicalTree, this.visualTree);
+            if (canvasWidth > 0 && canvasHeight > 0) {
+                updateLayout(canvasWidth, canvasHeight);
+            }
+            renderCurrentFrame();
+        }
+        if (progressCallback != null) {
+            progressCallback.accept(1.0);
+        }
+        if (onAnimationFinished != null) {
+            onAnimationFinished.run();
+        }
     }
 
     /**
@@ -189,7 +207,7 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     private List<VisualNode> injectInvisibleNewNodes(VisualTree finalTree) {
         List<VisualNode> newNodes = new ArrayList<>();
         for (VisualNode finalNode : finalTree.getNodes()) {
-            VisualNode existingNode = findNodeByLabel(this.visualTree, finalNode.getLabel());
+            VisualNode existingNode = findNodeById(this.visualTree, finalNode.getId());
 
             if (existingNode == null) {
                 // The node is completely new! Inject it invisibly at its final destination
@@ -204,9 +222,9 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
                 // Inject the incoming edge for this new node
                 VisualEdge finalEdge = findIncomingEdge(finalNode, finalTree);
                 if (finalEdge != null) {
-                    VisualNode sourceInCurrent = findNodeByLabel(this.visualTree, finalEdge.getSource().getLabel());
+                    VisualNode sourceInCurrent = findNodeById(this.visualTree, finalEdge.getSource().getId());
                     if (sourceInCurrent != null) {
-                        VisualEdge newEdge = new VisualEdge(sourceInCurrent, newNode);
+                        VisualEdge newEdge = new VisualEdge(sourceInCurrent, newNode, finalEdge.getChildSide());
                         newEdge.setProgress(0.0);
                         this.visualTree.addEdge(newEdge);
                     }
@@ -222,7 +240,7 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
      */
     private boolean checkForDeletions(VisualTree finalTree, List<VisualNode> newlyInjectedNodes) {
         for (VisualNode currentNode : this.visualTree.getNodes()) {
-            if (findNodeByLabel(finalTree, currentNode.getLabel()) == null
+            if (findNodeById(finalTree, currentNode.getId()) == null
                     && !newlyInjectedNodes.contains(currentNode)) {
                 return true;
             }
@@ -298,7 +316,7 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         List<TreeAnimation> moveAnimations = new ArrayList<>();
 
         for (VisualNode currentNode : this.visualTree.getNodes()) {
-            VisualNode finalNode = findNodeByLabel(finalTree, currentNode.getLabel());
+            VisualNode finalNode = findNodeById(finalTree, currentNode.getId());
 
             if (finalNode != null && !newNodes.contains(currentNode)) {
                 double diffX = Math.abs(currentNode.getX() - finalNode.getX());
@@ -416,11 +434,11 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     }
 
     // --- Helper Utility Methods ---
-    private VisualNode findNodeByLabel(VisualTree tree, String label) {
-        if (tree == null || label == null)
+    private VisualNode findNodeById(VisualTree tree, String id) {
+        if (tree == null || id == null)
             return null;
         for (VisualNode node : tree.getNodes()) {
-            if (label.equals(node.getLabel()))
+            if (id.equals(node.getId()))
                 return node;
         }
         return null;
@@ -430,7 +448,7 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         if (tree == null || node == null)
             return null;
         for (VisualEdge edge : tree.getEdges()) {
-            if (edge.getTarget().getLabel().equals(node.getLabel()))
+            if (edge.getTarget().getId().equals(node.getId()))
                 return edge;
         }
         return null;

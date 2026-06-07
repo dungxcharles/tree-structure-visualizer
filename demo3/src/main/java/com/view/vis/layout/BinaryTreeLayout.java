@@ -2,10 +2,8 @@ package com.view.vis.layout;
 
 import com.view.vis.model.VisualNode;
 import com.view.vis.model.VisualTree;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.view.vis.model.VisualEdge;
+import com.view.vis.model.VisualEdge.ChildSide;
 
 public class BinaryTreeLayout implements LayoutStrategy {
 
@@ -26,12 +24,10 @@ public class BinaryTreeLayout implements LayoutStrategy {
             return;
         }
 
-        Map<VisualNode, List<VisualNode>> childrenMap = visualTree.getChildrenMap();
-
-        layoutNode(root, childrenMap, 0, containerWidth, 0);
+        layoutNode(root, visualTree, 0, containerWidth, 0);
     }
 
-    private void layoutNode(VisualNode node, Map<VisualNode, List<VisualNode>> childrenMap,
+    private void layoutNode(VisualNode node, VisualTree visualTree,
             double minX, double maxX, int depth) {
         if (node == null) {
             return;
@@ -44,36 +40,25 @@ public class BinaryTreeLayout implements LayoutStrategy {
         node.setX(x);
         node.setY(y);
 
-        List<VisualNode> children = childrenMap.getOrDefault(node, new ArrayList<>());
+        VisualNode leftChild = null;
+        VisualNode rightChild = null;
 
-        if (children.size() == 1) {
-            VisualNode child = children.get(0);
-            boolean goLeft = true;
-            try {
-                int parentVal = Integer.parseInt(node.getLabel());
-                int childVal = Integer.parseInt(child.getLabel());
-                if (childVal >= parentVal) {
-                    goLeft = false; // Branch right if value is greater
-                }
-            } catch (Exception e) {
-                // Ignore and use default left branch
+        for (VisualEdge edge : visualTree.getEdges()) {
+            if (!edge.getSource().equals(node)) {
+                continue;
             }
+            if (edge.getChildSide() == ChildSide.LEFT) {
+                leftChild = edge.getTarget();
+            } else if (edge.getChildSide() == ChildSide.RIGHT) {
+                rightChild = edge.getTarget();
+            }
+        }
 
-            if (goLeft) {
-                layoutNode(child, childrenMap, minX, x, depth + 1);
-            } else {
-                layoutNode(child, childrenMap, x, maxX, depth + 1);
-            }
-        } else if (children.size() == 2) {
-            children.sort((a, b) -> {
-                try {
-                    return Integer.compare(Integer.parseInt(a.getLabel()), Integer.parseInt(b.getLabel()));
-                } catch (Exception e) {
-                    return a.getLabel().compareTo(b.getLabel());
-                }
-            });
-            layoutNode(children.get(0), childrenMap, minX, x, depth + 1);
-            layoutNode(children.get(1), childrenMap, x, maxX, depth + 1);
+        if (leftChild != null) {
+            layoutNode(leftChild, visualTree, minX, x, depth + 1);
+        }
+        if (rightChild != null) {
+            layoutNode(rightChild, visualTree, x, maxX, depth + 1);
         }
     }
 }

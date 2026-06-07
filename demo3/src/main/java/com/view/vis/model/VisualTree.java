@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class VisualTree {
     private List<VisualNode> nodes;
@@ -74,11 +73,6 @@ public class VisualTree {
             if (children != null) {
                 children.add(edge.getTarget());
             }
-        }
-
-        // Sort ascending
-        for (List<VisualNode> children : map.values()) {
-            children.sort(Comparator.comparing(VisualNode::getLabel));
         }
 
         return map;

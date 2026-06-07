@@ -7,6 +7,7 @@ import com.model.step.TreeOperationListener;
 
 import java.util.List;
 
+// Base class for all tree implementations in the project.
 public abstract class AbstractTree<N extends Node> {
 
     protected N root;
@@ -24,6 +25,7 @@ public abstract class AbstractTree<N extends Node> {
         this.listener = listener;
     }
 
+    // Sends one algorithm step to the visualization layer.
     protected void fireStep(StepType type, int nodeValue, String message) {
         if (listener != null) {
             listener.onStep(type, nodeValue, message);
@@ -34,12 +36,11 @@ public abstract class AbstractTree<N extends Node> {
         return root == null;
     }
 
-    // setRoot() : have to check if neccessary
-
     public void clear() {
         this.root = null;
     }
 
+    // Common operations that every tree must support.
     public abstract void create(int value);
 
     public abstract boolean insert(int parentValue, int value);

@@ -1,4 +1,4 @@
-package com.model.tree;
+package com.model.exception;
 
 /**
  * Exception thrown when attempting to traverse a tree that has no nodes.

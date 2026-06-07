@@ -1,5 +1,8 @@
 package com.model.tree;
 
+import com.model.exception.NullParentException;
+import com.model.exception.NullRootException;
+import com.model.exception.TreeEmptyException;
 import com.model.node.GenericNode;
 import com.model.step.StepType;
 
@@ -8,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+// General tree where each node can have any number of children.
 public class GeneralTree extends AbstractTree<GenericNode> {
 
     @Override
@@ -21,6 +25,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
 
     @Override
     public boolean insert(int parentValue, int childValue) {
+        // A general tree inserts a new node under a chosen parent.
         if (this.isEmpty()) {
             throw new NullRootException("Cannot create a new node with parent when the root is null.");
         }
@@ -44,6 +49,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         if (current == null)
             return null;
             
+        // Search through the current node, then recursively search its children.
         fireStep(StepType.COMPARE, current.getValue(), "Compare with " + current.getValue());
         if (current.getValue() == value) {
             fireStep(StepType.FOUND, current.getValue(), "Found " + current.getValue());
@@ -64,6 +70,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         if (isEmpty())
             return false;
             
+        // Deleting the root removes the whole tree.
         fireStep(StepType.COMPARE, this.root.getValue(), "Compare root with " + value);
         if (this.root.getValue() == value) {
             fireStep(StepType.DELETE_NODE, value, "Delete root " + value);
@@ -148,6 +155,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
 
     @Override
     public List<Integer> traverse(TraversalType type) {
+        // General trees support DFS-style traversals and BFS.
         if (type == null) {
             throw new IllegalArgumentException("Traversal type cannot be null.");
         }
@@ -226,5 +234,5 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         }
     }
 
-    // delete will erase the subtree
+    // Deleting a node also removes its subtree.
 }

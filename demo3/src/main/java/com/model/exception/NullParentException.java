@@ -1,4 +1,4 @@
-package com.model.tree;
+package com.model.exception;
 
 /**
  * Exception thrown when attempting to insert a node with a parent that is null

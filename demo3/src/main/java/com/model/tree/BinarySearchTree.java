@@ -1,10 +1,13 @@
 package com.model.tree;
 
+import com.model.exception.NullRootException;
 import com.model.node.BinaryNode;
 import com.model.step.StepType;
 
+// Binary search tree that keeps smaller values on the left and larger values on the right.
 public class BinarySearchTree extends BinaryTree {
 
+    // Subclasses override this to create specialized node types.
     protected BinaryNode createNode(int value) {
         return new BinaryNode(value);
     }
@@ -33,6 +36,7 @@ public class BinarySearchTree extends BinaryTree {
     }
 
     protected BinaryNode insertRec(BinaryNode current, BinaryNode newNode) {
+        // Walk left or right by value until an empty position is found.
         if (current == null) {
             fireStep(StepType.INSERT_NODE, newNode.getValue(), "Insert node " + newNode.getValue());
             return newNode;
@@ -77,6 +81,7 @@ public class BinarySearchTree extends BinaryTree {
     }
 
     protected BinaryNode deleteRec(BinaryNode current, int value) {
+        // Standard BST delete: find the node, then handle 0, 1, or 2 children.
         if (current == null) {
             fireStep(StepType.NOT_FOUND, value, "Cannot find node " + value + " to delete");
             return null;
@@ -152,6 +157,7 @@ public class BinarySearchTree extends BinaryTree {
 
     @Override
     public boolean update(int currentValue, int newValue) {
+        // Updating a BST value is implemented as delete old value, then insert new value.
         com.model.step.TreeOperationListener temp = this.listener;
         this.listener = null;
         boolean existsCurrent = search(currentValue);
@@ -186,6 +192,7 @@ public class BinarySearchTree extends BinaryTree {
 
     @Override
     protected BinaryNode findNode(BinaryNode current, int value) {
+        // BST search uses the ordering rule to skip one branch each step.
         if (current == null) {
             return null;
         }

@@ -1,6 +1,9 @@
 package com.model.tree;
 
 import com.model.node.BinaryNode;
+import com.model.exception.NullParentException;
+import com.model.exception.NullRootException;
+import com.model.exception.TreeEmptyException;
 import com.model.step.StepType;
 
 import java.util.LinkedList;
@@ -9,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+// Binary tree where each node has at most one left child and one right child.
 public class BinaryTree extends AbstractTree<BinaryNode> {
 
     @Override
@@ -22,6 +26,7 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
 
     @Override
     public boolean insert(int parentValue, int value) {
+        // Insert under the selected parent, filling left child before right child.
         if (this.isEmpty()) {
             throw new NullRootException("Cannot create a new node with parent when the root is null.");
         }
@@ -74,6 +79,7 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
             return false;
         }
 
+        // Delete only the matched child; its subtree is removed with it.
         if (current.getLeft() != null) {
             fireStep(StepType.COMPARE, current.getLeft().getValue(), "Compare left child with " + value);
             if (current.getLeft().getValue() == value) {
@@ -132,6 +138,7 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
             return null;
         }
 
+        // Binary tree search scans both branches because there is no ordering rule.
         fireStep(StepType.COMPARE, current.getValue(), "Compare with " + current.getValue());
         if (current.getValue() == value) {
             fireStep(StepType.FOUND, current.getValue(), "Found " + current.getValue());
@@ -174,6 +181,7 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
 
     @Override
     public List<Integer> traverse(TraversalType type) {
+        // Binary trees support in-order, pre-order, post-order, and BFS.
         if (type == null) {
             throw new IllegalArgumentException("Traversal type cannot be null.");
         }

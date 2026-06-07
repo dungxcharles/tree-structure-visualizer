@@ -1,6 +1,7 @@
 package com.controller.workspace;
 
 import com.model.tree.AbstractTree;
+import com.model.tree.AVLTree;
 import com.model.tree.TraversalType;
 import com.model.tree.TreeFactory;
 import com.model.tree.TreeType;
@@ -29,6 +30,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.layout.GridPane;
+import javafx.geometry.Insets;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 import com.util.InputValidator;
@@ -71,6 +76,12 @@ public class WorkspaceController {
     private Label rootValueLabel;
 
     @FXML
+    private Label balanceFactorLabel;
+
+    @FXML
+    private Label balanceFactorTextLabel;
+
+    @FXML
     private Slider speedSlider;
 
     @FXML
@@ -84,6 +95,9 @@ public class WorkspaceController {
 
     @FXML
     private Button deleteButton;
+
+    @FXML
+    private Button updateButton;
 
     @FXML
     private Button searchButton;
@@ -153,14 +167,18 @@ public class WorkspaceController {
 
             if (logicalTree.isEmpty()) {
                 logicalTree.create(value);
-                historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.CREATE, 0, value));
+                if (!logicalTree.isEmpty()) {
+                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.CREATE, 0, value));
+                }
             } else {
+                boolean inserted;
                 if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
-                    logicalTree.insert(parentValue, value);
-                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, parentValue, value));
+                    inserted = logicalTree.insert(parentValue, value);
                 } else {
-                    logicalTree.insert(0, value);
-                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, 0, value));
+                    inserted = logicalTree.insert(0, value);
+                }
+                if (inserted) {
+                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, parentValue, value));
                 }
             }
             updateUndoRedoButtons();
@@ -171,8 +189,58 @@ public class WorkspaceController {
     void handleDeleteAction(ActionEvent event) {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
-            logicalTree.delete(value);
-            historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.DELETE, 0, value));
+            boolean deleted = logicalTree.delete(value);
+            if (deleted) {
+                historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.DELETE, 0, value));
+            }
+            updateUndoRedoButtons();
+        });
+    }
+
+    @FXML
+    void handleUpdateAction(ActionEvent event) {
+        if (treeController.isAnimating()) {
+            return;
+        }
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Update Node");
+        dialog.setHeaderText(null);
+
+        TextField currentValueField = new TextField();
+        currentValueField.setPromptText("Current value");
+        TextField newValueField = new TextField();
+        newValueField.setPromptText("New value");
+
+        GridPane form = new GridPane();
+        form.setHgap(10);
+        form.setVgap(10);
+        form.setPadding(new Insets(12));
+        form.add(new Label("Current value:"), 0, 0);
+        form.add(currentValueField, 1, 0);
+        form.add(new Label("New value:"), 0, 1);
+        form.add(newValueField, 1, 1);
+
+        dialog.getDialogPane().setContent(form);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        com.theme.ThemeManager.getInstance().applyThemeToDialogPane(dialog.getDialogPane());
+
+        Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+        okButton.disableProperty().bind(
+                currentValueField.textProperty().isEmpty()
+                        .or(newValueField.textProperty().isEmpty()));
+
+        if (dialog.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+            return;
+        }
+
+        executeTreeOperation(() -> {
+            int currentValue = InputValidator.getValidInt(currentValueField);
+            int newValue = InputValidator.getValidInt(newValueField);
+            boolean updated = logicalTree.update(currentValue, newValue);
+            if (updated) {
+                historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.UPDATE, currentValue, newValue));
+            }
             updateUndoRedoButtons();
         });
     }
@@ -257,8 +325,12 @@ public class WorkspaceController {
             insertButton.setDisable(disabled);
         if (deleteButton != null)
             deleteButton.setDisable(disabled);
+        if (updateButton != null)
+            updateButton.setDisable(disabled);
         if (searchButton != null)
             searchButton.setDisable(disabled);
+        if (traversalComboBox != null)
+            traversalComboBox.setDisable(disabled);
             
         if (disabled) {
             if (undoButton != null) undoButton.setDisable(true);
@@ -299,7 +371,10 @@ public class WorkspaceController {
 
         treeController = new TreeVisualizationController(treeCanvas, new AnimationManager(), layoutStrategy);
         treeController.setFxCanvas(fxCanvas);
-        treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
+        treeController.setOnAnimationFinished(() -> {
+            updateStatistics();
+            setOperationButtonsDisabled(false);
+        });
 
         treeCanvas.setRedrawCallback(() -> {
             if (!treeController.isAnimating()) {
@@ -335,6 +410,10 @@ public class WorkspaceController {
         if (parentValueTextField != null) {
             parentValueTextField.setVisible(needsParent);
             parentValueTextField.setManaged(needsParent);
+            parentValueTextField.setPromptText("Parent");
+        }
+        if (valueTextField != null) {
+            valueTextField.setPromptText("Value");
         }
         if (treeTypeLabel != null) {
             treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
@@ -365,12 +444,7 @@ public class WorkspaceController {
                 if (selected != null) {
                     TraversalType type = TraversalType
                             .valueOf(selected.replace(" ", "_"));
-                    if (pseudoCodeDisplay != null) {
-                        pseudoCodeDisplay.clear();
-                    }
-                    setOperationButtonsDisabled(true);
-                    logicalTree.traverse(type);
-                    treeController.playAnimations();
+                    executeTreeOperation(() -> logicalTree.traverse(type));
                     Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
                 }
             });
@@ -420,6 +494,21 @@ public class WorkspaceController {
                 rootValueLabel.setText("None");
             } else {
                 rootValueLabel.setText(String.valueOf(logicalTree.getRoot().getValue()));
+            }
+        }
+
+        boolean hasBalanceFactor = logicalTree instanceof AVLTree;
+        if (balanceFactorTextLabel != null) {
+            balanceFactorTextLabel.setVisible(hasBalanceFactor);
+            balanceFactorTextLabel.setManaged(hasBalanceFactor);
+        }
+        if (balanceFactorLabel != null) {
+            balanceFactorLabel.setVisible(hasBalanceFactor);
+            balanceFactorLabel.setManaged(hasBalanceFactor);
+
+            if (hasBalanceFactor) {
+                AVLTree avlTree = (AVLTree) logicalTree;
+                balanceFactorLabel.setText(String.valueOf(avlTree.getBalanceFactor(avlTree.getRoot())));
             }
         }
     }

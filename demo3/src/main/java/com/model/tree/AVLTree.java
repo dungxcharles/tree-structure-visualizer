@@ -6,6 +6,7 @@ import com.model.step.StepType;
 
 import java.util.List;
 
+// AVL tree is a self-balancing binary search tree.
 public class AVLTree extends BinarySearchTree {
 
     private boolean nodeInserted;
@@ -25,6 +26,7 @@ public class AVLTree extends BinarySearchTree {
     public boolean insert(int value) {
 
         nodeInserted = false;
+        // Insert like a BST, then rebalance while returning from recursion.
         this.root = insertRec(getRoot(), value);
         return nodeInserted;
     }
@@ -54,6 +56,7 @@ public class AVLTree extends BinarySearchTree {
     @Override
     public boolean delete(int value) {
         nodeDeleted = false;
+        // Delete like a BST, then rebalance affected ancestors.
         this.root = deleteRec(getRoot(), value);
         return nodeDeleted;
     }
@@ -122,6 +125,7 @@ public class AVLTree extends BinarySearchTree {
     }
 
     public int getBalanceFactor(AVLNode node) {
+        // Positive means left-heavy, negative means right-heavy.
         if (node == null) {
             return 0;
         }
@@ -148,6 +152,7 @@ public class AVLTree extends BinarySearchTree {
     }
 
     private AVLNode rebalance(AVLNode node) {
+        // Recalculate height before checking whether rotations are needed.
         updateHeight(node);
         int balance = getBalanceFactor(node);
         fireStep(StepType.CHECK_BALANCE, node.getValue(), "Check balance of " + node.getValue() + " = " + balance);
@@ -174,6 +179,7 @@ public class AVLTree extends BinarySearchTree {
     }
 
     private AVLNode leftRotate(AVLNode x) {
+        // Left rotation fixes right-heavy subtrees.
         AVLNode y = x.getRight();
         AVLNode middle = y.getLeft();
 
@@ -186,6 +192,7 @@ public class AVLTree extends BinarySearchTree {
     }
 
     private AVLNode rightRotate(AVLNode y) {
+        // Right rotation fixes left-heavy subtrees.
         AVLNode x = y.getLeft();
         AVLNode middle = x.getRight();
 

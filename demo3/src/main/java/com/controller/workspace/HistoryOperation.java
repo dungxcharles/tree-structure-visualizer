@@ -11,7 +11,8 @@ public class HistoryOperation {
     public enum Type {
         CREATE,
         INSERT,
-        DELETE
+        DELETE,
+        UPDATE
     }
 
     private final Type type;
@@ -51,6 +52,9 @@ public class HistoryOperation {
                 break;
             case DELETE:
                 tree.delete(value);
+                break;
+            case UPDATE:
+                tree.update(parentValue, value);
                 break;
         }
     }

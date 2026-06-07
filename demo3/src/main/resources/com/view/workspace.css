@@ -146,8 +146,27 @@
 .btn-delete { -fx-background-color: #ea4335; }
 .btn-delete:hover { -fx-background-color: #ce3a2f; }
 
+.btn-update { -fx-background-color: #7e57c2; }
+.btn-update:hover { -fx-background-color: #6d4ab0; }
+
 .btn-search { -fx-background-color: #4285f4; }
 .btn-search:hover { -fx-background-color: #3873d6; }
+
+.btn-undo { -fx-background-color: #00acc1; }
+.btn-undo:hover { -fx-background-color: #0097a7; }
+.btn-undo:disabled {
+    -fx-background-color: #b2ebf2;
+    -fx-text-fill: #607d8b;
+    -fx-opacity: 1.0;
+}
+
+.btn-redo { -fx-background-color: #5c6bc0; }
+.btn-redo:hover { -fx-background-color: #4f5daf; }
+.btn-redo:disabled {
+    -fx-background-color: #c5cae9;
+    -fx-text-fill: #5c6bc0;
+    -fx-opacity: 1.0;
+}
 
 .btn-pause { -fx-background-color: #fbbc05; -fx-text-fill: #3c4043; }
 .btn-pause:hover { -fx-background-color: #e0a804; }
