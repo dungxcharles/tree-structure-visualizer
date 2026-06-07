@@ -150,11 +150,29 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     }
 
     public void playAnimations() {
-        if (this.visualTree == null || this.recordedSteps.isEmpty())
+        if (this.visualTree == null || this.recordedSteps.isEmpty()) {
+            finishWithoutAnimation();
             return;
+        }
         if (progressCallback != null)
             progressCallback.accept(0.0);
         processRecordedStepsAndAnimate();
+    }
+
+    private void finishWithoutAnimation() {
+        if (this.visualTree != null && this.logicalTree != null) {
+            VisualTreeMapper.updateVisualTreeWithoutLayout(this.logicalTree, this.visualTree);
+            if (canvasWidth > 0 && canvasHeight > 0) {
+                updateLayout(canvasWidth, canvasHeight);
+            }
+            renderCurrentFrame();
+        }
+        if (progressCallback != null) {
+            progressCallback.accept(1.0);
+        }
+        if (onAnimationFinished != null) {
+            onAnimationFinished.run();
+        }
     }
 
     /**
