@@ -1,5 +1,6 @@
 package com.model.tree;
 
+import com.model.exception.NullRootException;
 import com.model.node.BinaryNode;
 import com.model.step.StepType;
 

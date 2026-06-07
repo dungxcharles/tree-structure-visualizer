@@ -1,5 +1,6 @@
 package com.model.tree;
 
+import com.model.exception.NullRootException;
 import com.model.node.RBNode;
 import com.model.node.RBNode.Color;
 import com.model.step.StepType;

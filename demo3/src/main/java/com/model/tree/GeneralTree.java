@@ -1,5 +1,8 @@
 package com.model.tree;
 
+import com.model.exception.NullParentException;
+import com.model.exception.NullRootException;
+import com.model.exception.TreeEmptyException;
 import com.model.node.GenericNode;
 import com.model.step.StepType;
 
