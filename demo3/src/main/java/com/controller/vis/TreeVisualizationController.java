@@ -72,6 +72,12 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     public void pauseAnimation() { this.animationManager.pause(); }
     public void resumeAnimation() { this.animationManager.resume(); }
 
+    public void resetCamera() {
+        if (this.canvas != null) {
+            this.canvas.resetCamera();
+        }
+    }
+
     /**
      * Attaches the logical data tree to this controller and initializes the starting visual layout.
      */

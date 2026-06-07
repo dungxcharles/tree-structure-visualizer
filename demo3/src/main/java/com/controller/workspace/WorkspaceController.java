@@ -178,6 +178,14 @@ public class WorkspaceController {
     }
 
     @FXML
+    void handleRecenterAction(ActionEvent event) {
+        if (treeController != null) {
+            treeController.resetCamera();
+            redrawTree();
+        }
+    }
+
+    @FXML
     void handleUndoAction(ActionEvent event) {
         if (historyManager == null || !historyManager.canUndo() || treeController.isAnimating()) return;
         historyManager.undo();

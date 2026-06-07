@@ -149,3 +149,24 @@
 .slider {
     -fx-pref-width: 150px;
 }
+
+/* Recenter Button (Google Maps Style) */
+.recenter-button {
+    -fx-background-color: white;
+    -fx-text-fill: #5f6368;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 2);
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-padding: 0 0 2px 0;
+}
+
+.recenter-button:hover {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #1a73e8;
+}
