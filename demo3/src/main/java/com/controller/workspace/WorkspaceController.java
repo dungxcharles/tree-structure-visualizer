@@ -153,14 +153,18 @@ public class WorkspaceController {
 
             if (logicalTree.isEmpty()) {
                 logicalTree.create(value);
-                historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.CREATE, 0, value));
+                if (!logicalTree.isEmpty()) {
+                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.CREATE, 0, value));
+                }
             } else {
+                boolean inserted;
                 if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
-                    logicalTree.insert(parentValue, value);
-                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, parentValue, value));
+                    inserted = logicalTree.insert(parentValue, value);
                 } else {
-                    logicalTree.insert(0, value);
-                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, 0, value));
+                    inserted = logicalTree.insert(0, value);
+                }
+                if (inserted) {
+                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, parentValue, value));
                 }
             }
             updateUndoRedoButtons();
@@ -171,8 +175,10 @@ public class WorkspaceController {
     void handleDeleteAction(ActionEvent event) {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
-            logicalTree.delete(value);
-            historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.DELETE, 0, value));
+            boolean deleted = logicalTree.delete(value);
+            if (deleted) {
+                historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.DELETE, 0, value));
+            }
             updateUndoRedoButtons();
         });
     }
