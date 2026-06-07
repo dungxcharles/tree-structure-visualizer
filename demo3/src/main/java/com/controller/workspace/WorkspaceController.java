@@ -37,6 +37,7 @@ import javafx.geometry.Insets;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 import com.util.InputValidator;
+import com.util.AlertUtils;
 
 public class WorkspaceController {
 
@@ -50,10 +51,7 @@ public class WorkspaceController {
     private ComboBox<String> treeTypeComboBox;
 
     @FXML
-    private TextField valueTextField;
-
-    @FXML
-    private TextField parentValueTextField;
+    private TextField valueTextField, parentValueTextField;
 
     @FXML
     private Label treeTypeLabel;
@@ -64,22 +62,7 @@ public class WorkspaceController {
     private ListViewPseudoCodeDisplay pseudoCodeDisplay;
 
     @FXML
-    private Label heightLabel;
-
-    @FXML
-    private Label numNodesLabel;
-
-    @FXML
-    private Label leafNodesLabel;
-
-    @FXML
-    private Label rootValueLabel;
-
-    @FXML
-    private Label balanceFactorLabel;
-
-    @FXML
-    private Label balanceFactorTextLabel;
+    private Label heightLabel, numNodesLabel, leafNodesLabel, rootValueLabel, balanceFactorLabel, balanceFactorTextLabel;
 
     @FXML
     private Slider speedSlider;
@@ -91,22 +74,13 @@ public class WorkspaceController {
     private ComboBox<String> traversalComboBox;
 
     @FXML
-    private Button insertButton;
+    private Button insertButton, deleteButton, updateButton, searchButton;
 
     @FXML
-    private Button deleteButton;
+    private Button undoButton, redoButton;
 
     @FXML
-    private Button updateButton;
-
-    @FXML
-    private Button searchButton;
-
-    @FXML
-    private Button undoButton;
-
-    @FXML
-    private Button redoButton;
+    private Button pauseResumeButton;
 
     private HistoryManager historyManager;
 
@@ -114,17 +88,10 @@ public class WorkspaceController {
     private Canvas fxCanvas;
     private AbstractTree<?> logicalTree;
 
-    // Static state to pass data between controllers without a new class
+    // Default tree type
     public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
 
-    private void showErrorAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        com.theme.ThemeManager.getInstance().applyThemeToDialogPane(alert.getDialogPane());
-        alert.showAndWait();
-    }
+
 
     private void executeTreeOperation(Runnable operation) {
         if (treeController.isAnimating())
@@ -140,15 +107,15 @@ public class WorkspaceController {
             operation.run();
         } catch (NumberFormatException e) {
             setOperationButtonsDisabled(false);
-            showErrorAlert("Invalid Input", "Please enter a valid integer value.");
+            AlertUtils.showErrorAlert("Invalid Input", "Please enter a valid integer value.");
             return;
         } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
             setOperationButtonsDisabled(false);
-            showErrorAlert("Operation Error", e.getMessage());
+            AlertUtils.showErrorAlert("Operation Error", e.getMessage());
             return;
         } catch (Exception e) {
             setOperationButtonsDisabled(false);
-            showErrorAlert("Unexpected Error", "An unexpected error occurred: " + e.getMessage());
+            AlertUtils.showErrorAlert("Unexpected Error", "An unexpected error occurred: " + e.getMessage());
             return;
         }
 
@@ -246,9 +213,6 @@ public class WorkspaceController {
     }
 
     @FXML
-    private Button pauseResumeButton;
-
-    @FXML
     void handlePauseResumeAction(ActionEvent event) {
         if (treeController.isAnimationPaused()) {
             treeController.resumeAnimation();
@@ -292,19 +256,15 @@ public class WorkspaceController {
     private void replayHistory() {
         setOperationButtonsDisabled(true);
         
-        // 1. Tạm thời ngắt kết nối màn hình để chạy ngầm
         logicalTree.setListener(null);
         
-        // 2. Tạo cây mới trắng tinh
         logicalTree = TreeFactory.create(currentTreeType);
         
-        // 3. Phát lại toàn bộ lịch sử trong nháy mắt
         List<HistoryOperation> operations = historyManager.getActiveHistory();
         for (HistoryOperation op : operations) {
             op.apply(logicalTree);
         }
         
-        // 4. Gắn lại màn hình và yêu cầu vẽ lại ngay lập tức
         logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
         redrawTree();
@@ -317,9 +277,6 @@ public class WorkspaceController {
         if (redoButton != null) redoButton.setDisable(!historyManager.canRedo());
     }
 
-    /**
-     * Disables or enables the Insert, Delete, Search buttons.
-     */
     private void setOperationButtonsDisabled(boolean disabled) {
         if (insertButton != null)
             insertButton.setDisable(disabled);
@@ -351,19 +308,16 @@ public class WorkspaceController {
         setupLogicalTree();
         setupComboBoxes();
 
-        // 4. Force a layout and render when pane is resized
         visualizerPane.widthProperty().addListener((obs, oldVal, newVal) -> redrawTree());
         visualizerPane.heightProperty().addListener((obs, oldVal, newVal) -> redrawTree());
     }
 
     private void setupVisualization() {
-        // 1. Create the physical JavaFX Canvas and bind its size to the Pane
         fxCanvas = new Canvas();
         fxCanvas.widthProperty().bind(visualizerPane.widthProperty());
         fxCanvas.heightProperty().bind(visualizerPane.heightProperty());
         visualizerPane.getChildren().add(fxCanvas);
 
-        // 2. Setup the MVC Visualization components
         TreeCanvas treeCanvas = new TreeCanvas(fxCanvas, new DefaultNodeRenderer(), new DefaultEdgeRenderer());
 
         LayoutStrategy layoutStrategy = (currentTreeType == TreeType.GENERAL) ? new GeneralTreeLayout()
@@ -384,7 +338,6 @@ public class WorkspaceController {
     }
 
     private void setupControls() {
-        // Connect animation speed slider
         if (speedSlider != null) {
             treeController.setAnimationSpeed(speedSlider.getValue());
             speedSlider.valueProperty()
@@ -399,13 +352,11 @@ public class WorkspaceController {
             });
         });
 
-        // Wire up pseudo code UI
         if (pseudoCodeListView != null) {
             pseudoCodeDisplay = new ListViewPseudoCodeDisplay(pseudoCodeListView);
             treeController.setStepHighlightCallback(pseudoCodeDisplay::addAndHighlightStep);
         }
 
-        // Setup UI dynamically based on the selected tree type
         boolean needsParent = (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY);
         if (parentValueTextField != null) {
             parentValueTextField.setVisible(needsParent);
@@ -421,7 +372,6 @@ public class WorkspaceController {
     }
 
     private void setupLogicalTree() {
-        // 3. Initialize logical tree based on the selected static state
         logicalTree = TreeFactory.create(currentTreeType);
         logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
@@ -431,7 +381,6 @@ public class WorkspaceController {
     }
 
     private void setupComboBoxes() {
-        // Initialize traversal combobox
         if (traversalComboBox != null) {
             traversalComboBox.getItems().clear();
             for (TraversalType type : TraversalType.values()) {
@@ -466,9 +415,6 @@ public class WorkspaceController {
         }
     }
 
-    /**
-     * Triggers the layout recalculation and redrawing of the canvas.
-     */
     private void redrawTree() {
         double width = visualizerPane.getWidth();
         double height = visualizerPane.getHeight();

@@ -26,7 +26,6 @@ public class EdgeTraversalAnimation implements TreeAnimation {
             }
         };
 
-        // Reset highlight after animation completes
         this.transition.setOnFinished(e -> {
             if (edge != null) {
                 edge.setHighlightProgress(0.0);
@@ -51,16 +50,7 @@ public class EdgeTraversalAnimation implements TreeAnimation {
 
     @Override
     public void setOnFinished(Runnable action) {
-        // We must preserve our internal reset while appending the user's action
-        javafx.event.EventHandler<javafx.event.ActionEvent> oldOnFinished = transition.getOnFinished();
-        transition.setOnFinished(e -> {
-            if (oldOnFinished != null) {
-                oldOnFinished.handle(e);
-            }
-            if (action != null) {
-                action.run();
-            }
-        });
+        transition.setOnFinished(e -> action.run());
     }
 
     @Override

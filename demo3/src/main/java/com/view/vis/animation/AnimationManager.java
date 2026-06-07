@@ -1,22 +1,24 @@
 package com.view.vis.animation;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.DoubleConsumer;
 
 public class AnimationManager {
 
     private Runnable onAllFinished;
-    private java.util.function.DoubleConsumer onProgressChanged;
+    private DoubleConsumer onProgressChanged;
 
     public void setOnAllFinished(Runnable onAllFinished) {
         this.onAllFinished = onAllFinished;
     }
 
-    public void setOnProgressChanged(java.util.function.DoubleConsumer onProgressChanged) {
+    public void setOnProgressChanged(DoubleConsumer onProgressChanged) {
         this.onProgressChanged = onProgressChanged;
     }
 
-    private java.util.List<TreeAnimation> currentRunningAnimations = new java.util.ArrayList<>();
-    private java.util.List<TreeAnimation> allAnimations = new java.util.ArrayList<>();
+    private List<TreeAnimation> currentRunningAnimations = new ArrayList<>();
+    private List<TreeAnimation> allAnimations = new ArrayList<>();
     private boolean isPaused = false;
 
     public void setRate(double rate) {
@@ -28,7 +30,7 @@ public class AnimationManager {
     public void pause() {
         if (!isPaused) {
             isPaused = true;
-            for (TreeAnimation anim : new java.util.ArrayList<>(currentRunningAnimations)) {
+            for (TreeAnimation anim : new ArrayList<>(currentRunningAnimations)) {
                 anim.pause();
             }
         }
@@ -37,7 +39,7 @@ public class AnimationManager {
     public void resume() {
         if (isPaused) {
             isPaused = false;
-            for (TreeAnimation anim : new java.util.ArrayList<>(currentRunningAnimations)) {
+            for (TreeAnimation anim : new ArrayList<>(currentRunningAnimations)) {
                 anim.play();
             }
         }
@@ -48,7 +50,7 @@ public class AnimationManager {
     }
 
     public void playSequential(List<TreeAnimation> animations) {
-        this.allAnimations = new java.util.ArrayList<>(animations);
+        this.allAnimations = new ArrayList<>(animations);
         if (animations == null || animations.isEmpty()) {
             if (onProgressChanged != null) {
                 onProgressChanged.accept(1.0);
@@ -102,7 +104,7 @@ public class AnimationManager {
     }
 
     public void playParallel(List<TreeAnimation> animations) {
-        this.allAnimations = new java.util.ArrayList<>(animations);
+        this.allAnimations = new ArrayList<>(animations);
         if (animations == null || animations.isEmpty()) {
             if (onProgressChanged != null) {
                 onProgressChanged.accept(1.0);

@@ -12,9 +12,6 @@ public class GeneralTreeLayout implements LayoutStrategy {
     private static final double LEVEL_HEIGHT = 80.0;
     private static final double PADDING_TOP = 40.0;
 
-    public GeneralTreeLayout() {
-    }
-
     @Override
     public void calculateLayout(VisualTree visualTree, double containerWidth, double containerHeight) {
         if (visualTree == null || visualTree.getNodes().isEmpty()) {

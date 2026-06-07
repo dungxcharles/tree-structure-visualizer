@@ -15,6 +15,7 @@ import com.view.vis.animation.TreeAnimation;
 import com.view.vis.animation.strategy.StepAnimationStrategy;
 import com.view.vis.animation.strategy.StepAnimatorFactory;
 import com.view.vis.layout.LayoutStrategy;
+import com.util.VisualTreeUtils;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,12 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-/**
- * TreeVisualizationController orchestrates the visualization of the tree.
- * It manages the lifecycle of the visual components, listens for logical tree
- * changes,
- * and builds smooth animation sequences.
- */
 public class TreeVisualizationController implements TreeOperationAnimator, TreeOperationListener {
     private VisualTree visualTree;
     private TreeCanvas canvas;
@@ -112,10 +107,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         }
     }
 
-    /**
-     * Attaches the logical data tree to this controller and initializes the
-     * starting visual layout.
-     */
     public void setTreeData(Object logicalTreeData) {
         if (this.visualTree != null) {
             this.visualTree.clear();
@@ -175,43 +166,26 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         }
     }
 
-    /**
-     * Main orchestration method: Breaks down the animation generation into 5
-     * readable steps.
-     */
     private void processRecordedStepsAndAnimate() {
-        // 1. Calculate the target layout (how the tree should look when finished)
         VisualTree finalTree = VisualTreeMapper.build(this.logicalTree, this.layoutStrategy, this.canvasWidth,
                 this.canvasHeight);
 
-        // 2. Prepare the canvas by injecting brand new nodes invisibly
         List<VisualNode> newNodes = injectInvisibleNewNodes(finalTree);
         boolean hasDeletions = checkForDeletions(finalTree, newNodes);
 
-        // 3. Create algorithmic animations (color changes, tracing paths, etc.)
         List<TreeAnimation> stepAnimations = createStepAnimations();
 
-        // 4. Create movement animations (nodes shifting to balance the tree)
         List<TreeAnimation> moveAnimations = createLayoutMoveAnimations(finalTree, newNodes);
 
-        // 5. Build the final playback timeline and execute it
         playAnimationSequence(stepAnimations, moveAnimations, newNodes.isEmpty(), hasDeletions);
     }
 
-    /**
-     * Identifies nodes that exist in the final layout but not in the current visual
-     * tree.
-     * Injects them invisibly into the current tree so they can be smoothly animated
-     * in later.
-     */
     private List<VisualNode> injectInvisibleNewNodes(VisualTree finalTree) {
         List<VisualNode> newNodes = new ArrayList<>();
         for (VisualNode finalNode : finalTree.getNodes()) {
-            VisualNode existingNode = findNodeById(this.visualTree, finalNode.getId());
+            VisualNode existingNode = VisualTreeUtils.findNodeById(this.visualTree, finalNode.getId());
 
             if (existingNode == null) {
-                // The node is completely new! Inject it invisibly at its final destination
-                // position.
                 VisualNode newNode = new VisualNode(finalNode.getId(), finalNode.getLabel());
                 newNode.setX(finalNode.getX());
                 newNode.setY(finalNode.getY());
@@ -219,10 +193,9 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
                 this.visualTree.addNode(newNode);
                 newNodes.add(newNode);
 
-                // Inject the incoming edge for this new node
-                VisualEdge finalEdge = findIncomingEdge(finalNode, finalTree);
+                VisualEdge finalEdge = VisualTreeUtils.findIncomingEdge(finalTree, finalNode);
                 if (finalEdge != null) {
-                    VisualNode sourceInCurrent = findNodeById(this.visualTree, finalEdge.getSource().getId());
+                    VisualNode sourceInCurrent = VisualTreeUtils.findNodeById(this.visualTree, finalEdge.getSource().getId());
                     if (sourceInCurrent != null) {
                         VisualEdge newEdge = new VisualEdge(sourceInCurrent, newNode, finalEdge.getChildSide());
                         newEdge.setProgress(0.0);
@@ -234,13 +207,9 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         return newNodes;
     }
 
-    /**
-     * Determines if any node currently on the screen is missing from the final
-     * layout.
-     */
     private boolean checkForDeletions(VisualTree finalTree, List<VisualNode> newlyInjectedNodes) {
         for (VisualNode currentNode : this.visualTree.getNodes()) {
-            if (findNodeById(finalTree, currentNode.getId()) == null
+            if (VisualTreeUtils.findNodeById(finalTree, currentNode.getId()) == null
                     && !newlyInjectedNodes.contains(currentNode)) {
                 return true;
             }
@@ -248,10 +217,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         return false;
     }
 
-    /**
-     * Iterates through the raw algorithmic steps recorded from the LogicalTree
-     * and converts them into rich visual TreeAnimations.
-     */
     private List<TreeAnimation> createStepAnimations() {
         List<TreeAnimation> stepAnimations = new ArrayList<>();
         int totalSteps = this.recordedSteps.size();
@@ -262,8 +227,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
             final double progress = totalSteps > 0 ? (double) currentStepIndex / totalSteps : 0.0;
             currentStepIndex++;
 
-            // Generate a lightweight background animation just to trigger the UI text
-            // update
             stepAnimations.add(new TreeAnimation() {
                 private Runnable onFinished;
 
@@ -295,7 +258,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
                 }
             });
 
-            // Delegate visual generation to the Strategy Factory based on the StepType
             StepAnimationStrategy strategy = animatorFactory.getStrategy(step.getType());
             if (strategy != null) {
                 List<TreeAnimation> animations = strategy.createAnimations(step, this.visualTree);
@@ -307,16 +269,11 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         return stepAnimations;
     }
 
-    /**
-     * Compares node positions between the current view and the final computed
-     * layout.
-     * Generates movement animations for any nodes that have shifted.
-     */
     private List<TreeAnimation> createLayoutMoveAnimations(VisualTree finalTree, List<VisualNode> newNodes) {
         List<TreeAnimation> moveAnimations = new ArrayList<>();
 
         for (VisualNode currentNode : this.visualTree.getNodes()) {
-            VisualNode finalNode = findNodeById(finalTree, currentNode.getId());
+            VisualNode finalNode = VisualTreeUtils.findNodeById(finalTree, currentNode.getId());
 
             if (finalNode != null && !newNodes.contains(currentNode)) {
                 double diffX = Math.abs(currentNode.getX() - finalNode.getX());
@@ -331,10 +288,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         return moveAnimations;
     }
 
-    /**
-     * Orchestrates the correct ordering of algorithm animations vs physical
-     * movement animations.
-     */
     private void playAnimationSequence(List<TreeAnimation> stepAnimations, List<TreeAnimation> moveAnimations,
             boolean noNewNodes, boolean hasDeletions) {
         startRenderLoop();
@@ -357,10 +310,7 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
             return;
         }
 
-        // Logical Flow Control:
         if (!noNewNodes || (!hasDeletions && !moveAnimations.isEmpty())) {
-            // INSERT/UPDATE Operation: Move tree to make physical room FIRST, then play
-            // algorithm steps
             if (!moveAnimations.isEmpty()) {
                 for (TreeAnimation a : moveAnimations)
                     a.setRate(this.animationSpeed);
@@ -370,8 +320,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
                 playSequentialSteps(stepAnimations, finalizeAndCleanup);
             }
         } else if (hasDeletions) {
-            // DELETE Operation: Play algorithm steps FIRST (find node), then move layout to
-            // close the physical gap
             playSequentialSteps(stepAnimations, () -> {
                 if (!moveAnimations.isEmpty()) {
                     for (TreeAnimation a : moveAnimations)
@@ -432,25 +380,6 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
             renderFrame(fxCanvas.getGraphicsContext2D());
         }
     }
-
-    // --- Helper Utility Methods ---
-    private VisualNode findNodeById(VisualTree tree, String id) {
-        if (tree == null || id == null)
-            return null;
-        for (VisualNode node : tree.getNodes()) {
-            if (id.equals(node.getId()))
-                return node;
-        }
-        return null;
-    }
-
-    private VisualEdge findIncomingEdge(VisualNode node, VisualTree tree) {
-        if (tree == null || node == null)
-            return null;
-        for (VisualEdge edge : tree.getEdges()) {
-            if (edge.getTarget().getId().equals(node.getId()))
-                return edge;
-        }
-        return null;
-    }
 }
+
+

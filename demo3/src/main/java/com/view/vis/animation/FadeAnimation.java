@@ -1,6 +1,5 @@
 package com.view.vis.animation;
 
-import com.view.vis.model.VisualEdge;
 import com.view.vis.model.VisualNode;
 import com.view.vis.model.VisualTree;
 import javafx.animation.Transition;
@@ -10,8 +9,6 @@ public class FadeAnimation implements TreeAnimation {
     private final Transition transition;
 
     public FadeAnimation(VisualNode node, VisualTree tree, double startOpacity, double endOpacity, double durationMs) {
-        VisualEdge parentEdge = findIncomingEdge(node, tree);
-
         node.setOpacity(startOpacity);
 
         this.transition = new Transition() {
@@ -25,17 +22,6 @@ public class FadeAnimation implements TreeAnimation {
                 node.setOpacity(opacity);
             }
         };
-    }
-
-    private VisualEdge findIncomingEdge(VisualNode node, VisualTree tree) {
-        if (tree == null)
-            return null;
-        for (VisualEdge edge : tree.getEdges()) {
-            if (edge.getTarget().equals(node)) {
-                return edge;
-            }
-        }
-        return null;
     }
 
     @Override

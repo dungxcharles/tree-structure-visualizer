@@ -7,6 +7,7 @@ import com.view.vis.model.VisualEdge;
 import com.view.vis.animation.NodeColorAnimation;
 import com.view.vis.animation.TreeAnimation;
 import com.view.vis.animation.EdgeTraversalAnimation;
+import com.util.VisualTreeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +18,12 @@ public class SearchStepStrategy implements StepAnimationStrategy {
     private static final String FOUND_COLOR = "#2ECC71";
     private static final String NOT_FOUND_COLOR = "#E74C3C";
     private static final String DEFAULT_COLOR = "#FFFFFF";
-    private static final double STEP_DURATION_MS = 400;
+    private static final double DURATION_MS = 400;
 
     @Override
     public List<TreeAnimation> createAnimations(AnimationStep step, VisualTree tree) {
         List<TreeAnimation> animations = new ArrayList<>();
-        VisualNode targetNode = findVisualNodeByValue(tree, step.getMainNodeValue());
+        VisualNode targetNode = VisualTreeUtils.findVisualNodeByValue(tree, step.getMainNodeValue());
 
         if (targetNode == null) {
             return animations;
@@ -33,46 +34,40 @@ public class SearchStepStrategy implements StepAnimationStrategy {
         switch (step.getType()) {
             case VISIT:
             case COMPARE:
-                // Highlight orange while comparing, then restore
-                animations.add(new NodeColorAnimation(targetNode, originalColor, TRAVERSAL_COLOR, STEP_DURATION_MS));
+                animations.add(new NodeColorAnimation(targetNode, originalColor, TRAVERSAL_COLOR, DURATION_MS));
                 animations
-                        .add(new NodeColorAnimation(targetNode, TRAVERSAL_COLOR, originalColor, STEP_DURATION_MS / 2));
+                        .add(new NodeColorAnimation(targetNode, TRAVERSAL_COLOR, originalColor, DURATION_MS / 2));
                 break;
 
             case GO_LEFT:
             case GO_RIGHT:
             case GO_CHILD:
-                // Brief orange flash to indicate direction taken
                 animations
-                        .add(new NodeColorAnimation(targetNode, originalColor, TRAVERSAL_COLOR, STEP_DURATION_MS / 2));
+                        .add(new NodeColorAnimation(targetNode, originalColor, TRAVERSAL_COLOR, DURATION_MS / 2));
                 animations
-                        .add(new NodeColorAnimation(targetNode, TRAVERSAL_COLOR, originalColor, STEP_DURATION_MS / 2));
+                        .add(new NodeColorAnimation(targetNode, TRAVERSAL_COLOR, originalColor, DURATION_MS / 2));
                 
-                VisualEdge outgoingEdge = findOutgoingEdge(tree, targetNode, step.getType());
+                VisualEdge outgoingEdge = VisualTreeUtils.findOutgoingEdge(tree, targetNode, step.getType());
                 if (outgoingEdge != null && outgoingEdge.getTarget().getOpacity() > 0.0) {
-                    animations.add(new EdgeTraversalAnimation(outgoingEdge, TRAVERSAL_COLOR, STEP_DURATION_MS));
+                    animations.add(new EdgeTraversalAnimation(outgoingEdge, TRAVERSAL_COLOR, DURATION_MS));
                 }
                 break;
 
             case ADD_TO_RESULT:
-                // Quick green flash for traversal result
-                animations.add(new NodeColorAnimation(targetNode, originalColor, FOUND_COLOR, STEP_DURATION_MS / 2));
+                animations.add(new NodeColorAnimation(targetNode, originalColor, FOUND_COLOR, DURATION_MS / 2));
                 break;
 
             case FOUND:
-                // Node found: turn green and stay
-                animations.add(new NodeColorAnimation(targetNode, originalColor, FOUND_COLOR, STEP_DURATION_MS));
+                animations.add(new NodeColorAnimation(targetNode, originalColor, FOUND_COLOR, DURATION_MS));
                 break;
 
             case NOT_FOUND:
-                // Search failed: flash red
-                animations.add(new NodeColorAnimation(targetNode, originalColor, NOT_FOUND_COLOR, STEP_DURATION_MS));
+                animations.add(new NodeColorAnimation(targetNode, originalColor, NOT_FOUND_COLOR, DURATION_MS));
                 break;
 
             case DONE:
-                // Restore to default color
                 animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), DEFAULT_COLOR,
-                        STEP_DURATION_MS / 2));
+                        DURATION_MS / 2));
                 break;
 
             default:
@@ -82,29 +77,4 @@ public class SearchStepStrategy implements StepAnimationStrategy {
         return animations;
     }
 
-    private VisualNode findVisualNodeByValue(VisualTree tree, int value) {
-        String targetLabel = String.valueOf(value);
-        for (VisualNode vNode : tree.getNodes()) {
-            if (vNode.getLabel().equals(targetLabel)) {
-                return vNode;
-            }
-        }
-        return null;
-    }
-
-    private VisualEdge findOutgoingEdge(VisualTree tree, VisualNode source, com.model.step.StepType direction) {
-        if (tree == null || source == null) return null;
-        for (VisualEdge edge : tree.getEdges()) {
-            if (edge.getSource().equals(source)) {
-                if (direction == com.model.step.StepType.GO_LEFT && edge.getTarget().getX() <= source.getX()) {
-                    return edge;
-                } else if (direction == com.model.step.StepType.GO_RIGHT && edge.getTarget().getX() >= source.getX()) {
-                    return edge;
-                } else if (direction == com.model.step.StepType.GO_CHILD) {
-                    return edge;
-                }
-            }
-        }
-        return null;
-    }
 }
