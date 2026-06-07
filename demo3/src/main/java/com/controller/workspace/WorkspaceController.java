@@ -1,6 +1,7 @@
 package com.controller.workspace;
 
 import com.model.tree.AbstractTree;
+import com.model.tree.AVLTree;
 import com.model.tree.TraversalType;
 import com.model.tree.TreeFactory;
 import com.model.tree.TreeType;
@@ -73,6 +74,12 @@ public class WorkspaceController {
 
     @FXML
     private Label rootValueLabel;
+
+    @FXML
+    private Label balanceFactorLabel;
+
+    @FXML
+    private Label balanceFactorTextLabel;
 
     @FXML
     private Slider speedSlider;
@@ -487,6 +494,21 @@ public class WorkspaceController {
                 rootValueLabel.setText("None");
             } else {
                 rootValueLabel.setText(String.valueOf(logicalTree.getRoot().getValue()));
+            }
+        }
+
+        boolean hasBalanceFactor = logicalTree instanceof AVLTree;
+        if (balanceFactorTextLabel != null) {
+            balanceFactorTextLabel.setVisible(hasBalanceFactor);
+            balanceFactorTextLabel.setManaged(hasBalanceFactor);
+        }
+        if (balanceFactorLabel != null) {
+            balanceFactorLabel.setVisible(hasBalanceFactor);
+            balanceFactorLabel.setManaged(hasBalanceFactor);
+
+            if (hasBalanceFactor) {
+                AVLTree avlTree = (AVLTree) logicalTree;
+                balanceFactorLabel.setText(String.valueOf(avlTree.getBalanceFactor(avlTree.getRoot())));
             }
         }
     }
