@@ -51,7 +51,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     private GenericNode findNode(GenericNode current, int value) {
         if (current == null)
             return null;
-            
+
         fireStep(StepType.COMPARE, current.getValue(), "So sánh với " + current.getValue());
         if (current.getValue() == value) {
             fireStep(StepType.FOUND, current.getValue(), "Đã tìm thấy " + current.getValue());
@@ -71,7 +71,6 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     public boolean delete(int value) {
         if (isEmpty())
             return false;
-            
         fireStep(StepType.COMPARE, this.root.getValue(), "So sánh root với " + value);
         if (this.root.getValue() == value) {
             fireStep(StepType.DELETE_NODE, value, "Xóa gốc (root) " + value);
@@ -82,7 +81,8 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     }
 
     private boolean deleteNode(GenericNode current, int value) {
-        fireStep(StepType.ITERATE_CHILDREN, current.getValue(), "Duyệt các con của " + current.getValue() + " để tìm xóa " + value);
+        fireStep(StepType.ITERATE_CHILDREN, current.getValue(),
+                "Duyệt các con của " + current.getValue() + " để tìm xóa " + value);
         for (GenericNode child : current.getChildren()) {
             fireStep(StepType.COMPARE, child.getValue(), "So sánh con với " + value);
             if (child.getValue() == value) {
@@ -184,11 +184,11 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     private void preOrderTraverse(GenericNode node, List<Integer> result) {
         if (node == null)
             return;
-            
+
         fireStep(StepType.VISIT, node.getValue(), "Pre-order: Thăm node " + node.getValue());
         fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
-        
+
         fireStep(StepType.ITERATE_CHILDREN, node.getValue(), "Bắt đầu duyệt các con của " + node.getValue());
         for (GenericNode child : node.getChildren()) {
             fireStep(StepType.GO_CHILD, child.getValue(), "Đi xuống nhánh con " + child.getValue());
@@ -199,13 +199,11 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     private void postOrderTraverse(GenericNode node, List<Integer> result) {
         if (node == null)
             return;
-            
         fireStep(StepType.ITERATE_CHILDREN, node.getValue(), "Bắt đầu duyệt các con của " + node.getValue());
         for (GenericNode child : node.getChildren()) {
             fireStep(StepType.GO_CHILD, child.getValue(), "Đi xuống nhánh con " + child.getValue());
             postOrderTraverse(child, result);
         }
-        
         fireStep(StepType.VISIT, node.getValue(), "Post-order: Thăm node " + node.getValue());
         fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
@@ -220,11 +218,13 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         while (!queue.isEmpty()) {
             GenericNode current = queue.poll();
             fireStep(StepType.VISIT, current.getValue(), "BFS: Lấy node " + current.getValue() + " từ Queue và thăm");
-            fireStep(StepType.ADD_TO_RESULT, current.getValue(), "Thêm " + current.getValue() + " vào danh sách kết quả");
+            fireStep(StepType.ADD_TO_RESULT, current.getValue(),
+                    "Thêm " + current.getValue() + " vào danh sách kết quả");
             result.add(current.getValue());
-            
+
             if (!current.getChildren().isEmpty()) {
-                fireStep(StepType.ITERATE_CHILDREN, current.getValue(), "Đưa các con của " + current.getValue() + " vào Queue");
+                fireStep(StepType.ITERATE_CHILDREN, current.getValue(),
+                        "Đưa các con của " + current.getValue() + " vào Queue");
                 for (GenericNode child : current.getChildren()) {
                     fireStep(StepType.GO_CHILD, child.getValue(), "Đưa con " + child.getValue() + " vào Queue");
                     queue.add(child);

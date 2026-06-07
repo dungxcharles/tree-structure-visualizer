@@ -84,7 +84,8 @@ public class AVLTree extends BinarySearchTree {
             }
 
             AVLNode successor = minimum(node.getRight());
-            fireStep(StepType.REPLACE_VALUE, node.getValue(), "Thay thế " + node.getValue() + " bằng successor " + successor.getValue());
+            fireStep(StepType.REPLACE_VALUE, node.getValue(),
+                    "Thay thế " + node.getValue() + " bằng successor " + successor.getValue());
             node.setValue(successor.getValue());
             node.setRight(deleteRec(node.getRight(), successor.getValue()));
         }
@@ -154,7 +155,8 @@ public class AVLTree extends BinarySearchTree {
 
         if (balance > 1) {
             if (getBalanceFactor(node.getLeft()) < 0) {
-                fireStep(StepType.ROTATE_LEFT, node.getLeft().getValue(), "Mất cân bằng Trái-Phải -> Xoay trái tại " + node.getLeft().getValue());
+                fireStep(StepType.ROTATE_LEFT, node.getLeft().getValue(),
+                        "Mất cân bằng Trái-Phải -> Xoay trái tại " + node.getLeft().getValue());
                 node.setLeft(leftRotate(node.getLeft()));
             }
             fireStep(StepType.ROTATE_RIGHT, node.getValue(), "Xoay phải tại " + node.getValue());
@@ -163,7 +165,8 @@ public class AVLTree extends BinarySearchTree {
 
         if (balance < -1) {
             if (getBalanceFactor(node.getRight()) > 0) {
-                fireStep(StepType.ROTATE_RIGHT, node.getRight().getValue(), "Mất cân bằng Phải-Trái -> Xoay phải tại " + node.getRight().getValue());
+                fireStep(StepType.ROTATE_RIGHT, node.getRight().getValue(),
+                        "Mất cân bằng Phải-Trái -> Xoay phải tại " + node.getRight().getValue());
                 node.setRight(rightRotate(node.getRight()));
             }
             fireStep(StepType.ROTATE_LEFT, node.getValue(), "Xoay trái tại " + node.getValue());
