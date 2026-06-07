@@ -17,6 +17,7 @@ import com.controller.vis.TreeVisualizationController;
 import com.view.vis.layout.BinaryTreeLayout;
 import com.view.vis.layout.LayoutStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -63,7 +64,8 @@ public class WorkspaceController {
     private ListViewPseudoCodeDisplay pseudoCodeDisplay;
 
     @FXML
-    private Label heightLabel, numNodesLabel, leafNodesLabel, rootValueLabel, balanceFactorLabel, balanceFactorTextLabel;
+    private Label heightLabel, numNodesLabel, leafNodesLabel, rootValueLabel, balanceFactorLabel, balanceFactorTextLabel,
+            traverseStatusLabel;
 
     @FXML
     private Slider speedSlider;
@@ -88,6 +90,8 @@ public class WorkspaceController {
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
     private AbstractTree<?> logicalTree;
+    private boolean recordingTraverseStatus = false;
+    private final List<Integer> traverseStatusValues = new ArrayList<>();
 
     // Default tree type
     public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
@@ -108,14 +112,17 @@ public class WorkspaceController {
             operation.run();
         } catch (NumberFormatException e) {
             setOperationButtonsDisabled(false);
+            recordingTraverseStatus = false;
             AlertUtils.showErrorAlert("Invalid Input", "Please enter a valid integer value.");
             return;
         } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
             setOperationButtonsDisabled(false);
+            recordingTraverseStatus = false;
             AlertUtils.showErrorAlert("Operation Error", e.getMessage());
             return;
         } catch (Exception e) {
             setOperationButtonsDisabled(false);
+            recordingTraverseStatus = false;
             AlertUtils.showErrorAlert("Unexpected Error", "An unexpected error occurred: " + e.getMessage());
             return;
         }
@@ -137,6 +144,7 @@ public class WorkspaceController {
                 logicalTree.create(value);
                 if (!logicalTree.isEmpty()) {
                     historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.CREATE, 0, value));
+                    clearTraverseStatus();
                 }
             } else {
                 boolean inserted;
@@ -147,6 +155,7 @@ public class WorkspaceController {
                 }
                 if (inserted) {
                     historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, parentValue, value));
+                    clearTraverseStatus();
                 }
             }
             updateUndoRedoButtons();
@@ -160,6 +169,7 @@ public class WorkspaceController {
             boolean deleted = logicalTree.delete(value);
             if (deleted) {
                 historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.DELETE, 0, value));
+                clearTraverseStatus();
             }
             updateUndoRedoButtons();
         });
@@ -208,6 +218,7 @@ public class WorkspaceController {
             boolean updated = logicalTree.update(currentValue, newValue);
             if (updated) {
                 historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.UPDATE, currentValue, newValue));
+                clearTraverseStatus();
             }
             updateUndoRedoButtons();
         });
@@ -328,6 +339,7 @@ public class WorkspaceController {
         treeController.setFxCanvas(fxCanvas);
         treeController.setOnAnimationFinished(() -> {
             updateStatistics();
+            recordingTraverseStatus = false;
             setOperationButtonsDisabled(false);
         });
 
@@ -355,7 +367,10 @@ public class WorkspaceController {
 
         if (pseudoCodeListView != null) {
             pseudoCodeDisplay = new ListViewPseudoCodeDisplay(pseudoCodeListView);
-            treeController.setStepHighlightCallback(pseudoCodeDisplay::addAndHighlightStep);
+            treeController.setStepHighlightCallback(message -> {
+                pseudoCodeDisplay.addAndHighlightStep(message);
+                appendTraverseStatusFromStep(message);
+            });
         }
 
         boolean needsParent = (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY);
@@ -370,6 +385,7 @@ public class WorkspaceController {
         if (treeTypeLabel != null) {
             treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
         }
+        clearTraverseStatus();
     }
 
     private void setupLogicalTree() {
@@ -394,6 +410,7 @@ public class WorkspaceController {
                 if (selected != null) {
                     TraversalType type = TraversalType
                             .valueOf(selected.replace(" ", "_"));
+                    beginTraverseStatus();
                     executeTreeOperation(() -> logicalTree.traverse(type));
                     Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
                 }
@@ -458,6 +475,56 @@ public class WorkspaceController {
                 balanceFactorLabel.setText(String.valueOf(avlTree.getBalanceFactor(avlTree.getRoot())));
             }
         }
+    }
+
+    private void clearTraverseStatus() {
+        recordingTraverseStatus = false;
+        traverseStatusValues.clear();
+        if (traverseStatusLabel != null) {
+            traverseStatusLabel.setText("None");
+        }
+    }
+
+    private void beginTraverseStatus() {
+        recordingTraverseStatus = true;
+        traverseStatusValues.clear();
+        if (traverseStatusLabel != null) {
+            traverseStatusLabel.setText("Running...");
+        }
+    }
+
+    private void appendTraverseStatusFromStep(String message) {
+        if (!recordingTraverseStatus || message == null || !message.startsWith("Add ")
+                || !message.endsWith(" to result list")) {
+            return;
+        }
+
+        String valueText = message.substring("Add ".length(), message.length() - " to result list".length()).trim();
+        try {
+            traverseStatusValues.add(Integer.parseInt(valueText));
+            updateTraverseStatusLabel();
+        } catch (NumberFormatException ignored) {
+            // Ignore messages that are not node values.
+        }
+    }
+
+    private void updateTraverseStatusLabel() {
+        if (traverseStatusLabel == null) {
+            return;
+        }
+        if (traverseStatusValues.isEmpty()) {
+            traverseStatusLabel.setText("None");
+            return;
+        }
+
+        StringBuilder status = new StringBuilder();
+        for (int i = 0; i < traverseStatusValues.size(); i++) {
+            if (i > 0) {
+                status.append(" -> ");
+            }
+            status.append(traverseStatusValues.get(i));
+        }
+        traverseStatusLabel.setText(status.toString());
     }
 
     @FXML

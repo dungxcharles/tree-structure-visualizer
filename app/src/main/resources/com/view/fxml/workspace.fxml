@@ -48,6 +48,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                 <children>
                     <Label styleClass="stats-label" text="Tree type:" />
@@ -60,6 +61,12 @@
                     <Label fx:id="rootValueLabel" styleClass="stats-value" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Label fx:id="balanceFactorTextLabel" styleClass="stats-label" text="Root balance:" GridPane.rowIndex="4" />
                     <Label fx:id="balanceFactorLabel" styleClass="stats-value" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <VBox spacing="6.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                        <children>
+                            <Label styleClass="stats-label" text="Traverse status:" />
+                            <Label fx:id="traverseStatusLabel" maxWidth="240.0" styleClass="stats-value" text="None" wrapText="true" />
+                        </children>
+                    </VBox>
                 </children>
             </GridPane>
         </VBox>
