@@ -265,6 +265,8 @@ public class WorkspaceController {
             deleteButton.setDisable(disabled);
         if (searchButton != null)
             searchButton.setDisable(disabled);
+        if (traversalComboBox != null)
+            traversalComboBox.setDisable(disabled);
             
         if (disabled) {
             if (undoButton != null) undoButton.setDisable(true);
@@ -371,12 +373,7 @@ public class WorkspaceController {
                 if (selected != null) {
                     TraversalType type = TraversalType
                             .valueOf(selected.replace(" ", "_"));
-                    if (pseudoCodeDisplay != null) {
-                        pseudoCodeDisplay.clear();
-                    }
-                    setOperationButtonsDisabled(true);
-                    logicalTree.traverse(type);
-                    treeController.playAnimations();
+                    executeTreeOperation(() -> logicalTree.traverse(type));
                     Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
                 }
             });
