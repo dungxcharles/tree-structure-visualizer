@@ -2,7 +2,6 @@ package com.model.node;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class GenericNode extends Node {
 
@@ -16,7 +15,7 @@ public class GenericNode extends Node {
     }
 
     public List<GenericNode> getChildren() {
-        return Collections.unmodifiableList(this.children);
+        return this.children;
     }
 
     public GenericNode getParent() {

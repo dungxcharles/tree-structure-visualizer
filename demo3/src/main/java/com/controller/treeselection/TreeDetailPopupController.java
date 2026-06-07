@@ -1,0 +1,94 @@
+package com.controller.treeselection;
+
+import com.controller.NavigationManager;
+import com.controller.workspace.WorkspaceController;
+import com.model.tree.TreeType;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
+public class TreeDetailPopupController {
+
+    @FXML
+    private Label lblTitle;
+
+    @FXML
+    private Label lblDescription;
+
+    @FXML
+    private Button btnStart;
+
+    private Runnable onCloseAction;
+
+    private TreeInfo currentTreeInfo;
+
+    public void setTreeInfo(TreeInfo treeInfo) {
+        this.currentTreeInfo = treeInfo;
+        lblTitle.setText(treeInfo.getTitle());
+        lblDescription.setText(treeInfo.getDescription());
+    }
+
+    public void setOnCloseAction(Runnable onCloseAction) {
+        this.onCloseAction = onCloseAction;
+    }
+
+    @FXML
+    void handleStartVisualization(ActionEvent event) {
+        if (onCloseAction != null) {
+            onCloseAction.run();
+        }
+
+        if (currentTreeInfo != null) {
+            switch (currentTreeInfo) {
+                case GENERAL_TREE:
+                    WorkspaceController.currentTreeType = TreeType.GENERAL;
+                    break;
+                case BINARY_TREE:
+                    WorkspaceController.currentTreeType = TreeType.BINARY;
+                    break;
+                case RED_BLACK_TREE:
+                    WorkspaceController.currentTreeType = TreeType.RED_BLACK;
+                    break;
+                case AVL_TREE:
+                    WorkspaceController.currentTreeType = TreeType.AVL;
+                    break;
+                case BINARY_SEARCH_TREE:
+                    WorkspaceController.currentTreeType = TreeType.BINARY_SEARCH;
+                    break;
+            }
+        }
+
+        NavigationManager.getInstance().navigateTo("/com/view/workspace.fxml");
+    }
+
+    public enum TreeInfo {
+        GENERAL_TREE("General Tree",
+                "A general tree is a hierarchical data structure in which each node can have an arbitrary number of children."),
+        BINARY_TREE("Binary Tree",
+                "A binary tree is a tree data structure in which each node has at most two children, referred to as the left child and the right child."),
+        RED_BLACK_TREE("Red-Black Tree",
+                "A red-black tree is a kind of self-balancing binary search tree where each node has an extra bit for color, used to ensure the tree remains balanced."),
+        AVL_TREE("AVL Tree",
+                "An AVL tree is a self-balancing binary search tree where the difference between heights of left and right subtrees cannot be more than one for all nodes."),
+        BINARY_SEARCH_TREE("Binary Search Tree",
+                "A binary search tree is a rooted binary tree whose internal nodes each store a key greater than all the keys in the node's left subtree and less than those in its right subtree.");
+
+        private final String title;
+        private final String description;
+
+        TreeInfo(String title, String description) {
+            this.title = title;
+            this.description = description;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+    }
+}

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="a909cc71-9f0e-422f-ac22-7ac309d8446d" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.000021529678746" />
+      <entry key="MS500" value="1.1617362739724457" />
+      <entry key="S2" value="2.815116561111266" />
+      <entry key="S5" value="5.707130228456427" />
+      <entry key="S10" value="8.42071687725096" />
+      <entry key="S30" value="11.644686782576379" />
+      <entry key="S60" value="12.745395850157028" />
+      <entry key="M2" value="13.54176839962511" />
+      <entry key="M5" value="17.97932900107354" />
+      <entry key="M10" value="28.361217120152325" />
+      <entry key="M15" value="37.68739134258758" />
+      <entry key="M30" value="56.46906433673721" />
+      <entry key="H1" value="73.37960504851189" />
+      <entry key="H2" value="85.12713071429032" />
+      <entry key="H4" value="92.1168285176725" />
+      <entry key="D1" value="98.61859116405485" />
+      <entry key="W1" value="99.80092426995417" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="3.6647829783979546E-135" />
+      <entry key="S5" value="2.873891738132703E-54" />
+      <entry key="S10" value="2.853254280444509E-27" />
+      <entry key="S30" value="3.6283059013314814E-9" />
+      <entry key="S60" value="1.8582544483716824E-4" />
+      <entry key="M2" value="0.0563435429229546" />
+      <entry key="M5" value="2.1858894215682168" />
+      <entry key="M10" value="8.533134721330542" />
+      <entry key="M15" value="14.115717267930938" />
+      <entry key="M30" value="24.409884273123236" />
+      <entry key="H1" value="32.83020636418688" />
+      <entry key="H2" value="38.33748101205669" />
+      <entry key="H4" value="41.507463108983416" />
+      <entry key="D1" value="44.39389096005233" />
+      <entry key="W1" value="44.912802220447446" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.9726758876919888" />
+      <entry key="MS500" value="1.15524506306095" />
+      <entry key="S2" value="2.8104528582313617" />
+      <entry key="S5" value="5.702676202710211" />
+      <entry key="S10" value="8.4172375376652" />
+      <entry key="S30" value="11.643033885591878" />
+      <entry key="S60" value="12.744668051850116" />
+      <entry key="M2" value="13.5970382558514" />
+      <entry key="M5" value="20.154738583014655" />
+      <entry key="M10" value="36.872169258996095" />
+      <entry key="M15" value="51.777286541411755" />
+      <entry key="M30" value="80.85491622657054" />
+      <entry key="H1" value="106.19290732732019" />
+      <entry key="H2" value="123.45449673813732" />
+      <entry key="H4" value="133.61874555993427" />
+      <entry key="D1" value="143.01148266781598" />
+      <entry key="W1" value="144.71358176857237" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3DyM62M9V7qoK8xQqlNFdvX4hZ4" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainMenuApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/workspace&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\view" />
+      <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\controller.mainmenu" />
+      <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\java\com" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Reorganize the files" />
+      <created>1779249678086</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779249678086</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Reorganize the files">
+      <option name="closed" value="true" />
+      <created>1779250126307</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779250126307</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Feat: Granting access to workspace from main menu.">
+      <option name="closed" value="true" />
+      <created>1779328485268</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1779328485268</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Feat: Granting access to workspace from main menu.">
+      <option name="closed" value="true" />
+      <created>1780737282254</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1780737282255</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml">
+      <option name="closed" value="true" />
+      <created>1780737300634</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1780737300634</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fix: Fixed fullscreen bug when switching between screens.">
+      <option name="closed" value="true" />
+      <created>1780738827454</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1780738827454</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug.">
+      <option name="closed" value="true" />
+      <created>1780740484692</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1780740484692</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Reorganize the files" />
+    <MESSAGE value="Feat: Granting access to workspace from main menu." />
+    <MESSAGE value="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml" />
+    <MESSAGE value="Fix: Fixed fullscreen bug when switching between screens." />
+    <MESSAGE value="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug." />
+  </component>
+</project>

@@ -20,61 +20,24 @@ public class VisualEdge implements VisualElement {
         this.colorHex = "#000000";
     }
 
-    public VisualNode getSource() {
-        return this.source;
-    }
+    public VisualNode getSource() { return this.source; }
+    public VisualNode getTarget() { return this.target; }
+    public String getColorHex() { return this.colorHex; }
+    public void setColorHex(String colorHex) { this.colorHex = colorHex; }
+    public double getOpacity() { return this.opacity; }
+    public void setOpacity(double opacity) { this.opacity = Math.max(0.0, Math.min(1.0, opacity)); }
 
-    public VisualNode getTarget() {
-        return this.target;
-    }
+    public double getProgress() { return progress; }
+    public void setProgress(double progress) { this.progress = Math.max(0.0, Math.min(1.0, progress)); }
 
-    public String getColorHex() {
-        return this.colorHex;
-    }
+    public double getHighlightProgress() { return highlightProgress; }
+    public void setHighlightProgress(double highlightProgress) { this.highlightProgress = Math.max(0.0, Math.min(1.0, highlightProgress)); }
 
-    public void setColorHex(String colorHex) {
-        this.colorHex = colorHex;
-    }
-
-    public double getOpacity() {
-        return this.opacity;
-    }
-
-    public void setOpacity(double opacity) {
-        this.opacity = Math.max(0.0, Math.min(1.0, opacity));
-    }
-
-    public double getProgress() {
-        return progress;
-    }
-
-    public void setProgress(double progress) {
-        this.progress = Math.max(0.0, Math.min(1.0, progress));
-    }
-
-    public double getHighlightProgress() {
-        return highlightProgress;
-    }
-
-    public void setHighlightProgress(double highlightProgress) {
-        this.highlightProgress = Math.max(0.0, Math.min(1.0, highlightProgress));
-    }
-
-    public String getHighlightColor() {
-        return highlightColor;
-    }
-
-    public void setHighlightColor(String highlightColor) {
-        this.highlightColor = highlightColor;
-    }
+    public String getHighlightColor() { return highlightColor; }
+    public void setHighlightColor(String highlightColor) { this.highlightColor = highlightColor; }
 
     @Override
-    public boolean isVisible() {
-        return this.visible;
-    }
-
+    public boolean isVisible() { return this.visible; }
     @Override
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
+    public void setVisible(boolean visible) { this.visible = visible; }
 }

@@ -71,7 +71,6 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     public boolean delete(int value) {
         if (isEmpty())
             return false;
-
         fireStep(StepType.COMPARE, this.root.getValue(), "So sánh root với " + value);
         if (this.root.getValue() == value) {
             fireStep(StepType.DELETE_NODE, value, "Xóa gốc (root) " + value);
@@ -200,13 +199,11 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     private void postOrderTraverse(GenericNode node, List<Integer> result) {
         if (node == null)
             return;
-
         fireStep(StepType.ITERATE_CHILDREN, node.getValue(), "Bắt đầu duyệt các con của " + node.getValue());
         for (GenericNode child : node.getChildren()) {
             fireStep(StepType.GO_CHILD, child.getValue(), "Đi xuống nhánh con " + child.getValue());
             postOrderTraverse(child, result);
         }
-
         fireStep(StepType.VISIT, node.getValue(), "Post-order: Thăm node " + node.getValue());
         fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
         result.add(node.getValue());
