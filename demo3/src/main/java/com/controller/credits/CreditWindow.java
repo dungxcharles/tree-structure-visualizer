@@ -79,9 +79,10 @@ public class CreditWindow {
             "5. Use the settings menu to adjust animation speed."));
 
         // Pages 4-7: Step-by-Step Instructions (Image-based)
-        for (int i = 1; i <= 4; i++) {
-            pages.add(createImagePage("/com/view/help/instruction" + i + ".png"));
-        }
+        pages.add(createImagePage("Choose tree type", "/com/view/help/instruction1.png"));
+        pages.add(createImagePage("Insert", "/com/view/help/instruction2.png"));
+        pages.add(createImagePage("Traverse", "/com/view/help/instruction3.png"));
+        pages.add(createImagePage("Update", "/com/view/help/instruction4.png"));
     }
 
     /**
@@ -115,19 +116,28 @@ public class CreditWindow {
     /**
      * Helper to create an image-based page.
      */
-    private Node createImagePage(String imagePath) {
-        StackPane container = new StackPane();
+    private Node createImagePage(String title, String imagePath) {
+        VBox container = new VBox(18);
+        container.setAlignment(Pos.CENTER);
+        container.setPadding(new javafx.geometry.Insets(12, 24, 12, 24));
+
+        Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("credit-title");
+        titleLabel.setAlignment(Pos.CENTER);
+        titleLabel.setTextAlignment(TextAlignment.CENTER);
+
         try {
             Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
             ImageView imageView = new ImageView(img);
             imageView.setPreserveRatio(true);
-            imageView.setFitWidth(600); // Fit within the center area
-            imageView.setFitHeight(350);
-            container.getChildren().add(imageView);
+            imageView.setFitWidth(1100);
+            imageView.setFitHeight(500);
+            imageView.setSmooth(true);
+            container.getChildren().addAll(titleLabel, imageView);
         } catch (Exception e) {
             Label errorLabel = new Label("Image not found: " + imagePath);
             errorLabel.setTextFill(Color.RED);
-            container.getChildren().add(errorLabel);
+            container.getChildren().addAll(titleLabel, errorLabel);
         }
         return container;
     }
