@@ -224,7 +224,7 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
                 if (finalEdge != null) {
                     VisualNode sourceInCurrent = findNodeById(this.visualTree, finalEdge.getSource().getId());
                     if (sourceInCurrent != null) {
-                        VisualEdge newEdge = new VisualEdge(sourceInCurrent, newNode);
+                        VisualEdge newEdge = new VisualEdge(sourceInCurrent, newNode, finalEdge.getChildSide());
                         newEdge.setProgress(0.0);
                         this.visualTree.addEdge(newEdge);
                     }

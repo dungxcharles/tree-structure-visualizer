@@ -6,12 +6,10 @@ import com.model.node.Node;
 import com.model.node.RBNode;
 import com.model.tree.AbstractTree;
 import com.view.vis.model.VisualEdge;
+import com.view.vis.model.VisualEdge.ChildSide;
 import com.view.vis.model.VisualNode;
 import com.view.vis.model.VisualTree;
 import com.view.vis.layout.LayoutStrategy;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * VisualTreeMapper is responsible for converting a Logical Tree (data model)
@@ -33,7 +31,7 @@ public class VisualTreeMapper {
         if (logicalTree != null) {
             Node root = logicalTree.getRoot();
             if (root != null) {
-                mapLogicalNodeToVisual(root, null, tree);
+                mapLogicalNodeToVisual(root, null, ChildSide.UNKNOWN, tree);
                 
                 // Calculate physical coordinates if valid dimensions are provided
                 if (layoutStrategy != null && width > 0 && height > 0) {
@@ -52,12 +50,13 @@ public class VisualTreeMapper {
         if (logicalTree != null) {
             Node root = logicalTree.getRoot();
             if (root != null) {
-                mapLogicalNodeToVisual(root, null, targetTree);
+                mapLogicalNodeToVisual(root, null, ChildSide.UNKNOWN, targetTree);
             }
         }
     }
 
-    private static VisualNode mapLogicalNodeToVisual(Node logicalNode, VisualNode parentVisual, VisualTree targetTree) {
+    private static VisualNode mapLogicalNodeToVisual(Node logicalNode, VisualNode parentVisual, ChildSide childSide,
+            VisualTree targetTree) {
         if (logicalNode == null) return null;
 
         String id = String.valueOf(System.identityHashCode(logicalNode));
@@ -68,11 +67,18 @@ public class VisualTreeMapper {
         targetTree.addNode(vNode);
 
         if (parentVisual != null) {
-            targetTree.addEdge(new VisualEdge(parentVisual, vNode));
+            targetTree.addEdge(new VisualEdge(parentVisual, vNode, childSide));
         }
 
-        for (Node child : getLogicalChildren(logicalNode)) {
-            mapLogicalNodeToVisual(child, vNode, targetTree);
+        if (logicalNode instanceof BinaryNode) {
+            BinaryNode bNode = (BinaryNode) logicalNode;
+            mapLogicalNodeToVisual(bNode.getLeft(), vNode, ChildSide.LEFT, targetTree);
+            mapLogicalNodeToVisual(bNode.getRight(), vNode, ChildSide.RIGHT, targetTree);
+        } else if (logicalNode instanceof GenericNode) {
+            GenericNode gNode = (GenericNode) logicalNode;
+            for (GenericNode child : gNode.getChildren()) {
+                mapLogicalNodeToVisual(child, vNode, ChildSide.UNKNOWN, targetTree);
+            }
         }
 
         return vNode;
@@ -86,16 +92,4 @@ public class VisualTreeMapper {
         return VisualNode.COLOR_DEFAULT; // Default color
     }
 
-    private static List<Node> getLogicalChildren(Node logicalNode) {
-        List<Node> children = new ArrayList<>();
-        if (logicalNode instanceof BinaryNode) {
-            BinaryNode bNode = (BinaryNode) logicalNode;
-            if (bNode.getLeft() != null) children.add(bNode.getLeft());
-            if (bNode.getRight() != null) children.add(bNode.getRight());
-        } else if (logicalNode instanceof GenericNode) {
-            GenericNode gNode = (GenericNode) logicalNode;
-            children.addAll(gNode.getChildren());
-        }
-        return children;
-    }
 }
