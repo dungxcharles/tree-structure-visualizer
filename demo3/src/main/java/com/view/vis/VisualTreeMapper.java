@@ -81,9 +81,9 @@ public class VisualTreeMapper {
     private static String getLogicalNodeColor(Node logicalNode) {
         if (logicalNode instanceof RBNode) {
             RBNode rbNode = (RBNode) logicalNode;
-            return rbNode.getColor() == RBNode.Color.RED ? "#ff0000" : "#333333";
+            return rbNode.getColor() == RBNode.Color.RED ? VisualNode.COLOR_RED_BLACK_RED : VisualNode.COLOR_RED_BLACK_BLACK;
         }
-        return "#ffffff"; // Default color
+        return VisualNode.COLOR_DEFAULT; // Default color
     }
 
     private static List<Node> getLogicalChildren(Node logicalNode) {

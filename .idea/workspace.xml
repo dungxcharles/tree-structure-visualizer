@@ -6,16 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Added the exception classes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/credits/CreditWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/credits/CreditWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/settings/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/vis/TreeVisualizationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/vis/TreeVisualizationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/HistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/HistoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/HistoryOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/HistoryOperation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/pseudocode/ListViewPseudoCodeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/pseudocode/ListViewPseudoCodeDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultEdgeRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultEdgeRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultNodeRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/render/DefaultNodeRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/base-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/base-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/dark-mode.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/dark-mode.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/theme/DarkTheme.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/theme/DarkTheme.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/VisualTreeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/VisualTreeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/model/VisualNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/model/VisualNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,35 +117,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainMenuApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;release/v1.2&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Launcher.executor": "Run",
+    "Application.MainMenuApplication.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "feature/update-tree",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\view" />

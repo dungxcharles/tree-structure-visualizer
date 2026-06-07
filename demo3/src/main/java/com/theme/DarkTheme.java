@@ -1,6 +1,7 @@
 package com.theme;
 
 import javafx.scene.paint.Color;
+import com.view.vis.model.VisualNode;
 
 public class DarkTheme implements Theme {
 
@@ -24,7 +25,7 @@ public class DarkTheme implements Theme {
 
     @Override
     public Color getNodeFillColor(String originalColorHex) {
-        if ("#ffffff".equalsIgnoreCase(originalColorHex) || "#333333".equals(originalColorHex) || "#000000".equals(originalColorHex)) {
+        if (VisualNode.COLOR_DEFAULT.equalsIgnoreCase(originalColorHex) || VisualNode.COLOR_RED_BLACK_BLACK.equals(originalColorHex) || "#000000".equals(originalColorHex)) {
             return Color.web("#2b2b2b");
         }
         return Color.web(originalColorHex);
@@ -37,10 +38,10 @@ public class DarkTheme implements Theme {
 
     @Override
     public Color getNodeTextFillColor(String originalColorHex) {
-        if ("#ffffff".equalsIgnoreCase(originalColorHex) || "#333333".equals(originalColorHex) || "#000000".equals(originalColorHex)) {
+        if (VisualNode.COLOR_DEFAULT.equalsIgnoreCase(originalColorHex) || VisualNode.COLOR_RED_BLACK_BLACK.equals(originalColorHex) || "#000000".equals(originalColorHex)) {
             return Color.WHITE;
         }
-        if ("#ff0000".equalsIgnoreCase(originalColorHex)) {
+        if (VisualNode.COLOR_RED_BLACK_RED.equalsIgnoreCase(originalColorHex)) {
             return Color.WHITE;
         }
         return Color.BLACK;

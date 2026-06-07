@@ -1,5 +1,7 @@
 package com.controller.workspace;
 
+import com.model.tree.AbstractTree;
+
 /**
  * A simple data class representing a single operation performed by the user.
  * Used for Event Sourcing in the Undo/Redo functionality.
@@ -32,5 +34,24 @@ public class HistoryOperation {
 
     public int getValue() {
         return value;
+    }
+
+    /**
+     * Executes this operation on the given logical tree.
+     * Encapsulates the execution behavior to satisfy the Open/Closed Principle.
+     */
+    public void apply(AbstractTree<?> tree) {
+        if (tree == null) return;
+        switch (type) {
+            case CREATE:
+                tree.create(value);
+                break;
+            case INSERT:
+                tree.insert(parentValue, value);
+                break;
+            case DELETE:
+                tree.delete(value);
+                break;
+        }
     }
 }

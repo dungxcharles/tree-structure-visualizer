@@ -9,11 +9,15 @@ public class VisualNode implements VisualElement {
     private boolean visible;
     private double opacity = 1.0;
 
+    public static final String COLOR_DEFAULT = "#ffffff";
+    public static final String COLOR_RED_BLACK_RED = "#ff0000";
+    public static final String COLOR_RED_BLACK_BLACK = "#333333";
+
     public VisualNode(String id, String label) {
         this.id = id;
         this.label = label;
         this.visible = true;
-        this.colorHex = "#ffffff";
+        this.colorHex = COLOR_DEFAULT;
     }
 
     public String getId() { return this.id; }

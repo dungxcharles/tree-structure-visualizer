@@ -14,6 +14,8 @@ import com.controller.vis.TreeVisualizationController;
 import com.view.vis.layout.BinaryTreeLayout;
 import com.view.vis.layout.LayoutStrategy;
 
+import java.util.List;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,14 +28,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Alert;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 import com.util.InputValidator;
-import com.model.tree.NullRootException;
-import com.model.tree.NullParentException;
-import com.model.tree.InvalidParentInputException;
-import com.model.tree.TreeEmptyException;
-import javafx.scene.control.Alert;
 
 public class WorkspaceController {
 
@@ -76,10 +74,10 @@ public class WorkspaceController {
     private Slider speedSlider;
 
     @FXML
-    private ComboBox<String> traversalComboBox;
+    private ProgressBar animationProgressBar;
 
     @FXML
-    private ProgressBar operationProgressBar;
+    private ComboBox<String> traversalComboBox;
 
     @FXML
     private Button insertButton;
@@ -89,6 +87,14 @@ public class WorkspaceController {
 
     @FXML
     private Button searchButton;
+
+    @FXML
+    private Button undoButton;
+
+    @FXML
+    private Button redoButton;
+
+    private HistoryManager historyManager;
 
     private TreeVisualizationController treeController;
     private Canvas fxCanvas;
@@ -102,11 +108,7 @@ public class WorkspaceController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-
-        // Apply theme styling to the dialog pane
-        javafx.scene.control.DialogPane dialogPane = alert.getDialogPane();
-        com.theme.ThemeManager.getInstance().applyThemeToDialogPane(dialogPane);
-
+        com.theme.ThemeManager.getInstance().applyThemeToDialogPane(alert.getDialogPane());
         alert.showAndWait();
     }
 
@@ -119,44 +121,24 @@ public class WorkspaceController {
         }
 
         setOperationButtonsDisabled(true);
-        if (operationProgressBar != null) {
-            operationProgressBar.setProgress(0.0);
-            operationProgressBar.setVisible(true);
-            operationProgressBar.setManaged(true);
-        }
 
         try {
             operation.run();
-        } catch (NullRootException | NullParentException | InvalidParentInputException e) {
+        } catch (NumberFormatException e) {
             setOperationButtonsDisabled(false);
-            if (operationProgressBar != null) {
-                operationProgressBar.setVisible(false);
-                operationProgressBar.setManaged(false);
-            }
-            if (pauseResumeButton != null) {
-                pauseResumeButton.setDisable(true);
-            }
-            showErrorAlert("Invalid Operation", e.getMessage());
+            showErrorAlert("Invalid Input", "Please enter a valid integer value.");
+            return;
+        } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
+            setOperationButtonsDisabled(false);
+            showErrorAlert("Operation Error", e.getMessage());
             return;
         } catch (Exception e) {
-            // Re-enable if something failed before animation starts
             setOperationButtonsDisabled(false);
-            if (operationProgressBar != null) {
-                operationProgressBar.setVisible(false);
-                operationProgressBar.setManaged(false);
-            }
-            if (pauseResumeButton != null) {
-                pauseResumeButton.setDisable(true);
-            }
-            showErrorAlert("Error", e.getMessage());
+            showErrorAlert("Unexpected Error", "An unexpected error occurred: " + e.getMessage());
             return;
         }
 
         treeController.playAnimations();
-        if (pauseResumeButton != null) {
-            pauseResumeButton.setDisable(!treeController.isAnimating());
-            pauseResumeButton.setText("Pause");
-        }
     }
 
     @FXML
@@ -164,40 +146,34 @@ public class WorkspaceController {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
 
+            int parentValue = 0;
+            if (!logicalTree.isEmpty() && (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY)) {
+                parentValue = InputValidator.getValidInt(parentValueTextField);
+            }
+
             if (logicalTree.isEmpty()) {
-                if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
-                    String parentText = parentValueTextField.getText();
-                    if (parentText != null && !parentText.trim().isEmpty()) {
-                        int parentValue = InputValidator.getValidInt(parentValueTextField);
-                        logicalTree.insert(parentValue, value);
-                    } else {
-                        logicalTree.create(value);
-                    }
-                } else {
-                    logicalTree.create(value);
-                }
+                logicalTree.create(value);
+                historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.CREATE, 0, value));
             } else {
                 if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
-                    int parentValue = InputValidator.getValidInt(parentValueTextField);
                     logicalTree.insert(parentValue, value);
+                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, parentValue, value));
                 } else {
                     logicalTree.insert(0, value);
+                    historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, 0, value));
                 }
             }
+            updateUndoRedoButtons();
         });
     }
 
     @FXML
     void handleDeleteAction(ActionEvent event) {
         executeTreeOperation(() -> {
-            if (parentValueTextField != null && parentValueTextField.isVisible()) {
-                String parentText = parentValueTextField.getText();
-                if (parentText != null && !parentText.trim().isEmpty()) {
-                    throw new InvalidParentInputException("Cannot delete/search a node but the parent is not null in the text field");
-                }
-            }
             int value = InputValidator.getValidInt(valueTextField);
             logicalTree.delete(value);
+            historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.DELETE, 0, value));
+            updateUndoRedoButtons();
         });
     }
 
@@ -218,15 +194,59 @@ public class WorkspaceController {
     @FXML
     void handleSearchAction(ActionEvent event) {
         executeTreeOperation(() -> {
-            if (parentValueTextField != null && parentValueTextField.isVisible()) {
-                String parentText = parentValueTextField.getText();
-                if (parentText != null && !parentText.trim().isEmpty()) {
-                    throw new InvalidParentInputException("Cannot delete/search a node but the parent is not null in the text field");
-                }
-            }
             int value = InputValidator.getValidInt(valueTextField);
             logicalTree.search(value);
         });
+    }
+
+    @FXML
+    void handleRecenterAction(ActionEvent event) {
+        if (treeController != null) {
+            treeController.resetCamera();
+            redrawTree();
+        }
+    }
+
+    @FXML
+    void handleUndoAction(ActionEvent event) {
+        if (historyManager == null || !historyManager.canUndo() || treeController.isAnimating()) return;
+        historyManager.undo();
+        replayHistory();
+    }
+
+    @FXML
+    void handleRedoAction(ActionEvent event) {
+        if (historyManager == null || !historyManager.canRedo() || treeController.isAnimating()) return;
+        historyManager.redo();
+        replayHistory();
+    }
+
+    private void replayHistory() {
+        setOperationButtonsDisabled(true);
+        
+        // 1. Tạm thời ngắt kết nối màn hình để chạy ngầm
+        logicalTree.setListener(null);
+        
+        // 2. Tạo cây mới trắng tinh
+        logicalTree = TreeFactory.create(currentTreeType);
+        
+        // 3. Phát lại toàn bộ lịch sử trong nháy mắt
+        List<HistoryOperation> operations = historyManager.getActiveHistory();
+        for (HistoryOperation op : operations) {
+            op.apply(logicalTree);
+        }
+        
+        // 4. Gắn lại màn hình và yêu cầu vẽ lại ngay lập tức
+        logicalTree.setListener(treeController);
+        treeController.setTreeData(logicalTree);
+        redrawTree();
+        
+        setOperationButtonsDisabled(false);
+    }
+
+    private void updateUndoRedoButtons() {
+        if (undoButton != null) undoButton.setDisable(!historyManager.canUndo());
+        if (redoButton != null) redoButton.setDisable(!historyManager.canRedo());
     }
 
     /**
@@ -239,8 +259,13 @@ public class WorkspaceController {
             deleteButton.setDisable(disabled);
         if (searchButton != null)
             searchButton.setDisable(disabled);
-        if (traversalComboBox != null)
-            traversalComboBox.setDisable(disabled);
+            
+        if (disabled) {
+            if (undoButton != null) undoButton.setDisable(true);
+            if (redoButton != null) redoButton.setDisable(true);
+        } else {
+            updateUndoRedoButtons();
+        }
     }
 
     @FXML
@@ -274,18 +299,7 @@ public class WorkspaceController {
 
         treeController = new TreeVisualizationController(treeCanvas, new AnimationManager(), layoutStrategy);
         treeController.setFxCanvas(fxCanvas);
-        treeController.setOnAnimationFinished(() -> {
-            setOperationButtonsDisabled(false);
-            if (operationProgressBar != null) {
-                operationProgressBar.setProgress(0.0);
-                operationProgressBar.setVisible(false);
-                operationProgressBar.setManaged(false);
-            }
-            if (pauseResumeButton != null) {
-                pauseResumeButton.setDisable(true);
-                pauseResumeButton.setText("Pause");
-            }
-        });
+        treeController.setOnAnimationFinished(() -> setOperationButtonsDisabled(false));
 
         treeCanvas.setRedrawCallback(() -> {
             if (!treeController.isAnimating()) {
@@ -297,10 +311,18 @@ public class WorkspaceController {
     private void setupControls() {
         // Connect animation speed slider
         if (speedSlider != null) {
-            treeController.updateAnimationSpeed(speedSlider.getValue());
+            treeController.setAnimationSpeed(speedSlider.getValue());
             speedSlider.valueProperty()
-                    .addListener((obs, oldVal, newVal) -> treeController.updateAnimationSpeed(newVal.doubleValue()));
+                    .addListener((obs, oldVal, newVal) -> treeController.setAnimationSpeed(newVal.doubleValue()));
         }
+
+        treeController.setProgressCallback(progress -> {
+            Platform.runLater(() -> {
+                if (animationProgressBar != null) {
+                    animationProgressBar.setProgress(progress);
+                }
+            });
+        });
 
         // Wire up pseudo code UI
         if (pseudoCodeListView != null) {
@@ -314,11 +336,6 @@ public class WorkspaceController {
             parentValueTextField.setVisible(needsParent);
             parentValueTextField.setManaged(needsParent);
         }
-
-        if (pauseResumeButton != null) {
-            pauseResumeButton.setDisable(true);
-        }
-
         if (treeTypeLabel != null) {
             treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
         }
@@ -329,14 +346,9 @@ public class WorkspaceController {
         logicalTree = TreeFactory.create(currentTreeType);
         logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
-
-        treeController.setProgressListener(progress -> {
-            Platform.runLater(() -> {
-                if (operationProgressBar != null) {
-                    operationProgressBar.setProgress(progress);
-                }
-            });
-        });
+        
+        historyManager = new HistoryManager();
+        updateUndoRedoButtons();
     }
 
     private void setupComboBoxes() {
@@ -357,41 +369,9 @@ public class WorkspaceController {
                         pseudoCodeDisplay.clear();
                     }
                     setOperationButtonsDisabled(true);
-                    if (operationProgressBar != null) {
-                        operationProgressBar.setProgress(0.0);
-                        operationProgressBar.setVisible(true);
-                        operationProgressBar.setManaged(true);
-                    }
-                    try {
-                        logicalTree.traverse(type);
-                        treeController.playAnimations();
-                        if (pauseResumeButton != null) {
-                            pauseResumeButton.setDisable(!treeController.isAnimating());
-                            pauseResumeButton.setText("Pause");
-                        }
-                    } catch (TreeEmptyException e) {
-                        setOperationButtonsDisabled(false);
-                        if (operationProgressBar != null) {
-                            operationProgressBar.setVisible(false);
-                            operationProgressBar.setManaged(false);
-                        }
-                        if (pauseResumeButton != null) {
-                            pauseResumeButton.setDisable(true);
-                        }
-                        showErrorAlert("Empty Tree", e.getMessage());
-                    } catch (Exception e) {
-                        setOperationButtonsDisabled(false);
-                        if (operationProgressBar != null) {
-                            operationProgressBar.setVisible(false);
-                            operationProgressBar.setManaged(false);
-                        }
-                        if (pauseResumeButton != null) {
-                            pauseResumeButton.setDisable(true);
-                        }
-                        showErrorAlert("Error", e.getMessage());
-                    } finally {
-                        Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
-                    }
+                    logicalTree.traverse(type);
+                    treeController.playAnimations();
+                    Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
                 }
             });
         }
