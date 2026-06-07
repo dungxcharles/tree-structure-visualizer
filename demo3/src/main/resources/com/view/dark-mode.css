@@ -16,7 +16,7 @@
 
 /* Tree Tiles in Tree Selection View */
 .tree-tile {
-    -fx-background-color: #383838;
+    -fx-background-color: #989898;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 5);
 }
 
@@ -45,7 +45,7 @@
 
 /* Labels and Text */
 .label {
-    -fx-text-fill: #e0e0e0;
+    -fx-text-fill: white !important;
 }
 
 /* ComboBox and TextFields in Workspace */
@@ -65,7 +65,7 @@
 }
 
 .canvas-container {
-    -fx-background-color: #2b2b2b !important;
+    -fx-background-color: #474747 !important;
 }
 
 .panel-title {
@@ -160,4 +160,14 @@
 }
 .scroll-pane .viewport {
     -fx-background-color: transparent !important;
+}
+
+/* Slider Labels */
+.slider .axis {
+    -fx-tick-label-fill: white !important;
+}
+
+/* ComboBox Prompt Text */
+.combo-box .list-cell {
+    -fx-text-fill: white !important;
 }
