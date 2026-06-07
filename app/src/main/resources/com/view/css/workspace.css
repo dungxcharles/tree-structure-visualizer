@@ -1,0 +1,198 @@
+/* Modern Workspace Styles */
+.root {
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+    -fx-background-color: #f0f2f5;
+}
+
+/* Top Bar */
+.top-bar {
+    -fx-background-color: white;
+    -fx-padding: 12px 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+.home-button {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dadce0;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-text-fill: #3c4043;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 16px;
+    -fx-cursor: hand;
+}
+
+.home-button:hover {
+    -fx-background-color: #e8eaed;
+}
+
+.tree-type-combo {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dadce0;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 2px 10px;
+}
+
+/* Center Canvas */
+.canvas-container {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-padding: 20px;
+}
+
+/* Right Panel */
+.right-panel {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, -2, 0);
+}
+
+.panel-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #202124;
+}
+
+.pseudo-code-list {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 5px;
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+
+.pseudo-code-list .list-cell {
+    -fx-padding: 8px 10px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #333333;
+}
+
+.pseudo-code-list .list-cell:filled:selected {
+    -fx-background-color: #fff3cd;
+    -fx-text-fill: #856404;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4px;
+}
+
+.pseudo-code-list .list-cell.active-step {
+    -fx-background-color: #ffeb3b !important;
+    -fx-text-fill: #000000 !important;
+    -fx-font-weight: bold !important;
+}
+
+.stats-grid {
+    -fx-hgap: 15px;
+    -fx-vgap: 12px;
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e0e0e0;
+}
+
+.stats-label {
+    -fx-text-fill: #5f6368;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.stats-value {
+    -fx-text-fill: #1a73e8;
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
+}
+
+/* Bottom Bar */
+.bottom-bar {
+    -fx-background-color: white;
+    -fx-padding: 15px 20px;
+    -fx-spacing: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, -2);
+    -fx-alignment: center-left;
+}
+
+.input-field {
+    -fx-background-color: #f1f3f4;
+    -fx-border-color: #dadce0;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 12px;
+    -fx-font-size: 13px;
+}
+
+.input-field:focused {
+    -fx-border-color: #1a73e8;
+    -fx-background-color: white;
+}
+
+.action-btn {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 7px 18px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.btn-insert { -fx-background-color: #34a853; }
+.btn-insert:hover { -fx-background-color: #2d9249; }
+
+.btn-delete { -fx-background-color: #ea4335; }
+.btn-delete:hover { -fx-background-color: #ce3a2f; }
+
+.btn-update { -fx-background-color: #7e57c2; }
+.btn-update:hover { -fx-background-color: #6d4ab0; }
+
+.btn-search { -fx-background-color: #4285f4; }
+.btn-search:hover { -fx-background-color: #3873d6; }
+
+.btn-undo { -fx-background-color: #00acc1; }
+.btn-undo:hover { -fx-background-color: #0097a7; }
+.btn-undo:disabled {
+    -fx-background-color: #b2ebf2;
+    -fx-text-fill: #607d8b;
+    -fx-opacity: 1.0;
+}
+
+.btn-redo { -fx-background-color: #5c6bc0; }
+.btn-redo:hover { -fx-background-color: #4f5daf; }
+.btn-redo:disabled {
+    -fx-background-color: #c5cae9;
+    -fx-text-fill: #5c6bc0;
+    -fx-opacity: 1.0;
+}
+
+.btn-pause { -fx-background-color: #fbbc05; -fx-text-fill: #3c4043; }
+.btn-pause:hover { -fx-background-color: #e0a804; }
+
+.slider {
+    -fx-pref-width: 150px;
+}
+
+/* Operation Progress Bar */
+.progress-bar {
+    -fx-pref-height: 6px;
+    -fx-min-height: 6px;
+    -fx-max-height: 6px;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.progress-bar .track {
+    -fx-background-color: #e8eaed;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3px;
+}
+
+.progress-bar .bar {
+    -fx-background-color: #1a73e8; /* Sleek Google Blue */
+    -fx-background-insets: 0;
+    -fx-background-radius: 3px;
+}
+

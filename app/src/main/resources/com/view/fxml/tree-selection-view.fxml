@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="rootStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.treeselection.TreeSelectionController">
+   <children>
+      <AnchorPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0">
+         <children>
+            <VBox prefHeight="720.0" prefWidth="1280.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox prefHeight="73.0" prefWidth="600.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#handleBack" prefHeight="25.0" prefWidth="250.0" styleClass="back-button" text="⬅Back">
+                           <HBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+
+                        <VBox alignment="CENTER" prefHeight="73.0" prefWidth="1100.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="223.0" text="Choose Your Tree">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="260.0" text="Select a structure to visualize" wrapText="true">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
+
+                        <Button disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" opacity="0.0" prefHeight="25.0" prefWidth="250.0" style="-fx-background-color: TRANSPARENT;" text="⬅Back" visible="false">
+                           <HBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="transparent-scroll-pane" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox spacing="30.0">
+                           <children>
+                              <HBox alignment="CENTER" spacing="30.0">
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" top="10.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <TilePane alignment="CENTER" focusTraversable="true" onMouseClicked="#handleClickedTree1" prefHeight="250.0" prefWidth="250.0" styleClass="tree-tile">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <ImageView fitHeight="123.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/treeselection/general_tree.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="General Tree">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </TilePane>
+                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" onMouseClicked="#handleClickedTree2" prefHeight="250.0" prefWidth="250.0" styleClass="tree-tile">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <ImageView fitHeight="123.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/treeselection/binary_tree.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="Binary Tree">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </TilePane>
+                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" onMouseClicked="#handleClickedTree3" prefHeight="250.0" prefWidth="250.0" styleClass="tree-tile">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <ImageView fitHeight="135.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/treeselection/redblack_tree.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="Red-black Tree">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </TilePane>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" spacing="30.0">
+                                 <children>
+                                    <TilePane alignment="CENTER" focusTraversable="true" onMouseClicked="#handleClickedTree4" prefHeight="250.0" prefWidth="250.0" styleClass="tree-tile">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <ImageView fitHeight="137.0" fitWidth="202.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/treeselection/avl_tree.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="AVL Tree">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </TilePane>
+                                    <TilePane alignment="CENTER" focusTraversable="true" layoutX="10.0" layoutY="10.0" onMouseClicked="#handleClickedTree5" prefHeight="250.0" prefWidth="250.0" styleClass="tree-tile">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="180.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <ImageView fitHeight="145.0" fitWidth="191.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/treeselection/binary_search_tree.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="Binary Search Tree">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </TilePane>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
