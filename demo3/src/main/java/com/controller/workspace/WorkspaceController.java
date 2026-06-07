@@ -306,9 +306,9 @@ public class WorkspaceController {
     private void setupControls() {
         // Connect animation speed slider
         if (speedSlider != null) {
-            treeController.setAnimationSpeed(speedSlider.getValue());
+            treeController.updateAnimationSpeed(speedSlider.getValue());
             speedSlider.valueProperty()
-                    .addListener((obs, oldVal, newVal) -> treeController.setAnimationSpeed(newVal.doubleValue()));
+                    .addListener((obs, oldVal, newVal) -> treeController.updateAnimationSpeed(newVal.doubleValue()));
         }
 
         // Wire up pseudo code UI

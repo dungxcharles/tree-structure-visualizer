@@ -72,6 +72,10 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
     public void setFxCanvas(Canvas fxCanvas) { this.fxCanvas = fxCanvas; }
     public void setStepHighlightCallback(Consumer<String> callback) { this.stepHighlightCallback = callback; }
     public void setAnimationSpeed(double speed) { this.animationSpeed = speed; }
+    public void updateAnimationSpeed(double speed) {
+        this.animationSpeed = speed;
+        this.animationManager.setRate(speed);
+    }
     public void setOnAnimationFinished(Runnable action) { this.onAnimationFinished = action; }
     public void setLayoutStrategy(LayoutStrategy layoutStrategy) { this.layoutStrategy = layoutStrategy; }
     public boolean isAnimating() { return animating; }

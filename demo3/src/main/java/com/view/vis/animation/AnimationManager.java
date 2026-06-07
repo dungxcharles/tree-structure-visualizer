@@ -16,7 +16,14 @@ public class AnimationManager {
     }
 
     private java.util.List<TreeAnimation> currentRunningAnimations = new java.util.ArrayList<>();
+    private java.util.List<TreeAnimation> allAnimations = new java.util.ArrayList<>();
     private boolean isPaused = false;
+
+    public void setRate(double rate) {
+        for (TreeAnimation anim : allAnimations) {
+            anim.setRate(rate);
+        }
+    }
 
     public void pause() {
         if (!isPaused) {
@@ -41,6 +48,7 @@ public class AnimationManager {
     }
 
     public void playSequential(List<TreeAnimation> animations) {
+        this.allAnimations = new java.util.ArrayList<>(animations);
         if (animations == null || animations.isEmpty()) {
             if (onProgressChanged != null) {
                 onProgressChanged.accept(1.0);
@@ -94,6 +102,7 @@ public class AnimationManager {
     }
 
     public void playParallel(List<TreeAnimation> animations) {
+        this.allAnimations = new java.util.ArrayList<>(animations);
         if (animations == null || animations.isEmpty()) {
             if (onProgressChanged != null) {
                 onProgressChanged.accept(1.0);
