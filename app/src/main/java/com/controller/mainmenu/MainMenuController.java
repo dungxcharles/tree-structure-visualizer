@@ -8,9 +8,6 @@ import javafx.scene.input.MouseEvent;
 public class MainMenuController {
 
     @FXML
-    private ImageView MainMenuController;
-
-    @FXML
     void startButtonClicked(MouseEvent event) {
         NavigationManager.getInstance().navigateTo("/com/view/fxml/tree-selection-view.fxml");
     }
