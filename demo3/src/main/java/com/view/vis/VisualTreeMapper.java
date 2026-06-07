@@ -5,9 +5,9 @@ import com.model.node.GenericNode;
 import com.model.node.Node;
 import com.model.node.RBNode;
 import com.model.tree.AbstractTree;
-import com.model.vis.VisualEdge;
-import com.model.vis.VisualNode;
-import com.model.vis.VisualTree;
+import com.view.vis.model.VisualEdge;
+import com.view.vis.model.VisualNode;
+import com.view.vis.model.VisualTree;
 import com.view.vis.layout.LayoutStrategy;
 
 import java.util.ArrayList;
@@ -81,9 +81,9 @@ public class VisualTreeMapper {
     private static String getLogicalNodeColor(Node logicalNode) {
         if (logicalNode instanceof RBNode) {
             RBNode rbNode = (RBNode) logicalNode;
-            return rbNode.getColor() == RBNode.Color.RED ? "#ff0000" : "#333333";
+            return rbNode.getColor() == RBNode.Color.RED ? VisualNode.COLOR_RED_BLACK_RED : VisualNode.COLOR_RED_BLACK_BLACK;
         }
-        return "#ffffff"; // Default color
+        return VisualNode.COLOR_DEFAULT; // Default color
     }
 
     private static List<Node> getLogicalChildren(Node logicalNode) {

@@ -1,6 +1,6 @@
 package com.view.vis.animation;
 
-import com.model.vis.VisualEdge;
+import com.view.vis.model.VisualEdge;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 

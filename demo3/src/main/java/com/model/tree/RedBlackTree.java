@@ -24,12 +24,15 @@ public class RedBlackTree extends BinarySearchTree {
 
         RBNode node = createNode(value);
         node.setColor(Color.BLACK);
-        fireStep(StepType.INSERT_NODE, value, "Tạo gốc (root) màu ĐEN với giá trị " + value);
+        fireStep(StepType.INSERT_NODE, value, "Create BLACK root with value " + value);
         this.root = node;
     }
 
     @Override
     public boolean insert(int parentValue, int value) {
+        if (this.isEmpty()) {
+            throw new NullRootException("Cannot create a new node with parent when the root is null.");
+        }
         return insert(value);
     }
 
@@ -41,48 +44,46 @@ public class RedBlackTree extends BinarySearchTree {
         this.listener = temp;
 
         if (exists) {
-            fireStep(StepType.FOUND, value, "Node " + value + " đã tồn tại!");
+            fireStep(StepType.FOUND, value, "Node " + value + " already exists!");
             return false;
         }
 
         if (this.root == null) {
             RBNode newNode = createNode(value);
             newNode.setColor(Color.BLACK);
-            fireStep(StepType.INSERT_NODE, value, "Tạo gốc (root) màu ĐEN với giá trị " + value);
+            fireStep(StepType.INSERT_NODE, value, "Create BLACK root with value " + value);
             this.root = newNode;
             return true;
         }
 
         RBNode newNode = createNode(value);
         newNode.setColor(Color.RED);
-        fireStep(StepType.INSERT_NODE, value, "Tạo node mới màu ĐỎ: " + value);
+        fireStep(StepType.INSERT_NODE, value, "Create new RED node: " + value);
 
         insertBST((RBNode) getRoot(), newNode);
-        fireStep(StepType.FIX_START, value, "Bắt đầu quá trình Fix-up sau khi chèn");
+        fireStep(StepType.FIX_START, value, "Start insert fix-up");
         fixInsert(newNode);
         return true;
     }
 
     private void insertBST(RBNode current, RBNode newNode) {
-        fireStep(StepType.COMPARE, current.getValue(), "So sánh " + newNode.getValue() + " với " + current.getValue());
+        fireStep(StepType.COMPARE, current.getValue(), "Compare " + newNode.getValue() + " with " + current.getValue());
         if (newNode.getValue() < current.getValue()) {
             if (current.getLeft() == null) {
-                fireStep(StepType.INSERT_NODE, newNode.getValue(),
-                        "Chèn " + newNode.getValue() + " làm con trái của " + current.getValue());
+                fireStep(StepType.INSERT_NODE, newNode.getValue(), "Insert " + newNode.getValue() + " as left child of " + current.getValue());
                 current.setLeft(newNode);
                 newNode.setParent(current);
             } else {
-                fireStep(StepType.GO_LEFT, current.getValue(), "Đi trái");
+                fireStep(StepType.GO_LEFT, current.getValue(), "Go left");
                 insertBST((RBNode) current.getLeft(), newNode);
             }
         } else {
             if (current.getRight() == null) {
-                fireStep(StepType.INSERT_NODE, newNode.getValue(),
-                        "Chèn " + newNode.getValue() + " làm con phải của " + current.getValue());
+                fireStep(StepType.INSERT_NODE, newNode.getValue(), "Insert " + newNode.getValue() + " as right child of " + current.getValue());
                 current.setRight(newNode);
                 newNode.setParent(current);
             } else {
-                fireStep(StepType.GO_RIGHT, current.getValue(), "Đi phải");
+                fireStep(StepType.GO_RIGHT, current.getValue(), "Go right");
                 insertBST((RBNode) current.getRight(), newNode);
             }
         }
@@ -97,8 +98,7 @@ public class RedBlackTree extends BinarySearchTree {
                 RBNode uncle = (RBNode) grandParent.getRight();
 
                 if (colorOf(uncle) == Color.RED) {
-                    fireStep(StepType.RECOLOR, parent.getValue(),
-                            "Case 1: Uncle màu ĐỎ. Đổi màu Parent, Uncle thành ĐEN, GrandParent thành ĐỎ");
+                    fireStep(StepType.RECOLOR, parent.getValue(), "Case 1: Uncle is RED. Recolor Parent and Uncle to BLACK, GrandParent to RED");
                     parent.setColor(Color.BLACK);
                     uncle.setColor(Color.BLACK);
                     grandParent.setColor(Color.RED);
@@ -106,13 +106,11 @@ public class RedBlackTree extends BinarySearchTree {
                 } else {
                     if (node == parent.getRight()) {
                         node = parent;
-                        fireStep(StepType.ROTATE_LEFT, node.getValue(),
-                                "Case 2: Node là con phải -> Xoay trái tại Parent");
+                        fireStep(StepType.ROTATE_LEFT, node.getValue(), "Case 2: Node is right child -> Rotate left at Parent");
                         leftRotate(node);
                     }
 
-                    fireStep(StepType.RECOLOR, parentOf(node).getValue(),
-                            "Case 3: Node là con trái -> Đổi màu Parent (ĐEN), GrandParent (ĐỎ) và Xoay phải");
+                    fireStep(StepType.RECOLOR, parentOf(node).getValue(), "Case 3: Node is left child -> Recolor Parent to BLACK, GrandParent to RED, and rotate right");
                     parentOf(node).setColor(Color.BLACK);
                     parentOf(parentOf(node)).setColor(Color.RED);
                     rightRotate(parentOf(parentOf(node)));
@@ -121,8 +119,7 @@ public class RedBlackTree extends BinarySearchTree {
                 RBNode uncle = (RBNode) grandParent.getLeft();
 
                 if (colorOf(uncle) == Color.RED) {
-                    fireStep(StepType.RECOLOR, parent.getValue(),
-                            "Case 1: Uncle màu ĐỎ. Đổi màu Parent, Uncle thành ĐEN, GrandParent thành ĐỎ");
+                    fireStep(StepType.RECOLOR, parent.getValue(), "Case 1: Uncle is RED. Recolor Parent and Uncle to BLACK, GrandParent to RED");
                     parent.setColor(Color.BLACK);
                     uncle.setColor(Color.BLACK);
                     grandParent.setColor(Color.RED);
@@ -130,13 +127,11 @@ public class RedBlackTree extends BinarySearchTree {
                 } else {
                     if (node == parent.getLeft()) {
                         node = parent;
-                        fireStep(StepType.ROTATE_RIGHT, node.getValue(),
-                                "Case 2: Node là con trái -> Xoay phải tại Parent");
+                        fireStep(StepType.ROTATE_RIGHT, node.getValue(), "Case 2: Node is left child -> Rotate right at Parent");
                         rightRotate(node);
                     }
 
-                    fireStep(StepType.RECOLOR, parentOf(node).getValue(),
-                            "Case 3: Node là con phải -> Đổi màu Parent (ĐEN), GrandParent (ĐỎ) và Xoay trái");
+                    fireStep(StepType.RECOLOR, parentOf(node).getValue(), "Case 3: Node is right child -> Recolor Parent to BLACK, GrandParent to RED, and rotate left");
                     parentOf(node).setColor(Color.BLACK);
                     parentOf(parentOf(node)).setColor(Color.RED);
                     leftRotate(parentOf(parentOf(node)));
@@ -145,7 +140,7 @@ public class RedBlackTree extends BinarySearchTree {
         }
 
         if (getRoot().getColor() != Color.BLACK) {
-            fireStep(StepType.RECOLOR, getRoot().getValue(), "Đổi màu Root thành ĐEN");
+            fireStep(StepType.RECOLOR, getRoot().getValue(), "Recolor Root to BLACK");
             getRoot().setColor(Color.BLACK);
         }
     }
@@ -154,7 +149,7 @@ public class RedBlackTree extends BinarySearchTree {
         if (x == null || x.getRight() == null) {
             return;
         }
-        fireStep(StepType.ROTATE_LEFT, x.getValue(), "Xoay trái tại " + x.getValue());
+        fireStep(StepType.ROTATE_LEFT, x.getValue(), "Rotate left at " + x.getValue());
 
         RBNode y = x.getRight();
         x.setRight(y.getLeft());
@@ -181,7 +176,7 @@ public class RedBlackTree extends BinarySearchTree {
         if (x == null || x.getLeft() == null) {
             return;
         }
-        fireStep(StepType.ROTATE_RIGHT, x.getValue(), "Xoay phải tại " + x.getValue());
+        fireStep(StepType.ROTATE_RIGHT, x.getValue(), "Rotate right at " + x.getValue());
 
         RBNode y = x.getLeft();
         x.setLeft(y.getRight());
@@ -208,11 +203,11 @@ public class RedBlackTree extends BinarySearchTree {
     public boolean delete(int value) {
         RBNode z = (RBNode) findNode(this.root, value);
         if (z == null) {
-            fireStep(StepType.NOT_FOUND, value, "Không tìm thấy " + value + " để xóa");
+            fireStep(StepType.NOT_FOUND, value, "Cannot find " + value + " to delete");
             return false;
         }
 
-        fireStep(StepType.DELETE_NODE, z.getValue(), "Bắt đầu xóa node " + z.getValue());
+        fireStep(StepType.DELETE_NODE, z.getValue(), "Start deleting node " + z.getValue());
         deleteNode(z);
         return true;
     }
@@ -227,18 +222,18 @@ public class RedBlackTree extends BinarySearchTree {
 
         if (currentValue == newValue) {
             if (existsCurrent) {
-                fireStep(StepType.FOUND, currentValue, "Node " + currentValue + " không cần đổi");
+                fireStep(StepType.FOUND, currentValue, "Node " + currentValue + " does not need to change");
                 return true;
             }
-            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue);
+            fireStep(StepType.NOT_FOUND, currentValue, "Node " + currentValue + " not found");
             return false;
         }
         if (!existsCurrent) {
-            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue + " để cập nhật");
+            fireStep(StepType.NOT_FOUND, currentValue, "Node " + currentValue + " not found to update");
             return false;
         }
         if (existsNew) {
-            fireStep(StepType.FOUND, newValue, "Giá trị mới " + newValue + " đã tồn tại trong cây");
+            fireStep(StepType.FOUND, newValue, "New value " + newValue + " already exists in the tree");
             return false;
         }
 
@@ -256,12 +251,12 @@ public class RedBlackTree extends BinarySearchTree {
         if (z.getLeft() == null) {
             x = (RBNode) z.getRight();
             xParent = z.getParent();
-            fireStep(StepType.TRANSPLANT, z.getValue(), "Nhổ node và thay bằng con phải");
+            fireStep(StepType.TRANSPLANT, z.getValue(), "Remove node and replace with right child");
             transplant(z, (RBNode) z.getRight());
         } else if (z.getRight() == null) {
             x = (RBNode) z.getLeft();
             xParent = z.getParent();
-            fireStep(StepType.TRANSPLANT, z.getValue(), "Nhổ node và thay bằng con trái");
+            fireStep(StepType.TRANSPLANT, z.getValue(), "Remove node and replace with left child");
             transplant(z, (RBNode) z.getLeft());
         } else {
             y = (RBNode) minimum(z.getRight());
@@ -283,7 +278,7 @@ public class RedBlackTree extends BinarySearchTree {
                 }
             }
 
-            fireStep(StepType.TRANSPLANT, z.getValue(), "Nhổ node và thay bằng successor " + y.getValue());
+            fireStep(StepType.TRANSPLANT, z.getValue(), "Remove node and replace with successor " + y.getValue());
             transplant(z, y);
             y.setLeft(z.getLeft());
 
@@ -295,8 +290,7 @@ public class RedBlackTree extends BinarySearchTree {
         }
 
         if (originalColor == Color.BLACK) {
-            fireStep(StepType.FIX_START, (x != null) ? x.getValue() : -1,
-                    "Node bị xóa/thay thế mang màu ĐEN -> Kích hoạt Fix-up");
+            fireStep(StepType.FIX_START, (x != null) ? x.getValue() : -1, "Deleted/replaced node is BLACK -> Activate delete fix-up");
             fixDelete(x, xParent);
         }
 

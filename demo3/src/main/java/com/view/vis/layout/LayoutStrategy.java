@@ -1,6 +1,6 @@
 package com.view.vis.layout;
 
-import com.model.vis.VisualTree;
+import com.view.vis.model.VisualTree;
 
 public interface LayoutStrategy {
     void calculateLayout(VisualTree visualTree, double containerWidth, double containerHeight);

@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug.">
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Added the exception classes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/NavigationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/tree-selection-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/vis/TreeVisualizationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/vis/TreeVisualizationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/HistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/HistoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/HistoryOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/HistoryOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/theme/DarkTheme.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/theme/DarkTheme.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/VisualTreeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/VisualTreeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/model/VisualNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/model/VisualNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/resources/com/view/workspace.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +28,12 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/workspace" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubDefaultAccount">
@@ -36,61 +48,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.000021529678746" />
-      <entry key="MS500" value="1.1617362739724457" />
-      <entry key="S2" value="2.815116561111266" />
-      <entry key="S5" value="5.707130228456427" />
-      <entry key="S10" value="8.42071687725096" />
-      <entry key="S30" value="11.644686782576379" />
-      <entry key="S60" value="12.745395850157028" />
-      <entry key="M2" value="13.54176839962511" />
-      <entry key="M5" value="17.97932900107354" />
-      <entry key="M10" value="28.361217120152325" />
-      <entry key="M15" value="37.68739134258758" />
-      <entry key="M30" value="56.46906433673721" />
-      <entry key="H1" value="73.37960504851189" />
-      <entry key="H2" value="85.12713071429032" />
-      <entry key="H4" value="92.1168285176725" />
-      <entry key="D1" value="98.61859116405485" />
-      <entry key="W1" value="99.80092426995417" />
+      <entry key="MS100" value="1.000012920308111" />
+      <entry key="MS500" value="1.1056291421268756" />
+      <entry key="S2" value="1.9851978476427434" />
+      <entry key="S5" value="4.486956274154575" />
+      <entry key="S10" value="7.239266292006906" />
+      <entry key="S30" value="10.578568492723749" />
+      <entry key="S60" value="11.711748341708162" />
+      <entry key="M2" value="12.338745730750505" />
+      <entry key="M5" value="13.504931051605695" />
+      <entry key="M10" value="18.120050709259832" />
+      <entry key="M15" value="23.937915408690408" />
+      <entry key="M30" value="42.65637715671861" />
+      <entry key="H1" value="73.51387170671484" />
+      <entry key="H2" value="106.55014122045543" />
+      <entry key="H4" value="131.80478313090873" />
+      <entry key="D1" value="159.54362408742378" />
+      <entry key="W1" value="165.05701207323412" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
-      <entry key="S2" value="3.6647829783979546E-135" />
-      <entry key="S5" value="2.873891738132703E-54" />
-      <entry key="S10" value="2.853254280444509E-27" />
-      <entry key="S30" value="3.6283059013314814E-9" />
-      <entry key="S60" value="1.8582544483716824E-4" />
-      <entry key="M2" value="0.0563435429229546" />
-      <entry key="M5" value="2.1858894215682168" />
-      <entry key="M10" value="8.533134721330542" />
-      <entry key="M15" value="14.115717267930938" />
-      <entry key="M30" value="24.409884273123236" />
-      <entry key="H1" value="32.83020636418688" />
-      <entry key="H2" value="38.33748101205669" />
-      <entry key="H4" value="41.507463108983416" />
-      <entry key="D1" value="44.39389096005233" />
-      <entry key="W1" value="44.912802220447446" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="3.5018546948285364E-184" />
+      <entry key="S30" value="1.8031136864129642E-61" />
+      <entry key="S60" value="1.3099803719474147E-30" />
+      <entry key="M2" value="4.730684184128282E-15" />
+      <entry key="M5" value="1.2860566808123925E-5" />
+      <entry key="M10" value="0.02069781796587534" />
+      <entry key="M15" value="0.25482787041195704" />
+      <entry key="M30" value="3.279727092242472" />
+      <entry key="H1" value="12.033988886562655" />
+      <entry key="H2" value="23.210878093838538" />
+      <entry key="H4" value="32.29685167157265" />
+      <entry key="D1" value="42.575740553069785" />
+      <entry key="W1" value="44.64529777863446" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9726758876919888" />
-      <entry key="MS500" value="1.15524506306095" />
-      <entry key="S2" value="2.8104528582313617" />
-      <entry key="S5" value="5.702676202710211" />
-      <entry key="S10" value="8.4172375376652" />
-      <entry key="S30" value="11.643033885591878" />
-      <entry key="S60" value="12.744668051850116" />
-      <entry key="M2" value="13.5970382558514" />
-      <entry key="M5" value="20.154738583014655" />
-      <entry key="M10" value="36.872169258996095" />
-      <entry key="M15" value="51.777286541411755" />
-      <entry key="M30" value="80.85491622657054" />
-      <entry key="H1" value="106.19290732732019" />
-      <entry key="H2" value="123.45449673813732" />
-      <entry key="H4" value="133.61874555993427" />
-      <entry key="D1" value="143.01148266781598" />
-      <entry key="W1" value="144.71358176857237" />
+      <entry key="MS100" value="0.9460699551020488" />
+      <entry key="MS500" value="1.0935807910816888" />
+      <entry key="S2" value="1.9791097890470053" />
+      <entry key="S5" value="4.479302935273516" />
+      <entry key="S10" value="7.23250148472629" />
+      <entry key="S30" value="10.575147335675208" />
+      <entry key="S60" value="11.709842753936604" />
+      <entry key="M2" value="12.337739487377897" />
+      <entry key="M5" value="13.50451947077814" />
+      <entry key="M10" value="18.14045571357844" />
+      <entry key="M15" value="24.192097489402855" />
+      <entry key="M30" value="45.93276154379844" />
+      <entry key="H1" value="85.54159535853323" />
+      <entry key="H2" value="129.75485631291497" />
+      <entry key="H4" value="164.09729851153347" />
+      <entry key="D1" value="202.11840241007465" />
+      <entry key="W1" value="209.70216545663502" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -105,35 +117,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainMenuApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/workspace&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Launcher.executor": "Run",
+    "Application.MainMenuApplication.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "feature/update-tree",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC\IdeaProjects\OOP.20252-14\demo3\src\main\resources\com\view" />
@@ -205,7 +217,79 @@
       <option name="project" value="LOCAL" />
       <updated>1780740484692</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fix: Fixing the UI in the workspace in dark mode.">
+      <option name="closed" value="true" />
+      <created>1780813573582</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1780813573582</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations.">
+      <option name="closed" value="true" />
+      <created>1780816430030</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1780816430030</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations.">
+      <option name="closed" value="true" />
+      <created>1780816500766</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1780816500766</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fix: Disabling the the pause/play button when there is no operation running.">
+      <option name="closed" value="true" />
+      <created>1780817396514</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1780817396514</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fix: Disabling the traverse operation when there is any operation running.">
+      <option name="closed" value="true" />
+      <created>1780817556671</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1780817556671</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fix: Improved the tree animation.">
+      <option name="closed" value="true" />
+      <created>1780818986610</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1780818986610</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Fix: Improved the tree animation.">
+      <option name="closed" value="true" />
+      <created>1780819450042</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1780819450042</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fix: Added the exception classes.">
+      <option name="closed" value="true" />
+      <created>1780821327716</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1780821327716</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fix: Added the exception classes.">
+      <option name="closed" value="true" />
+      <created>1780821340778</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1780821340778</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,6 +312,12 @@
     <MESSAGE value="Merge branch 'feature/workspace' of https://github.com/thangtq111206-tech/OOP.20252-14 into feature/controller&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;demo3/src/main/java/com/controller/treeselection/TreeSelectionController.java&#10;#&#9;demo3/src/main/java/com/model/tree/BinaryTree.java&#10;#&#9;demo3/src/main/resources/com/view/tree-selection-view.fxml" />
     <MESSAGE value="Fix: Fixed fullscreen bug when switching between screens." />
     <MESSAGE value="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug." />
+    <MESSAGE value="Fix: Fixing the UI in the workspace in dark mode." />
+    <MESSAGE value="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations." />
+    <MESSAGE value="Fix: Disabling the the pause/play button when there is no operation running." />
+    <MESSAGE value="Fix: Disabling the traverse operation when there is any operation running." />
+    <MESSAGE value="Fix: Improved the tree animation." />
+    <MESSAGE value="Fix: Added the exception classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Added the exception classes." />
   </component>
 </project>

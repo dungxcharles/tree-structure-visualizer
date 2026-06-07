@@ -94,15 +94,14 @@ public class CreditWindow {
         vbox.setPadding(new javafx.geometry.Insets(40, 80, 40, 80));
 
         Label titleLabel = new Label(title);
-        titleLabel.setFont(Font.font("System", FontWeight.BOLD, 28));
-        titleLabel.setTextFill(Color.web("#2c3e50"));
+        titleLabel.getStyleClass().add("credit-title");
         titleLabel.setMaxWidth(Double.MAX_VALUE);
         titleLabel.setAlignment(Pos.CENTER); // Center the label itself
         titleLabel.setTextAlignment(TextAlignment.CENTER); // Center the text within
 
         Label contentLabel = new Label(content);
         contentLabel.setFont(Font.font("System", fontSize));
-        contentLabel.setTextFill(Color.web("#34495e"));
+        contentLabel.getStyleClass().add("credit-content");
         contentLabel.setWrapText(true);
         contentLabel.setLineSpacing(5.0); // Better readability
         contentLabel.setMaxWidth(Double.MAX_VALUE); // Expand to fill available width
@@ -155,10 +154,10 @@ public class CreditWindow {
         for (int i = 0; i < pages.size(); i++) {
             Circle dot = new Circle(6);
             if (i == currentPageIndex) {
-                dot.setFill(Color.web("#3498db")); // Active color
+                dot.getStyleClass().add("pagination-dot-active");
                 dot.setRadius(8); // Slightly larger
             } else {
-                dot.setFill(Color.web("#bdc3c7")); // Inactive color
+                dot.getStyleClass().add("pagination-dot");
             }
             paginationDots.getChildren().add(dot);
         }

@@ -1,4 +1,4 @@
-package com.model.vis;
+package com.view.vis.model;
 
 public interface VisualElement {
     boolean isVisible();

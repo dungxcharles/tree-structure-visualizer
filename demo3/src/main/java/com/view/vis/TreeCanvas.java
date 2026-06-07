@@ -1,8 +1,8 @@
 package com.view.vis;
 
-import com.model.vis.VisualEdge;
-import com.model.vis.VisualNode;
-import com.model.vis.VisualTree;
+import com.view.vis.model.VisualEdge;
+import com.view.vis.model.VisualNode;
+import com.view.vis.model.VisualTree;
 import com.view.vis.render.EdgeRenderer;
 import com.view.vis.render.NodeRenderer;
 import javafx.scene.canvas.Canvas;

@@ -79,6 +79,12 @@
     -fx-background-radius: 4px;
 }
 
+.pseudo-code-list .list-cell.active-step {
+    -fx-background-color: #ffeb3b !important;
+    -fx-text-fill: #000000 !important;
+    -fx-font-weight: bold !important;
+}
+
 .stats-grid {
     -fx-hgap: 15px;
     -fx-vgap: 12px;
@@ -150,23 +156,24 @@
     -fx-pref-width: 150px;
 }
 
-/* Recenter Button (Google Maps Style) */
-.recenter-button {
-    -fx-background-color: white;
-    -fx-text-fill: #5f6368;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 50%;
-    -fx-border-radius: 50%;
-    -fx-pref-width: 40px;
-    -fx-pref-height: 40px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 2);
-    -fx-cursor: hand;
-    -fx-alignment: center;
-    -fx-padding: 0 0 2px 0;
+/* Operation Progress Bar */
+.progress-bar {
+    -fx-pref-height: 6px;
+    -fx-min-height: 6px;
+    -fx-max-height: 6px;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
 }
 
-.recenter-button:hover {
-    -fx-background-color: #f8f9fa;
-    -fx-text-fill: #1a73e8;
+.progress-bar .track {
+    -fx-background-color: #e8eaed;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3px;
 }
+
+.progress-bar .bar {
+    -fx-background-color: #1a73e8; /* Sleek Google Blue */
+    -fx-background-insets: 0;
+    -fx-background-radius: 3px;
+}
+

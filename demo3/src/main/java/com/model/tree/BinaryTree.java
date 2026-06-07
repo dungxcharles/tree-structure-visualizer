@@ -16,42 +16,40 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         if (!isEmpty()) {
             return;
         }
-        fireStep(StepType.INSERT_NODE, value, "Tạo gốc (root) với giá trị " + value);
+        fireStep(StepType.INSERT_NODE, value, "Create root with value " + value);
         this.root = new BinaryNode(value);
     }
 
     @Override
     public boolean insert(int parentValue, int value) {
         if (this.isEmpty()) {
-            fireStep(StepType.NOT_FOUND, parentValue, "Cây rỗng");
-            return false;
+            throw new NullRootException("Cannot create a new node with parent when the root is null.");
         }
 
         BinaryNode parentNode = findNode(this.root, parentValue);
 
         if (parentNode == null) {
-            fireStep(StepType.NOT_FOUND, parentValue, "Không tìm thấy parent " + parentValue);
-            return false;
+            throw new NullParentException("Cannot create a new node with parent when the parent is null.");
         }
 
         if (findNode(this.root, value) != null) {
-            fireStep(StepType.COMPARE, value, "Giá trị " + value + " đã tồn tại");
+            fireStep(StepType.COMPARE, value, "Value " + value + " already exists");
             return false;
         }
 
         if (parentNode.getLeft() == null) {
-            fireStep(StepType.INSERT_NODE, value, "Thêm " + value + " làm con trái của " + parentValue);
+            fireStep(StepType.INSERT_NODE, value, "Add " + value + " as left child of " + parentValue);
             parentNode.setLeft(new BinaryNode(value));
             return true;
         }
 
         if (parentNode.getRight() == null) {
-            fireStep(StepType.INSERT_NODE, value, "Thêm " + value + " làm con phải của " + parentValue);
+            fireStep(StepType.INSERT_NODE, value, "Add " + value + " as right child of " + parentValue);
             parentNode.setRight(new BinaryNode(value));
             return true;
         }
 
-        fireStep(StepType.NOT_FOUND, parentValue, "Node " + parentValue + " đã đủ 2 con");
+        fireStep(StepType.NOT_FOUND, parentValue, "Node " + parentValue + " already has 2 children");
         return false;
     }
 
@@ -61,9 +59,9 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
             return false;
         }
 
-        fireStep(StepType.COMPARE, this.root.getValue(), "So sánh root với " + value);
+        fireStep(StepType.COMPARE, this.root.getValue(), "Compare root with " + value);
         if (this.root.getValue() == value) {
-            fireStep(StepType.DELETE_NODE, value, "Xóa gốc (root) " + value);
+            fireStep(StepType.DELETE_NODE, value, "Delete root " + value);
             this.root = null;
             return true;
         }
@@ -77,29 +75,29 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         }
 
         if (current.getLeft() != null) {
-            fireStep(StepType.COMPARE, current.getLeft().getValue(), "So sánh con trái với " + value);
+            fireStep(StepType.COMPARE, current.getLeft().getValue(), "Compare left child with " + value);
             if (current.getLeft().getValue() == value) {
-                fireStep(StepType.DELETE_NODE, value, "Xóa con trái " + value + " của " + current.getValue());
+                fireStep(StepType.DELETE_NODE, value, "Delete left child " + value + " of " + current.getValue());
                 current.setLeft(null);
                 return true;
             }
         }
 
         if (current.getRight() != null) {
-            fireStep(StepType.COMPARE, current.getRight().getValue(), "So sánh con phải với " + value);
+            fireStep(StepType.COMPARE, current.getRight().getValue(), "Compare right child with " + value);
             if (current.getRight().getValue() == value) {
-                fireStep(StepType.DELETE_NODE, value, "Xóa con phải " + value + " của " + current.getValue());
+                fireStep(StepType.DELETE_NODE, value, "Delete right child " + value + " of " + current.getValue());
                 current.setRight(null);
                 return true;
             }
         }
 
-        fireStep(StepType.GO_LEFT, current.getValue(), "Duyệt nhánh trái của " + current.getValue() + " để xóa");
+        fireStep(StepType.GO_LEFT, current.getValue(), "Traverse left branch of " + current.getValue() + " to delete");
         if (deleteNode(current.getLeft(), value)) {
             return true;
         }
 
-        fireStep(StepType.GO_RIGHT, current.getValue(), "Duyệt nhánh phải của " + current.getValue() + " để xóa");
+        fireStep(StepType.GO_RIGHT, current.getValue(), "Traverse right branch of " + current.getValue() + " to delete");
         return deleteNode(current.getRight(), value);
     }
 
@@ -109,17 +107,17 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
             return false;
         }
         if (currentValue != newValue && findNode(this.root, newValue) != null) {
-            fireStep(StepType.COMPARE, newValue, "Giá trị thay thế " + newValue + " đã tồn tại");
+            fireStep(StepType.COMPARE, newValue, "Replacement value " + newValue + " already exists");
             return false;
         }
 
         BinaryNode node = findNode(this.root, currentValue);
         if (node == null) {
-            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue + " để cập nhật");
+            fireStep(StepType.NOT_FOUND, currentValue, "Node " + currentValue + " not found to update");
             return false;
         }
 
-        fireStep(StepType.REPLACE_VALUE, currentValue, "Cập nhật giá trị " + currentValue + " thành " + newValue);
+        fireStep(StepType.REPLACE_VALUE, currentValue, "Update value " + currentValue + " to " + newValue);
         node.setValue(newValue);
         return true;
     }
@@ -134,19 +132,19 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
             return null;
         }
 
-        fireStep(StepType.COMPARE, current.getValue(), "So sánh với " + current.getValue());
+        fireStep(StepType.COMPARE, current.getValue(), "Compare with " + current.getValue());
         if (current.getValue() == value) {
-            fireStep(StepType.FOUND, current.getValue(), "Tìm thấy " + current.getValue());
+            fireStep(StepType.FOUND, current.getValue(), "Found " + current.getValue());
             return current;
         }
 
-        fireStep(StepType.GO_LEFT, current.getValue(), "Tìm nhánh trái của " + current.getValue());
+        fireStep(StepType.GO_LEFT, current.getValue(), "Find left branch of " + current.getValue());
         BinaryNode leftResult = findNode(current.getLeft(), value);
         if (leftResult != null) {
             return leftResult;
         }
 
-        fireStep(StepType.GO_RIGHT, current.getValue(), "Tìm nhánh phải của " + current.getValue());
+        fireStep(StepType.GO_RIGHT, current.getValue(), "Find right branch of " + current.getValue());
         return findNode(current.getRight(), value);
     }
 
@@ -179,11 +177,11 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         if (type == null) {
             throw new IllegalArgumentException("Traversal type cannot be null.");
         }
+        if (isEmpty()) {
+            throw new TreeEmptyException("Cannot traverse the tree when there is no nodes.");
+        }
 
         List<Integer> result = new ArrayList<>();
-        if (isEmpty()) {
-            return result;
-        }
 
         switch (type) {
             case IN_ORDER:
@@ -209,16 +207,16 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         }
 
         if (node.getLeft() != null) {
-            fireStep(StepType.GO_LEFT, node.getValue(), "In-order: Đi sang nhánh trái của " + node.getValue());
+            fireStep(StepType.GO_LEFT, node.getValue(), "In-order: Go to left branch of " + node.getValue());
         }
         inOrderRec(node.getLeft(), result);
 
-        fireStep(StepType.VISIT, node.getValue(), "In-order: Thăm node " + node.getValue());
-        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
+        fireStep(StepType.VISIT, node.getValue(), "In-order: Visit node " + node.getValue());
+        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Add " + node.getValue() + " to result list");
         result.add(node.getValue());
 
         if (node.getRight() != null) {
-            fireStep(StepType.GO_RIGHT, node.getValue(), "In-order: Đi sang nhánh phải của " + node.getValue());
+            fireStep(StepType.GO_RIGHT, node.getValue(), "In-order: Go to right branch of " + node.getValue());
         }
         inOrderRec(node.getRight(), result);
     }
@@ -228,17 +226,17 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
             return;
         }
 
-        fireStep(StepType.VISIT, node.getValue(), "Pre-order: Thăm node " + node.getValue());
-        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
+        fireStep(StepType.VISIT, node.getValue(), "Pre-order: Visit node " + node.getValue());
+        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Add " + node.getValue() + " to result list");
         result.add(node.getValue());
 
         if (node.getLeft() != null) {
-            fireStep(StepType.GO_LEFT, node.getValue(), "Pre-order: Đi sang nhánh trái của " + node.getValue());
+            fireStep(StepType.GO_LEFT, node.getValue(), "Pre-order: Go to left branch of " + node.getValue());
         }
         preOrderRec(node.getLeft(), result);
 
         if (node.getRight() != null) {
-            fireStep(StepType.GO_RIGHT, node.getValue(), "Pre-order: Đi sang nhánh phải của " + node.getValue());
+            fireStep(StepType.GO_RIGHT, node.getValue(), "Pre-order: Go to right branch of " + node.getValue());
         }
         preOrderRec(node.getRight(), result);
     }
@@ -249,17 +247,17 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         }
 
         if (node.getLeft() != null) {
-            fireStep(StepType.GO_LEFT, node.getValue(), "Post-order: Đi sang nhánh trái của " + node.getValue());
+            fireStep(StepType.GO_LEFT, node.getValue(), "Post-order: Go to left branch of " + node.getValue());
         }
         postOrderRec(node.getLeft(), result);
 
         if (node.getRight() != null) {
-            fireStep(StepType.GO_RIGHT, node.getValue(), "Post-order: Đi sang nhánh phải của " + node.getValue());
+            fireStep(StepType.GO_RIGHT, node.getValue(), "Post-order: Go to right branch of " + node.getValue());
         }
         postOrderRec(node.getRight(), result);
 
-        fireStep(StepType.VISIT, node.getValue(), "Post-order: Thăm node " + node.getValue());
-        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Thêm " + node.getValue() + " vào danh sách kết quả");
+        fireStep(StepType.VISIT, node.getValue(), "Post-order: Visit node " + node.getValue());
+        fireStep(StepType.ADD_TO_RESULT, node.getValue(), "Add " + node.getValue() + " to result list");
         result.add(node.getValue());
     }
 
@@ -269,19 +267,19 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
 
         while (!queue.isEmpty()) {
             BinaryNode current = queue.poll();
-            fireStep(StepType.VISIT, current.getValue(), "BFS: Lấy node " + current.getValue() + " từ Queue và thăm");
+            fireStep(StepType.VISIT, current.getValue(), "BFS: Take node " + current.getValue() + " from Queue and visit");
             fireStep(StepType.ADD_TO_RESULT, current.getValue(),
-                    "Thêm " + current.getValue() + " vào danh sách kết quả");
+                    "Add " + current.getValue() + " to result list");
             result.add(current.getValue());
 
             if (current.getLeft() != null) {
                 fireStep(StepType.GO_LEFT, current.getValue(),
-                        "Đưa con trái " + current.getLeft().getValue() + " vào Queue");
+                        "Add left child " + current.getLeft().getValue() + " to Queue");
                 queue.add(current.getLeft());
             }
             if (current.getRight() != null) {
                 fireStep(StepType.GO_RIGHT, current.getValue(),
-                        "Đưa con phải " + current.getRight().getValue() + " vào Queue");
+                        "Add right child " + current.getRight().getValue() + " to Queue");
                 queue.add(current.getRight());
             }
         }

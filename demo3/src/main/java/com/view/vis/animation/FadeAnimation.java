@@ -1,8 +1,8 @@
 package com.view.vis.animation;
 
-import com.model.vis.VisualEdge;
-import com.model.vis.VisualNode;
-import com.model.vis.VisualTree;
+import com.view.vis.model.VisualEdge;
+import com.view.vis.model.VisualNode;
+import com.view.vis.model.VisualTree;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 

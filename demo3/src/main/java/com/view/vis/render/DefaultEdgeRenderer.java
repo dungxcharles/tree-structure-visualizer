@@ -1,7 +1,8 @@
 package com.view.vis.render;
 
-import com.model.vis.VisualEdge;
-import com.model.vis.VisualNode;
+import com.theme.ThemeManager;
+import com.view.vis.model.VisualEdge;
+import com.view.vis.model.VisualNode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -29,7 +30,8 @@ public class DefaultEdgeRenderer implements EdgeRenderer {
         double currentX = startX + (targetX - startX) * edge.getProgress();
         double currentY = startY + (targetY - startY) * edge.getProgress();
 
-        gc.setStroke(Color.web(edge.getColorHex()));
+        String colorHex = edge.getColorHex();
+        gc.setStroke(ThemeManager.getInstance().getCurrentTheme().getCanvasEdgeColor(colorHex));
         gc.setLineWidth(2.0);
         gc.strokeLine(startX, startY, currentX, currentY);
 

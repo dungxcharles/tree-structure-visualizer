@@ -17,6 +17,9 @@ public class SettingsController {
     private ToggleGroup resolution;
 
     @FXML
+    private ToggleGroup theme;
+
+    @FXML
     public void initialize() {
         if (NavigationManager.getInstance().getStage() != null) {
             boolean isFullScreen = NavigationManager.getInstance().getStage().isFullScreen();
@@ -37,6 +40,19 @@ public class SettingsController {
                 }
             }
         }
+
+        boolean isDark = com.theme.ThemeManager.getInstance().isDarkMode();
+        if (theme != null) {
+            String targetTheme = isDark ? "Dark" : "Light";
+            for (Toggle toggle : theme.getToggles()) {
+                if (toggle instanceof RadioButton radioButton) {
+                    if (radioButton.getText().equals(targetTheme)) {
+                        radioButton.setSelected(true);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @FXML
@@ -48,6 +64,16 @@ public class SettingsController {
         double height = Double.parseDouble(res[1]);
 
         NavigationManager.getInstance().setResolution(width, height);
+    }
+
+    @FXML
+    void changeTheme(ActionEvent event) {
+        RadioButton selectedButton = (RadioButton) event.getSource();
+        boolean isDark = "Dark".equals(selectedButton.getText());
+        com.theme.ThemeManager.getInstance().setThemeType(isDark ? com.theme.ThemeType.DARK : com.theme.ThemeType.LIGHT);
+        if (NavigationManager.getInstance().getStage() != null && NavigationManager.getInstance().getStage().getScene() != null) {
+            com.theme.ThemeManager.getInstance().applyTheme(NavigationManager.getInstance().getStage().getScene());
+        }
     }
 
     @FXML

@@ -27,6 +27,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Alert;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 import com.util.InputValidator;
@@ -72,6 +74,9 @@ public class WorkspaceController {
     private Slider speedSlider;
 
     @FXML
+    private ProgressBar animationProgressBar;
+
+    @FXML
     private ComboBox<String> traversalComboBox;
 
     @FXML
@@ -98,6 +103,15 @@ public class WorkspaceController {
     // Static state to pass data between controllers without a new class
     public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
 
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        com.theme.ThemeManager.getInstance().applyThemeToDialogPane(alert.getDialogPane());
+        alert.showAndWait();
+    }
+
     private void executeTreeOperation(Runnable operation) {
         if (treeController.isAnimating())
             return;
@@ -110,9 +124,17 @@ public class WorkspaceController {
 
         try {
             operation.run();
-        } catch (Exception e) {
-            // Re-enable if something failed before animation starts
+        } catch (NumberFormatException e) {
             setOperationButtonsDisabled(false);
+            showErrorAlert("Invalid Input", "Please enter a valid integer value.");
+            return;
+        } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
+            setOperationButtonsDisabled(false);
+            showErrorAlert("Operation Error", e.getMessage());
+            return;
+        } catch (Exception e) {
+            setOperationButtonsDisabled(false);
+            showErrorAlert("Unexpected Error", "An unexpected error occurred: " + e.getMessage());
             return;
         }
 
@@ -211,17 +233,7 @@ public class WorkspaceController {
         // 3. Phát lại toàn bộ lịch sử trong nháy mắt
         List<HistoryOperation> operations = historyManager.getActiveHistory();
         for (HistoryOperation op : operations) {
-            switch (op.getType()) {
-                case CREATE:
-                    logicalTree.create(op.getValue());
-                    break;
-                case INSERT:
-                    logicalTree.insert(op.getParentValue(), op.getValue());
-                    break;
-                case DELETE:
-                    logicalTree.delete(op.getValue());
-                    break;
-            }
+            op.apply(logicalTree);
         }
         
         // 4. Gắn lại màn hình và yêu cầu vẽ lại ngay lập tức
@@ -303,6 +315,14 @@ public class WorkspaceController {
             speedSlider.valueProperty()
                     .addListener((obs, oldVal, newVal) -> treeController.setAnimationSpeed(newVal.doubleValue()));
         }
+
+        treeController.setProgressCallback(progress -> {
+            Platform.runLater(() -> {
+                if (animationProgressBar != null) {
+                    animationProgressBar.setProgress(progress);
+                }
+            });
+        });
 
         // Wire up pseudo code UI
         if (pseudoCodeListView != null) {

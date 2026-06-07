@@ -31,20 +31,20 @@ public class AVLTree extends BinarySearchTree {
 
     private AVLNode insertRec(AVLNode node, int value) {
         if (node == null) {
-            fireStep(StepType.INSERT_NODE, value, "Chèn node " + value);
+            fireStep(StepType.INSERT_NODE, value, "Insert node " + value);
             nodeInserted = true;
             return createNode(value);
         }
 
-        fireStep(StepType.COMPARE, node.getValue(), "So sánh " + value + " với " + node.getValue());
+        fireStep(StepType.COMPARE, node.getValue(), "Compare " + value + " with " + node.getValue());
         if (value == node.getValue()) {
-            fireStep(StepType.FOUND, node.getValue(), "Node " + node.getValue() + " đã tồn tại!");
+            fireStep(StepType.FOUND, node.getValue(), "Node " + node.getValue() + " has already been inserted!");
             return node;
         } else if (value < node.getValue()) {
-            fireStep(StepType.GO_LEFT, node.getValue(), value + " < " + node.getValue() + " -> Đi trái");
+            fireStep(StepType.GO_LEFT, node.getValue(), value + " < " + node.getValue() + " -> Go left");
             node.setLeft(insertRec(node.getLeft(), value));
         } else if (value > node.getValue()) {
-            fireStep(StepType.GO_RIGHT, node.getValue(), value + " > " + node.getValue() + " -> Đi phải");
+            fireStep(StepType.GO_RIGHT, node.getValue(), value + " > " + node.getValue() + " -> Go right");
             node.setRight(insertRec(node.getRight(), value));
         }
 
@@ -63,29 +63,28 @@ public class AVLTree extends BinarySearchTree {
             return null;
         }
 
-        fireStep(StepType.COMPARE, node.getValue(), "So sánh " + value + " với " + node.getValue());
+        fireStep(StepType.COMPARE, node.getValue(), "Compare " + value + " with " + node.getValue());
         if (value < node.getValue()) {
-            fireStep(StepType.GO_LEFT, node.getValue(), value + " < " + node.getValue() + " -> Đi trái");
+            fireStep(StepType.GO_LEFT, node.getValue(), value + " < " + node.getValue() + " -> Go left");
             node.setLeft(deleteRec(node.getLeft(), value));
         } else if (value > node.getValue()) {
-            fireStep(StepType.GO_RIGHT, node.getValue(), value + " > " + node.getValue() + " -> Đi phải");
+            fireStep(StepType.GO_RIGHT, node.getValue(), value + " > " + node.getValue() + " -> Go right");
             node.setRight(deleteRec(node.getRight(), value));
         } else {
-            fireStep(StepType.FOUND, node.getValue(), "Tìm thấy " + value + " để xóa");
+            fireStep(StepType.FOUND, node.getValue(), "Found " + value + " to delete");
             nodeDeleted = true;
 
             if (node.getLeft() == null) {
-                fireStep(StepType.DELETE_NODE, value, "Xóa node (không có con trái)");
+                fireStep(StepType.DELETE_NODE, value, "Delete node (no left child)");
                 return node.getRight();
             }
             if (node.getRight() == null) {
-                fireStep(StepType.DELETE_NODE, value, "Xóa node (không có con phải)");
+                fireStep(StepType.DELETE_NODE, value, "Delete node (no right child)");
                 return node.getLeft();
             }
 
             AVLNode successor = minimum(node.getRight());
-            fireStep(StepType.REPLACE_VALUE, node.getValue(),
-                    "Thay thế " + node.getValue() + " bằng successor " + successor.getValue());
+            fireStep(StepType.REPLACE_VALUE, node.getValue(), "Replace " + node.getValue() + " with successor " + successor.getValue());
             node.setValue(successor.getValue());
             node.setRight(deleteRec(node.getRight(), successor.getValue()));
         }
@@ -103,18 +102,18 @@ public class AVLTree extends BinarySearchTree {
 
         if (currentValue == newValue) {
             if (existsCurrent) {
-                fireStep(StepType.FOUND, currentValue, "Node " + currentValue + " không cần đổi");
+                fireStep(StepType.FOUND, currentValue, "Node " + currentValue + " does not need to change");
                 return true;
             }
-            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue);
+            fireStep(StepType.NOT_FOUND, currentValue, "Node " + currentValue + " not found");
             return false;
         }
         if (!existsCurrent) {
-            fireStep(StepType.NOT_FOUND, currentValue, "Không tìm thấy node " + currentValue + " để cập nhật");
+            fireStep(StepType.NOT_FOUND, currentValue, "Node " + currentValue + " not found to update");
             return false;
         }
         if (existsNew) {
-            fireStep(StepType.FOUND, newValue, "Giá trị mới " + newValue + " đã tồn tại trong cây");
+            fireStep(StepType.FOUND, newValue, "New value " + newValue + " already exists in the tree");
             return false;
         }
 
@@ -131,7 +130,7 @@ public class AVLTree extends BinarySearchTree {
 
     private AVLNode minimum(AVLNode node) {
         while (node.getLeft() != null) {
-            fireStep(StepType.GO_LEFT, node.getValue(), "Đi trái tìm min");
+            fireStep(StepType.GO_LEFT, node.getValue(), "Go left to find min");
             node = node.getLeft();
         }
         return node;
@@ -151,25 +150,23 @@ public class AVLTree extends BinarySearchTree {
     private AVLNode rebalance(AVLNode node) {
         updateHeight(node);
         int balance = getBalanceFactor(node);
-        fireStep(StepType.CHECK_BALANCE, node.getValue(), "Kiểm tra balance của " + node.getValue() + " = " + balance);
+        fireStep(StepType.CHECK_BALANCE, node.getValue(), "Check balance of " + node.getValue() + " = " + balance);
 
         if (balance > 1) {
             if (getBalanceFactor(node.getLeft()) < 0) {
-                fireStep(StepType.ROTATE_LEFT, node.getLeft().getValue(),
-                        "Mất cân bằng Trái-Phải -> Xoay trái tại " + node.getLeft().getValue());
+                fireStep(StepType.ROTATE_LEFT, node.getLeft().getValue(), "Left-Right imbalance -> Rotate left at " + node.getLeft().getValue());
                 node.setLeft(leftRotate(node.getLeft()));
             }
-            fireStep(StepType.ROTATE_RIGHT, node.getValue(), "Xoay phải tại " + node.getValue());
+            fireStep(StepType.ROTATE_RIGHT, node.getValue(), "Rotate right at " + node.getValue());
             return rightRotate(node);
         }
 
         if (balance < -1) {
             if (getBalanceFactor(node.getRight()) > 0) {
-                fireStep(StepType.ROTATE_RIGHT, node.getRight().getValue(),
-                        "Mất cân bằng Phải-Trái -> Xoay phải tại " + node.getRight().getValue());
+                fireStep(StepType.ROTATE_RIGHT, node.getRight().getValue(), "Right-Left imbalance -> Rotate right at " + node.getRight().getValue());
                 node.setRight(rightRotate(node.getRight()));
             }
-            fireStep(StepType.ROTATE_LEFT, node.getValue(), "Xoay trái tại " + node.getValue());
+            fireStep(StepType.ROTATE_LEFT, node.getValue(), "Rotate left at " + node.getValue());
             return leftRotate(node);
         }
 

@@ -2,14 +2,14 @@ package com.view.vis.animation.strategy;
 
 import com.model.step.AnimationStep;
 import com.model.step.StepType;
-import com.model.vis.VisualNode;
-import com.model.vis.VisualTree;
+import com.view.vis.model.VisualNode;
+import com.view.vis.model.VisualTree;
 import com.view.vis.animation.FadeAnimation;
 import com.view.vis.animation.NodeColorAnimation;
 import com.view.vis.animation.NodeLabelAnimation;
 import com.view.vis.animation.TreeAnimation;
 import com.view.vis.animation.EdgeGrowthAnimation;
-import com.model.vis.VisualEdge;
+import com.view.vis.model.VisualEdge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,8 @@ public class StructureStepStrategy implements StepAnimationStrategy {
     @Override
     public List<TreeAnimation> createAnimations(AnimationStep step, VisualTree tree) {
         List<TreeAnimation> animations = new ArrayList<>();
-        VisualNode targetNode = findVisualNodeByValue(tree, step.getMainNodeValue());
+        boolean preferNew = (step.getType() == StepType.INSERT_NODE || step.getType() == StepType.ADD_CHILD);
+        VisualNode targetNode = findVisualNodeByValue(tree, step.getMainNodeValue(), preferNew);
 
         if (targetNode == null) {
             return animations;
@@ -41,15 +42,16 @@ public class StructureStepStrategy implements StepAnimationStrategy {
         switch (step.getType()) {
             case INSERT_NODE:
             case ADD_CHILD:
-                targetNode.setOpacity(0.0);
-                VisualEdge incomingEdge = findIncomingEdge(tree, targetNode);
-                if (incomingEdge != null) {
-                    incomingEdge.setProgress(0.0);
-                    animations.add(new EdgeGrowthAnimation(incomingEdge, 0.0, 1.0, DURATION_MS));
+                if (targetNode.getOpacity() == 0.0) {
+                    VisualEdge incomingEdge = findIncomingEdge(tree, targetNode);
+                    if (incomingEdge != null) {
+                        incomingEdge.setProgress(0.0);
+                        animations.add(new EdgeGrowthAnimation(incomingEdge, 0.0, 1.0, DURATION_MS));
+                    }
+                    animations.add(new FadeAnimation(targetNode, tree, 0.0, 1.0, DURATION_MS));
+                    animations.add(new NodeColorAnimation(targetNode, "#FFFFFF", INSERT_COLOR, DURATION_MS / 2));
+                    animations.add(new NodeColorAnimation(targetNode, INSERT_COLOR, targetNode.getColorHex(), DURATION_MS / 2));
                 }
-                animations.add(new FadeAnimation(targetNode, tree, 0.0, 1.0, DURATION_MS));
-                animations.add(new NodeColorAnimation(targetNode, "#FFFFFF", INSERT_COLOR, DURATION_MS / 2));
-                animations.add(new NodeColorAnimation(targetNode, INSERT_COLOR, targetNode.getColorHex(), DURATION_MS / 2));
                 break;
 
             case DELETE_NODE:
@@ -118,14 +120,20 @@ public class StructureStepStrategy implements StepAnimationStrategy {
         return null;
     }
 
-    private VisualNode findVisualNodeByValue(VisualTree tree, int value) {
+    private VisualNode findVisualNodeByValue(VisualTree tree, int value, boolean preferNew) {
         String targetLabel = String.valueOf(value);
+        VisualNode bestMatch = null;
         for (VisualNode vNode : tree.getNodes()) {
             if (vNode.getLabel().equals(targetLabel)) {
-                return vNode;
+                if (preferNew && vNode.getOpacity() == 0.0) {
+                    return vNode;
+                }
+                if (bestMatch == null) {
+                    bestMatch = vNode;
+                }
             }
         }
-        return null;
+        return bestMatch;
     }
 
     private VisualEdge findIncomingEdge(VisualTree tree, VisualNode node) {

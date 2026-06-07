@@ -89,6 +89,9 @@
             
             <Label style="-fx-font-weight: bold; -fx-text-fill: #5f6368;" text="Speed:" />
             <Slider fx:id="speedSlider" majorTickUnit="0.5" max="1.5" min="0.5" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="slider" value="1.0" />
+            
+            <Separator orientation="VERTICAL" />
+            <ProgressBar fx:id="animationProgressBar" prefWidth="100.0" progress="0.0" />
         </HBox>
     </bottom>
 
