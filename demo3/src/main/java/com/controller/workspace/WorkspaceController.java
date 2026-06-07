@@ -28,6 +28,9 @@ import javafx.scene.control.Slider;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 import com.util.InputValidator;
+import com.model.tree.NullRootException;
+import com.model.tree.TreeEmptyException;
+import javafx.scene.control.Alert;
 
 public class WorkspaceController {
 
@@ -88,6 +91,14 @@ public class WorkspaceController {
     // Static state to pass data between controllers without a new class
     public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
 
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     private void executeTreeOperation(Runnable operation) {
         if (treeController.isAnimating())
             return;
@@ -100,9 +111,14 @@ public class WorkspaceController {
 
         try {
             operation.run();
+        } catch (NullRootException e) {
+            setOperationButtonsDisabled(false);
+            showErrorAlert("Invalid Operation", e.getMessage());
+            return;
         } catch (Exception e) {
             // Re-enable if something failed before animation starts
             setOperationButtonsDisabled(false);
+            showErrorAlert("Error", e.getMessage());
             return;
         }
 
@@ -114,15 +130,21 @@ public class WorkspaceController {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
 
-            int parentValue = 0;
-            if (!logicalTree.isEmpty() && (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY)) {
-                parentValue = InputValidator.getValidInt(parentValueTextField);
-            }
-
             if (logicalTree.isEmpty()) {
-                logicalTree.create(value);
+                if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
+                    String parentText = parentValueTextField.getText();
+                    if (parentText != null && !parentText.trim().isEmpty()) {
+                        int parentValue = InputValidator.getValidInt(parentValueTextField);
+                        logicalTree.insert(parentValue, value);
+                    } else {
+                        logicalTree.create(value);
+                    }
+                } else {
+                    logicalTree.create(value);
+                }
             } else {
                 if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
+                    int parentValue = InputValidator.getValidInt(parentValueTextField);
                     logicalTree.insert(parentValue, value);
                 } else {
                     logicalTree.insert(0, value);
@@ -263,9 +285,18 @@ public class WorkspaceController {
                         pseudoCodeDisplay.clear();
                     }
                     setOperationButtonsDisabled(true);
-                    logicalTree.traverse(type);
-                    treeController.playAnimations();
-                    Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
+                    try {
+                        logicalTree.traverse(type);
+                        treeController.playAnimations();
+                    } catch (TreeEmptyException e) {
+                        setOperationButtonsDisabled(false);
+                        showErrorAlert("Empty Tree", e.getMessage());
+                    } catch (Exception e) {
+                        setOperationButtonsDisabled(false);
+                        showErrorAlert("Error", e.getMessage());
+                    } finally {
+                        Platform.runLater(() -> traversalComboBox.getSelectionModel().clearSelection());
+                    }
                 }
             });
         }

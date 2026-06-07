@@ -23,8 +23,7 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
     @Override
     public boolean insert(int parentValue, int value) {
         if (this.isEmpty()) {
-            fireStep(StepType.NOT_FOUND, parentValue, "Empty tree");
-            return false;
+            throw new NullRootException("Attempting to create a new node with parent when the root is null.");
         }
 
         BinaryNode parentNode = findNode(this.root, parentValue);
@@ -179,11 +178,11 @@ public class BinaryTree extends AbstractTree<BinaryNode> {
         if (type == null) {
             throw new IllegalArgumentException("Traversal type cannot be null.");
         }
+        if (isEmpty()) {
+            throw new TreeEmptyException("Attempting to traverse the tree when there is no nodes.");
+        }
 
         List<Integer> result = new ArrayList<>();
-        if (isEmpty()) {
-            return result;
-        }
 
         switch (type) {
             case IN_ORDER:

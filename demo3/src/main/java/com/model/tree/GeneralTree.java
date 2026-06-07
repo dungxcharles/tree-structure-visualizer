@@ -22,8 +22,7 @@ public class GeneralTree extends AbstractTree<GenericNode> {
     @Override
     public boolean insert(int parentValue, int childValue) {
         if (this.isEmpty()) {
-            fireStep(StepType.NOT_FOUND, parentValue, "Empty tree, cannot insert");
-            return false;
+            throw new NullRootException("Attempting to create a new node with parent when the root is null.");
         }
 
         GenericNode parentNode = findNode(this.root, parentValue);
@@ -153,10 +152,11 @@ public class GeneralTree extends AbstractTree<GenericNode> {
         if (type == null) {
             throw new IllegalArgumentException("Traversal type cannot be null.");
         }
+        if (isEmpty()) {
+            throw new TreeEmptyException("Attempting to traverse the tree when there is no nodes.");
+        }
 
         List<Integer> result = new ArrayList<>();
-        if (isEmpty())
-            return result;
 
         switch (type) {
             case PRE_ORDER:
