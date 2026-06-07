@@ -69,12 +69,13 @@
             
             <Button fx:id="insertButton" onAction="#handleInsertAction" styleClass="action-btn, btn-insert" text="Insert" />
             <Button fx:id="deleteButton" onAction="#handleDeleteAction" styleClass="action-btn, btn-delete" text="Delete" />
+            <Button fx:id="updateButton" onAction="#handleUpdateAction" styleClass="action-btn, btn-update" text="Update" />
             <Button fx:id="searchButton" onAction="#handleSearchAction" styleClass="action-btn, btn-search" text="Search" />
             
             <Separator orientation="VERTICAL" />
             
-            <Button fx:id="undoButton" disable="true" onAction="#handleUndoAction" styleClass="action-btn" text="Undo" />
-            <Button fx:id="redoButton" disable="true" onAction="#handleRedoAction" styleClass="action-btn" text="Redo" />
+            <Button fx:id="undoButton" disable="true" onAction="#handleUndoAction" styleClass="action-btn, btn-undo" text="Undo" />
+            <Button fx:id="redoButton" disable="true" onAction="#handleRedoAction" styleClass="action-btn, btn-redo" text="Redo" />
             
             <Separator orientation="VERTICAL" />
             

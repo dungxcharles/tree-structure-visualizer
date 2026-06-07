@@ -29,6 +29,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.layout.GridPane;
+import javafx.geometry.Insets;
 import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
 import javafx.scene.input.MouseEvent;
 import com.util.InputValidator;
@@ -84,6 +88,9 @@ public class WorkspaceController {
 
     @FXML
     private Button deleteButton;
+
+    @FXML
+    private Button updateButton;
 
     @FXML
     private Button searchButton;
@@ -184,6 +191,54 @@ public class WorkspaceController {
     }
 
     @FXML
+    void handleUpdateAction(ActionEvent event) {
+        if (treeController.isAnimating()) {
+            return;
+        }
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Update Node");
+        dialog.setHeaderText(null);
+
+        TextField currentValueField = new TextField();
+        currentValueField.setPromptText("Current value");
+        TextField newValueField = new TextField();
+        newValueField.setPromptText("New value");
+
+        GridPane form = new GridPane();
+        form.setHgap(10);
+        form.setVgap(10);
+        form.setPadding(new Insets(12));
+        form.add(new Label("Current value:"), 0, 0);
+        form.add(currentValueField, 1, 0);
+        form.add(new Label("New value:"), 0, 1);
+        form.add(newValueField, 1, 1);
+
+        dialog.getDialogPane().setContent(form);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        com.theme.ThemeManager.getInstance().applyThemeToDialogPane(dialog.getDialogPane());
+
+        Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+        okButton.disableProperty().bind(
+                currentValueField.textProperty().isEmpty()
+                        .or(newValueField.textProperty().isEmpty()));
+
+        if (dialog.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+            return;
+        }
+
+        executeTreeOperation(() -> {
+            int currentValue = InputValidator.getValidInt(currentValueField);
+            int newValue = InputValidator.getValidInt(newValueField);
+            boolean updated = logicalTree.update(currentValue, newValue);
+            if (updated) {
+                historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.UPDATE, currentValue, newValue));
+            }
+            updateUndoRedoButtons();
+        });
+    }
+
+    @FXML
     private Button pauseResumeButton;
 
     @FXML
@@ -263,6 +318,8 @@ public class WorkspaceController {
             insertButton.setDisable(disabled);
         if (deleteButton != null)
             deleteButton.setDisable(disabled);
+        if (updateButton != null)
+            updateButton.setDisable(disabled);
         if (searchButton != null)
             searchButton.setDisable(disabled);
         if (traversalComboBox != null)
@@ -346,6 +403,10 @@ public class WorkspaceController {
         if (parentValueTextField != null) {
             parentValueTextField.setVisible(needsParent);
             parentValueTextField.setManaged(needsParent);
+            parentValueTextField.setPromptText("Parent");
+        }
+        if (valueTextField != null) {
+            valueTextField.setPromptText("Value");
         }
         if (treeTypeLabel != null) {
             treeTypeLabel.setText(currentTreeType.name().replace("_", " "));
