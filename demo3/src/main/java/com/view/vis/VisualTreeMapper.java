@@ -5,9 +5,9 @@ import com.model.node.GenericNode;
 import com.model.node.Node;
 import com.model.node.RBNode;
 import com.model.tree.AbstractTree;
-import com.model.vis.VisualEdge;
-import com.model.vis.VisualNode;
-import com.model.vis.VisualTree;
+import com.view.vis.model.VisualEdge;
+import com.view.vis.model.VisualNode;
+import com.view.vis.model.VisualTree;
 import com.view.vis.layout.LayoutStrategy;
 
 import java.util.ArrayList;

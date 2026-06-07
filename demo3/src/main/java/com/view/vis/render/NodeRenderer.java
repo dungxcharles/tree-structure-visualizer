@@ -1,6 +1,6 @@
 package com.view.vis.render;
 
-import com.model.vis.VisualNode;
+import com.view.vis.model.VisualNode;
 import javafx.scene.canvas.GraphicsContext;
 
 public interface NodeRenderer {

@@ -2,14 +2,14 @@ package com.view.vis.animation.strategy;
 
 import com.model.step.AnimationStep;
 import com.model.step.StepType;
-import com.model.vis.VisualNode;
-import com.model.vis.VisualTree;
+import com.view.vis.model.VisualNode;
+import com.view.vis.model.VisualTree;
 import com.view.vis.animation.FadeAnimation;
 import com.view.vis.animation.NodeColorAnimation;
 import com.view.vis.animation.NodeLabelAnimation;
 import com.view.vis.animation.TreeAnimation;
 import com.view.vis.animation.EdgeGrowthAnimation;
-import com.model.vis.VisualEdge;
+import com.view.vis.model.VisualEdge;
 
 import java.util.ArrayList;
 import java.util.List;
