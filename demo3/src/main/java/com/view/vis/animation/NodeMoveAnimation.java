@@ -7,10 +7,11 @@ import javafx.util.Duration;
 public class NodeMoveAnimation implements TreeAnimation {
     private final Transition transition;
 
-    public NodeMoveAnimation(VisualNode node, double targetX, double targetY, double durationMs) {
-        final double startX = node.getX();
-        final double startY = node.getY();
+    private double startX;
+    private double startY;
+    private boolean initialized = false;
 
+    public NodeMoveAnimation(VisualNode node, double targetX, double targetY, double durationMs) {
         this.transition = new Transition() {
             {
                 setCycleDuration(Duration.millis(durationMs));
@@ -18,6 +19,11 @@ public class NodeMoveAnimation implements TreeAnimation {
 
             @Override
             protected void interpolate(double frac) {
+                if (frac == 0.0 || !initialized) {
+                    startX = node.getX();
+                    startY = node.getY();
+                    initialized = true;
+                }
                 node.setX(startX + (targetX - startX) * frac);
                 node.setY(startY + (targetY - startY) * frac);
             }
@@ -37,6 +43,7 @@ public class NodeMoveAnimation implements TreeAnimation {
     @Override
     public void stop() {
         transition.stop();
+        initialized = false;
     }
 
     @Override

@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations.">
+    <list default="true" id="5f127a31-92b3-40f1-aea6-3874f3187ead" name="Changes" comment="Fix: Disabling the traverse operation when there is any operation running.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/workspace/WorkspaceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinarySearchTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/BinaryTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/GeneralTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/model/tree/RedBlackTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/controller/vis/TreeVisualizationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/controller/vis/TreeVisualizationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/animation/NodeMoveAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/animation/NodeMoveAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/animation/strategy/StructureStepStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo3/src/main/java/com/view/vis/animation/strategy/StructureStepStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,61 +43,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.000000000002146" />
-      <entry key="MS500" value="1.0078415014101387" />
-      <entry key="S2" value="2.0293882459311705" />
-      <entry key="S5" value="4.616046552714447" />
-      <entry key="S10" value="6.848105296721136" />
-      <entry key="S30" value="9.297445979006856" />
-      <entry key="S60" value="10.09899552484809" />
-      <entry key="M2" value="10.5391902806199" />
-      <entry key="M5" value="11.349067786280118" />
-      <entry key="M10" value="14.948842197594374" />
-      <entry key="M15" value="20.605138654722577" />
-      <entry key="M30" value="39.71828657756469" />
-      <entry key="H1" value="66.21463278026211" />
-      <entry key="H2" value="89.87814403152396" />
-      <entry key="H4" value="105.9993571655571" />
-      <entry key="D1" value="122.35630437364355" />
-      <entry key="W1" value="125.47127232722622" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.00000681195881" />
+      <entry key="S2" value="1.074850369822771" />
+      <entry key="S5" value="1.806119791522975" />
+      <entry key="S10" value="2.9623124336489806" />
+      <entry key="S30" value="5.067450469174895" />
+      <entry key="S60" value="8.237074624847393" />
+      <entry key="M2" value="13.524067080153714" />
+      <entry key="M5" value="20.88241107549131" />
+      <entry key="M10" value="27.26750854737147" />
+      <entry key="M15" value="33.05007080035543" />
+      <entry key="M30" value="51.41659577227952" />
+      <entry key="H1" value="79.64846875830385" />
+      <entry key="H2" value="107.31903654005224" />
+      <entry key="H4" value="127.24609067830946" />
+      <entry key="D1" value="148.22951552942095" />
+      <entry key="W1" value="152.30568629989713" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
-      <entry key="S5" value="1.1452804313035364E-214" />
-      <entry key="S10" value="1.801196919999223E-107" />
-      <entry key="S30" value="6.705700224278054E-36" />
-      <entry key="S60" value="7.988685071333973E-18" />
-      <entry key="M2" value="1.1682323064611597E-8" />
-      <entry key="M5" value="0.004637695305498601" />
-      <entry key="M10" value="0.39304802133225003" />
-      <entry key="M15" value="1.813820442837331" />
-      <entry key="M30" value="8.750067254485112" />
-      <entry key="H1" value="19.656059040504935" />
-      <entry key="H2" value="29.664360584626507" />
-      <entry key="H4" value="36.511686974183625" />
-      <entry key="D1" value="43.45510755087051" />
-      <entry key="W1" value="44.77587670852161" />
+      <entry key="S5" value="2.6944883510869395E-282" />
+      <entry key="S10" value="2.76276172506211E-141" />
+      <entry key="S30" value="3.5895351703164E-47" />
+      <entry key="S60" value="1.8482994742798424E-23" />
+      <entry key="M2" value="1.776960326945048E-11" />
+      <entry key="M5" value="3.460681410765012E-4" />
+      <entry key="M10" value="0.10736811245521685" />
+      <entry key="M15" value="0.7636260962817096" />
+      <entry key="M30" value="5.677467093483899" />
+      <entry key="H1" value="15.833176944498595" />
+      <entry key="H2" value="26.62384647093483" />
+      <entry key="H4" value="34.58993960661979" />
+      <entry key="D1" value="43.065267236336894" />
+      <entry key="W1" value="44.71827069384768" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9726549474143729" />
-      <entry key="MS500" value="1.002266046022324" />
-      <entry key="S2" value="2.0262992210086224" />
-      <entry key="S5" value="4.612996866662124" />
-      <entry key="S10" value="6.8457838052883275" />
-      <entry key="S30" value="9.296379194255143" />
-      <entry key="S60" value="10.098414124135571" />
-      <entry key="M2" value="10.538886378873125" />
-      <entry key="M5" value="11.353550628373764" />
-      <entry key="M10" value="15.340784048891644" />
-      <entry key="M15" value="22.415573722928762" />
-      <entry key="M30" value="48.459695713027735" />
-      <entry key="H1" value="85.86054567130975" />
-      <entry key="H2" value="119.53466413974594" />
-      <entry key="H4" value="142.50615836961845" />
-      <entry key="D1" value="165.81043235352172" />
-      <entry key="W1" value="170.24700457539558" />
+      <entry key="MS100" value="0.9659363289248456" />
+      <entry key="MS500" value="0.9930992509909256" />
+      <entry key="S2" value="1.0729756246681008" />
+      <entry key="S5" value="1.8048606438759616" />
+      <entry key="S10" value="2.9612965311243875" />
+      <entry key="S30" value="5.066881848470911" />
+      <entry key="S60" value="8.236618921633367" />
+      <entry key="M2" value="13.52369656718428" />
+      <entry key="M5" value="20.88252719626334" />
+      <entry key="M10" value="27.37444832974425" />
+      <entry key="M15" value="33.81218325457837" />
+      <entry key="M30" value="57.08839858580646" />
+      <entry key="H1" value="95.47344903022368" />
+      <entry key="H2" value="133.93583409085605" />
+      <entry key="H4" value="161.83139559716324" />
+      <entry key="D1" value="191.29381096482624" />
+      <entry key="W1" value="197.02381257371718" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -238,7 +236,23 @@
       <option name="project" value="LOCAL" />
       <updated>1780816500766</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fix: Disabling the the pause/play button when there is no operation running.">
+      <option name="closed" value="true" />
+      <created>1780817396514</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1780817396514</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fix: Disabling the traverse operation when there is any operation running.">
+      <option name="closed" value="true" />
+      <created>1780817556671</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1780817556671</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,6 +277,8 @@
     <MESSAGE value="Fix: Fixed resolution bug switching screens with fullscreen and 1920 x 1080 resolution bug." />
     <MESSAGE value="Fix: Fixing the UI in the workspace in dark mode." />
     <MESSAGE value="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: Fixing the UI in the workspace in dark mode.&#10;Feat: Added progress bar for operations." />
+    <MESSAGE value="Fix: Disabling the the pause/play button when there is no operation running." />
+    <MESSAGE value="Fix: Disabling the traverse operation when there is any operation running." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Disabling the traverse operation when there is any operation running." />
   </component>
 </project>
