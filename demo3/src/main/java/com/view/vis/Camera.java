@@ -56,6 +56,13 @@ public class Camera {
     }
 
     /**
+     * Resets the camera transformation back to its default identity state (no pan, no zoom).
+     */
+    public void reset() {
+        this.transform.setToIdentity();
+    }
+
+    /**
      * Applies the camera's transformation to the given GraphicsContext.
      * @param gc The GraphicsContext to apply the transform to.
      */

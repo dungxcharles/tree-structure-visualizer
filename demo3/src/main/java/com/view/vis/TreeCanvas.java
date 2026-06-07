@@ -34,6 +34,13 @@ public class TreeCanvas {
         }
     }
 
+    public void resetCamera() {
+        if (this.camera != null) {
+            this.camera.reset();
+            triggerRedraw();
+        }
+    }
+
     public void draw(VisualTree tree, GraphicsContext gc) {
         if (tree == null || gc == null)
             return;

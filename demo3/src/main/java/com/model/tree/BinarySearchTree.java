@@ -204,7 +204,6 @@ public class BinarySearchTree extends BinaryTree {
             fireStep(StepType.GO_LEFT, current.getValue(), "Go left");
             return findNode(current.getLeft(), value);
         }
-        
         if (current.getRight() == null) {
             fireStep(StepType.NOT_FOUND, current.getValue(), "Cannot find " + value + " (right branch empty)");
             return null;
