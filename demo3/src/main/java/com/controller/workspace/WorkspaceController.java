@@ -248,6 +248,8 @@ public class WorkspaceController {
             deleteButton.setDisable(disabled);
         if (searchButton != null)
             searchButton.setDisable(disabled);
+        if (traversalComboBox != null)
+            traversalComboBox.setDisable(disabled);
     }
 
     @FXML
