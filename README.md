@@ -28,11 +28,11 @@ Demo video link: [Insert demo video link here]
 
 ## Technology Stack
 
-- Java
-- JavaFX
-- Maven
-- FXML
-- CSS
+- Programming language : Java
+- User interface framework : JavaFX
+- Build tool : Maven
+- Layout definition : FXML
+- Styling : CSS
 
 ## How to Run
 
