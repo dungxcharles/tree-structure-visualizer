@@ -6,14 +6,11 @@ Tree Operation is a JavaFX desktop application for visualizing tree data structu
 
 | Member | Student ID | Main assignment | Contribution |
 | --- | --- | --- | --- |
-| Nguyen Tien Dung | 202417116 | Controller development, view designing and building,bug fixing, refactoring, navigation flow implementation, design class diagram, and use case diagram support.| 21% |
-| Nguyen Khac Khiem | 202417142 | Developed controller logic, designed and built view
-components, supported animation handling, implemented navigation flow, refactored code, and contributed to class diagram and use case diagram design | 21% |
+| Nguyen Tien Dung | 202417116 | Controller development, view design and building, bug fixing, refactoring, navigation flow implementation, class diagram design, and use case diagram support | 21% |
+| Nguyen Khac Khiem | 202417142 | Controller logic development, view component design and building, animation handling support, navigation flow implementation, code refactoring, and class/use case diagram contribution | 21% |
 | Tran Quang Thang | 202417196 | Model architecture design, tree data structure algorithm implementation, pseudo-code display implementation, controller connection support, report writing support, and use case diagram design | 20% |
-| Vu Khanh Toan | 202417204 | Model diagram design, BST, AVL and Red-Black Tree model implementation, pseudo-code display support controller connection support, debugging and testing, main report and slide preparation, and partial
-controller/view development. | 20% |
-| Nguyen Xuan Thuy | 202417202 | Partial View and Controller development, exception handling implementation, and input error handling
-support. | 18% |
+| Vu Khanh Toan | 202417204 | Model diagram design, BST, AVL and Red-Black Tree model implementation, pseudo-code display support, controller connection support, debugging and testing, main report and slide preparation, and partial controller/view development | 20% |
+| Nguyen Xuan Thuy | 202417202 | Partial view and controller development, exception handling implementation, and input error handling support | 18% |
 
 ## Demo Video
 
