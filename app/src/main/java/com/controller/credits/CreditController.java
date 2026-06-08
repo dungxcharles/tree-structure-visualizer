@@ -79,9 +79,9 @@ public class CreditController {
 
         // Pages 4-7: Step-by-Step Instructions (Image-based)
         pages.add(createImagePage("Choose tree type", "/com/view/images/help/instruction1.png"));
-        pages.add(createImagePage("Insert", "/com/view/images/help/instruction2.png"));
-        pages.add(createImagePage("Traverse", "/com/view/images/help/instruction3.png"));
-        pages.add(createImagePage("Update", "/com/view/images/help/instruction4.png"));
+        pages.add(createImagePage("Tree operations", "/com/view/images/help/instruction2.png"));
+        pages.add(createImagePage("Traverse and Pause", "/com/view/images/help/instruction3.png"));
+        pages.add(createImagePage("Other utilities", "/com/view/images/help/instruction4.png"));
     }
 
     /**

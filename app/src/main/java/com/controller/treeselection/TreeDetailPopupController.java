@@ -28,6 +28,7 @@ public class TreeDetailPopupController {
         this.currentTreeInfo = treeInfo;
         lblTitle.setText(treeInfo.getTitle());
         lblDescription.setText(treeInfo.getDescription());
+        lblDescription.setStyle("-fx-text-alignment: center; -fx-alignment: center; -fx-line-spacing: 5px;");
     }
 
     public void setOnCloseAction(Runnable onCloseAction) {
@@ -65,15 +66,25 @@ public class TreeDetailPopupController {
 
     public enum TreeInfo {
         GENERAL_TREE("General Tree",
-                "A general tree is a hierarchical data structure in which each node can have an arbitrary number of children."),
+                "A general tree is a hierarchical data structure in which each node can have an arbitrary number of children.\n\n" +
+                "✨ Time Complexity ✨\n" +
+                "Search: O(n)   |   Insert: O(1) or O(n)   |   Delete: O(n)\n\n"),
         BINARY_TREE("Binary Tree",
-                "A binary tree is a tree data structure in which each node has at most two children, referred to as the left child and the right child."),
+                "A binary tree is a tree data structure in which each node has at most two children, referred to as the left child and the right child.\n\n" +
+                "✨ Time Complexity ✨\n" +
+                "Search: O(n)   |   Insert: O(n)   |   Delete: O(n)\n\n"),
         RED_BLACK_TREE("Red-Black Tree",
-                "A red-black tree is a kind of self-balancing binary search tree where each node has an extra bit for color, used to ensure the tree remains balanced."),
+                "A red-black tree is a kind of self-balancing binary search tree where each node has an extra bit for color, used to ensure the tree remains balanced.\n\n" +
+                "✨ Time Complexity ✨\n" +
+                "Search: O(log n)   |   Insert: O(log n)   |   Delete: O(log n)\n\n"),
         AVL_TREE("AVL Tree",
-                "An AVL tree is a self-balancing binary search tree where the difference between heights of left and right subtrees cannot be more than one for all nodes."),
+                "An AVL tree is a self-balancing binary search tree where the difference between heights of left and right subtrees cannot be more than one for all nodes.\n\n" +
+                "✨ Time Complexity ✨\n" +
+                "Search: O(log n)   |   Insert: O(log n)   |   Delete: O(log n)\n\n"),
         BINARY_SEARCH_TREE("Binary Search Tree",
-                "A binary search tree is a rooted binary tree whose internal nodes each store a key greater than all the keys in the node's left subtree and less than those in its right subtree.");
+                "A binary search tree is a rooted binary tree whose internal nodes each store a key greater than all the keys in the node's left subtree and less than those in its right subtree.\n\n" +
+                "✨ Time Complexity (Avg/Worst) ✨\n" +
+                "Search: O(log n)/O(n)   |   Insert: O(log n)/O(n)   |   Delete: O(log n)/O(n)\n\n");
 
         private final String title;
         private final String description;
