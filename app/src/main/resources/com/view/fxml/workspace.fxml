@@ -28,6 +28,8 @@
             <Separator orientation="VERTICAL" />
             <Label style="-fx-font-weight: bold; -fx-text-fill: #5f6368;" text="Tree Type:" />
             <ComboBox fx:id="treeTypeComboBox" prefWidth="180.0" promptText="Select Tree Type" styleClass="tree-type-combo" />
+         <Separator orientation="VERTICAL" />
+         <ProgressBar fx:id="animationProgressBar" minHeight="0.0" prefHeight="0.0" prefWidth="240.0" progress="0.0" />
         </HBox>
     </top>
 
@@ -90,7 +92,7 @@
     </right>
 
     <bottom>
-        <HBox styleClass="bottom-bar">
+        <HBox minWidth="-Infinity" styleClass="bottom-bar">
             <TextField fx:id="parentValueTextField" managed="false" prefWidth="70.0" promptText="Parent" styleClass="input-field" visible="false" />
             <TextField fx:id="valueTextField" prefWidth="80.0" promptText="Value" styleClass="input-field" />
             
@@ -117,9 +119,6 @@
             
             <Label style="-fx-font-weight: bold; -fx-text-fill: #5f6368;" text="Speed:" />
             <Slider fx:id="speedSlider" majorTickUnit="0.5" max="3.0" min="0.5" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="slider" value="1.0" />
-            
-            <Separator orientation="VERTICAL" />
-            <ProgressBar fx:id="animationProgressBar" prefWidth="100.0" progress="0.0" />
         </HBox>
     </bottom>
 
