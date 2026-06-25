@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class TreeVisualizationController implements TreeOperationAnimator, TreeOperationListener {
+public class TreeVisualizationController implements TreeOperationListener {
     private VisualTree visualTree;
     private TreeCanvas canvas;
     private AnimationManager animationManager;
@@ -195,7 +195,8 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
 
                 VisualEdge finalEdge = VisualTreeUtils.findIncomingEdge(finalTree, finalNode);
                 if (finalEdge != null) {
-                    VisualNode sourceInCurrent = VisualTreeUtils.findNodeById(this.visualTree, finalEdge.getSource().getId());
+                    VisualNode sourceInCurrent = VisualTreeUtils.findNodeById(this.visualTree,
+                            finalEdge.getSource().getId());
                     if (sourceInCurrent != null) {
                         VisualEdge newEdge = new VisualEdge(sourceInCurrent, newNode, finalEdge.getChildSide());
                         newEdge.setProgress(0.0);
@@ -348,7 +349,8 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
 
     private void resetAllNodeColors() {
         for (VisualNode node : this.visualTree.getNodes()) {
-            if (!node.getColorHex().equals(VisualNode.COLOR_RED_BLACK_RED) && !node.getColorHex().equals(VisualNode.COLOR_RED_BLACK_BLACK)) {
+            if (!node.getColorHex().equals(VisualNode.COLOR_RED_BLACK_RED)
+                    && !node.getColorHex().equals(VisualNode.COLOR_RED_BLACK_BLACK)) {
                 node.setColorHex(VisualNode.COLOR_DEFAULT);
             }
         }
@@ -381,5 +383,3 @@ public class TreeVisualizationController implements TreeOperationAnimator, TreeO
         }
     }
 }
-
-

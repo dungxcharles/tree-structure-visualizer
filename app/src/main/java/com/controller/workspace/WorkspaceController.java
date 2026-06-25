@@ -64,7 +64,8 @@ public class WorkspaceController {
     private ListViewPseudoCodeDisplay pseudoCodeDisplay;
 
     @FXML
-    private Label heightLabel, numNodesLabel, leafNodesLabel, rootValueLabel, balanceFactorLabel, balanceFactorTextLabel,
+    private Label heightLabel, numNodesLabel, leafNodesLabel, rootValueLabel, balanceFactorLabel,
+            balanceFactorTextLabel,
             traverseStatusLabel;
 
     @FXML
@@ -95,8 +96,6 @@ public class WorkspaceController {
 
     // Default tree type
     public static TreeType currentTreeType = TreeType.BINARY_SEARCH;
-
-
 
     private void executeTreeOperation(Runnable operation) {
         if (treeController.isAnimating())
@@ -253,40 +252,44 @@ public class WorkspaceController {
 
     @FXML
     void handleUndoAction(ActionEvent event) {
-        if (historyManager == null || !historyManager.canUndo() || treeController.isAnimating()) return;
+        if (historyManager == null || !historyManager.canUndo() || treeController.isAnimating())
+            return;
         historyManager.undo();
         replayHistory();
     }
 
     @FXML
     void handleRedoAction(ActionEvent event) {
-        if (historyManager == null || !historyManager.canRedo() || treeController.isAnimating()) return;
+        if (historyManager == null || !historyManager.canRedo() || treeController.isAnimating())
+            return;
         historyManager.redo();
         replayHistory();
     }
 
     private void replayHistory() {
         setOperationButtonsDisabled(true);
-        
+
         logicalTree.setListener(null);
-        
+
         logicalTree = TreeFactory.create(currentTreeType);
-        
+
         List<HistoryOperation> operations = historyManager.getActiveHistory();
         for (HistoryOperation op : operations) {
             op.apply(logicalTree);
         }
-        
+
         logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
         redrawTree();
-        
+
         setOperationButtonsDisabled(false);
     }
 
     private void updateUndoRedoButtons() {
-        if (undoButton != null) undoButton.setDisable(!historyManager.canUndo());
-        if (redoButton != null) redoButton.setDisable(!historyManager.canRedo());
+        if (undoButton != null)
+            undoButton.setDisable(!historyManager.canUndo());
+        if (redoButton != null)
+            redoButton.setDisable(!historyManager.canRedo());
     }
 
     private void setOperationButtonsDisabled(boolean disabled) {
@@ -300,10 +303,12 @@ public class WorkspaceController {
             searchButton.setDisable(disabled);
         if (traversalComboBox != null)
             traversalComboBox.setDisable(disabled);
-            
+
         if (disabled) {
-            if (undoButton != null) undoButton.setDisable(true);
-            if (redoButton != null) redoButton.setDisable(true);
+            if (undoButton != null)
+                undoButton.setDisable(true);
+            if (redoButton != null)
+                redoButton.setDisable(true);
         } else {
             updateUndoRedoButtons();
         }
@@ -392,7 +397,7 @@ public class WorkspaceController {
         logicalTree = TreeFactory.create(currentTreeType);
         logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
-        
+
         historyManager = new HistoryManager();
         updateUndoRedoButtons();
     }

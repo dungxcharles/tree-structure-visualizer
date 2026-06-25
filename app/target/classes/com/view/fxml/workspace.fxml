@@ -28,6 +28,8 @@
             <Separator orientation="VERTICAL" />
             <Label style="-fx-font-weight: bold; -fx-text-fill: #5f6368;" text="Tree Type:" />
             <ComboBox fx:id="treeTypeComboBox" prefWidth="180.0" promptText="Select Tree Type" styleClass="tree-type-combo" />
+            <Separator orientation="VERTICAL" />
+            <ProgressBar fx:id="animationProgressBar" minHeight="0.0" prefHeight="0.0" prefWidth="240.0" progress="0.0" />
         </HBox>
     </top>
 
@@ -36,7 +38,7 @@
             <ScrollPane fitToHeight="true" fitToWidth="true" pannable="true" style="-fx-background-color: transparent; -fx-background: #f0f2f5;">
                 <Pane fx:id="visualizerPane" prefHeight="2000.0" prefWidth="2000.0" styleClass="canvas-container" />
             </ScrollPane>
-            
+
             <Button onAction="#handleRecenterAction" style="-fx-background-color: #ffffff; -fx-text-fill: #4F46E5; -fx-font-size: 28px; -fx-background-radius: 50; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 4); -fx-pref-width: 50; -fx-pref-height: 50; -fx-cursor: hand; -fx-alignment: center; -fx-padding: 0;" styleClass="recenter-button" text="⌖" StackPane.alignment="BOTTOM_RIGHT">
                 <StackPane.margin>
                     <javafx.geometry.Insets bottom="25.0" right="25.0" />
@@ -50,9 +52,9 @@
         <VBox prefWidth="320.0" styleClass="right-panel">
             <Label styleClass="panel-title" text="Pseudo Code" />
             <ListView fx:id="pseudoCodeListView" prefHeight="260.0" styleClass="pseudo-code-list" VBox.vgrow="NEVER" />
-            
+
             <Separator />
-            
+
             <Label styleClass="panel-title" text="Tree Statistics" />
             <GridPane styleClass="stats-grid">
                 <columnConstraints>
@@ -90,36 +92,33 @@
     </right>
 
     <bottom>
-        <HBox styleClass="bottom-bar">
+        <HBox minWidth="-Infinity" styleClass="bottom-bar">
             <TextField fx:id="parentValueTextField" managed="false" prefWidth="70.0" promptText="Parent" styleClass="input-field" visible="false" />
             <TextField fx:id="valueTextField" prefWidth="80.0" promptText="Value" styleClass="input-field" />
-            
+
             <Button fx:id="insertButton" onAction="#handleInsertAction" styleClass="action-btn, btn-insert" text="Insert" />
             <Button fx:id="deleteButton" onAction="#handleDeleteAction" styleClass="action-btn, btn-delete" text="Delete" />
             <Button fx:id="updateButton" onAction="#handleUpdateAction" styleClass="action-btn, btn-update" text="Update" />
             <Button fx:id="searchButton" onAction="#handleSearchAction" styleClass="action-btn, btn-search" text="Search" />
-            
+
             <Separator orientation="VERTICAL" />
-            
+
             <Button fx:id="undoButton" disable="true" onAction="#handleUndoAction" styleClass="action-btn, btn-undo" text="Undo" />
             <Button fx:id="redoButton" disable="true" onAction="#handleRedoAction" styleClass="action-btn, btn-redo" text="Redo" />
-            
+
             <Separator orientation="VERTICAL" />
-            
+
             <Button fx:id="pauseResumeButton" onAction="#handlePauseResumeAction" styleClass="action-btn, btn-pause" text="Pause" />
-            
+
             <Separator orientation="VERTICAL" />
-            
+
             <Label style="-fx-font-weight: bold; -fx-text-fill: #5f6368;" text="Traverse:" />
             <ComboBox fx:id="traversalComboBox" prefWidth="140.0" promptText="Select Type" styleClass="input-field" />
-            
+
             <Pane HBox.hgrow="ALWAYS" /> <!-- Spacer -->
-            
+
             <Label style="-fx-font-weight: bold; -fx-text-fill: #5f6368;" text="Speed:" />
             <Slider fx:id="speedSlider" majorTickUnit="0.5" max="3.0" min="0.5" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="slider" value="1.0" />
-            
-            <Separator orientation="VERTICAL" />
-            <ProgressBar fx:id="animationProgressBar" prefWidth="100.0" progress="0.0" />
         </HBox>
     </bottom>
 
