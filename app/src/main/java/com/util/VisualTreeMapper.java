@@ -1,4 +1,4 @@
-    package com.view.vis;
+package com.util;
 
 import com.model.node.BinaryNode;
 import com.model.node.GenericNode;
@@ -12,7 +12,8 @@ import com.view.vis.layout.LayoutStrategy;
 
 /**
  * VisualTreeMapper is responsible for converting a Logical Tree (data model)
- * into a Visual Tree (graphics model). It strictly adheres to the Single Responsibility Principle.
+ * into a Visual Tree (graphics model). It strictly adheres to the Single
+ * Responsibility Principle.
  */
 public class VisualTreeMapper {
 
@@ -25,13 +26,14 @@ public class VisualTreeMapper {
      * @param height         The height of the available canvas.
      * @return A newly constructed and positioned VisualTree.
      */
-    public static VisualTree build(AbstractTree<?> logicalTree, LayoutStrategy layoutStrategy, double width, double height) {
+    public static VisualTree build(AbstractTree<?> logicalTree, LayoutStrategy layoutStrategy, double width,
+            double height) {
         VisualTree tree = new VisualTree();
         if (logicalTree != null) {
             Node root = logicalTree.getRoot();
             if (root != null) {
                 mapLogicalNodeToVisual(root, null, ChildSide.UNKNOWN, tree);
-                
+
                 // Calculate physical coordinates if valid dimensions are provided
                 if (layoutStrategy != null && width > 0 && height > 0) {
                     layoutStrategy.calculateLayout(tree, width, height);
@@ -56,7 +58,8 @@ public class VisualTreeMapper {
 
     private static VisualNode mapLogicalNodeToVisual(Node logicalNode, VisualNode parentVisual, ChildSide childSide,
             VisualTree targetTree) {
-        if (logicalNode == null) return null;
+        if (logicalNode == null)
+            return null;
 
         String id = String.valueOf(System.identityHashCode(logicalNode));
         String label = String.valueOf(logicalNode.getValue());

@@ -21,7 +21,7 @@ public class TreeCanvas {
         this.nodeRenderer = nodeRenderer;
         this.edgeRenderer = edgeRenderer;
         this.camera = new Camera();
-        
+
         // Initialize the handler which translates mouse events to camera operations
         this.panZoomHandler = new PanZoomHandler(canvas, this.camera, this::triggerRedraw);
     }
@@ -62,7 +62,8 @@ public class TreeCanvas {
 
     public void clear(GraphicsContext gc) {
         if (gc != null) {
-            // Camera context is restored at the end of draw(), so this safely clears the un-transformed physical canvas.
+            // Camera context is restored at the end of draw(), so this safely clears the
+            // un-transformed physical canvas.
             gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         }
     }
