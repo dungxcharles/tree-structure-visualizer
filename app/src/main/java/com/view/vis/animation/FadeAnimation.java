@@ -1,16 +1,13 @@
 package com.view.vis.animation;
 
 import com.view.vis.viewmodel.VisualNode;
-import com.view.vis.viewmodel.VisualTree;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 
 public class FadeAnimation implements TreeAnimation {
     private final Transition transition;
 
-    public FadeAnimation(VisualNode node, VisualTree tree, double startOpacity, double endOpacity, double durationMs) {
-        node.setOpacity(startOpacity);
-
+    public FadeAnimation(VisualNode node, double startOpacity, double endOpacity, double durationMs) {
         this.transition = new Transition() {
             {
                 setCycleDuration(Duration.millis(durationMs));

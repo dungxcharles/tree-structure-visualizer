@@ -20,25 +20,27 @@ public class RedBlackStepStrategy implements StepAnimationStrategy {
     public List<TreeAnimation> createAnimations(AnimationStep step, VisualTree tree) {
         List<TreeAnimation> animations = new ArrayList<>();
         VisualNode targetNode = VisualTreeUtils.findVisualNodeByValue(tree, step.getMainNodeValue());
-        
-        if (targetNode != null) {
-            switch (step.getType()) {
-                case RECOLOR:
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), FIX_COLOR, DURATION_MS));
-                    animations.add(new NodeColorAnimation(targetNode, FIX_COLOR, targetNode.getColorHex(), DURATION_MS));
-                    break;
-                case FIX_START:
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), FIX_COLOR, DURATION_MS));
-                    animations.add(new NodeColorAnimation(targetNode, FIX_COLOR, targetNode.getColorHex(), DURATION_MS));
-                    break;
-                case TRANSPLANT:
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), TRANSPLANT_COLOR, DURATION_MS));
-                    animations.add(new NodeColorAnimation(targetNode, TRANSPLANT_COLOR, targetNode.getColorHex(), DURATION_MS));
-                    break;
-                default:
-                    break;
-            }
+
+        if (targetNode == null) {
+            return animations;
         }
+
+        switch (step.getType()) {
+            case RECOLOR:
+            case FIX_START:
+                animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), FIX_COLOR, DURATION_MS));
+                animations.add(new NodeColorAnimation(targetNode, FIX_COLOR, targetNode.getColorHex(), DURATION_MS));
+                break;
+            case TRANSPLANT:
+                animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), TRANSPLANT_COLOR,
+                        DURATION_MS));
+                animations.add(new NodeColorAnimation(targetNode, TRANSPLANT_COLOR, targetNode.getColorHex(),
+                        DURATION_MS));
+                break;
+            default:
+                break;
+        }
+
         return animations;
     }
 

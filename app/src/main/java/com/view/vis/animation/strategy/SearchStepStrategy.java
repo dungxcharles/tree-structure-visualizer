@@ -46,9 +46,9 @@ public class SearchStepStrategy implements StepAnimationStrategy {
                         .add(new NodeColorAnimation(targetNode, originalColor, TRAVERSAL_COLOR, DURATION_MS / 2));
                 animations
                         .add(new NodeColorAnimation(targetNode, TRAVERSAL_COLOR, originalColor, DURATION_MS / 2));
-                
+
                 VisualEdge outgoingEdge = VisualTreeUtils.findOutgoingEdge(tree, targetNode, step.getType());
-                if (outgoingEdge != null && outgoingEdge.getTarget().getOpacity() > 0.0) {
+                if (outgoingEdge != null) {
                     animations.add(new EdgeTraversalAnimation(outgoingEdge, TRAVERSAL_COLOR, DURATION_MS));
                 }
                 break;

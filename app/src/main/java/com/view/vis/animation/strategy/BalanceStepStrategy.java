@@ -20,23 +20,30 @@ public class BalanceStepStrategy implements StepAnimationStrategy {
     public List<TreeAnimation> createAnimations(AnimationStep step, VisualTree tree) {
         List<TreeAnimation> animations = new ArrayList<>();
         VisualNode targetNode = VisualTreeUtils.findVisualNodeByValue(tree, step.getMainNodeValue());
-        
-        if (targetNode != null) {
-            switch (step.getType()) {
-                case UPDATE_HEIGHT:
-                case CHECK_BALANCE:
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), BALANCE_CHECK_COLOR, DURATION_MS));
-                    animations.add(new NodeColorAnimation(targetNode, BALANCE_CHECK_COLOR, targetNode.getColorHex(), DURATION_MS));
-                    break;
-                case ROTATE_LEFT:
-                case ROTATE_RIGHT:
-                    animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), ROTATE_COLOR, DURATION_MS));
-                    animations.add(new NodeColorAnimation(targetNode, ROTATE_COLOR, targetNode.getColorHex(), DURATION_MS));
-                    break;
-                default:
-                    break;
-            }
+
+        if (targetNode == null) {
+            return animations;
         }
+
+        switch (step.getType()) {
+            case UPDATE_HEIGHT:
+            case CHECK_BALANCE:
+                animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), BALANCE_CHECK_COLOR,
+                        DURATION_MS));
+                animations.add(new NodeColorAnimation(targetNode, BALANCE_CHECK_COLOR, targetNode.getColorHex(),
+                        DURATION_MS));
+                break;
+            case ROTATE_LEFT:
+            case ROTATE_RIGHT:
+                animations.add(new NodeColorAnimation(targetNode, targetNode.getColorHex(), ROTATE_COLOR,
+                        DURATION_MS));
+                animations.add(new NodeColorAnimation(targetNode, ROTATE_COLOR, targetNode.getColorHex(),
+                        DURATION_MS));
+                break;
+            default:
+                break;
+        }
+
         return animations;
     }
 
