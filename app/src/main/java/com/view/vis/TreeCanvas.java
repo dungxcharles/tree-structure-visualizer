@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class TreeCanvas {
+    private Canvas fxCanvas;
     private NodeRenderer nodeRenderer;
     private EdgeRenderer edgeRenderer;
     private Camera camera;
@@ -18,6 +19,7 @@ public class TreeCanvas {
     private Runnable redrawCallback;
 
     public TreeCanvas(Canvas canvas, NodeRenderer nodeRenderer, EdgeRenderer edgeRenderer) {
+        this.fxCanvas = canvas;
         this.nodeRenderer = nodeRenderer;
         this.edgeRenderer = edgeRenderer;
         this.camera = new Camera();
@@ -43,10 +45,11 @@ public class TreeCanvas {
         }
     }
 
-    public void draw(VisualTree tree, GraphicsContext gc) {
-        if (tree == null || gc == null)
+    public void draw(VisualTree tree) {
+        if (tree == null || fxCanvas == null)
             return;
 
+        GraphicsContext gc = fxCanvas.getGraphicsContext2D();
         camera.apply(gc);
 
         for (VisualEdge edge : tree.getEdges()) {
@@ -60,11 +63,12 @@ public class TreeCanvas {
         camera.restore(gc);
     }
 
-    public void clear(GraphicsContext gc) {
-        if (gc != null) {
+    public void clear() {
+        if (fxCanvas != null) {
+            GraphicsContext gc = fxCanvas.getGraphicsContext2D();
             // Camera context is restored at the end of draw(), so this safely clears the
             // un-transformed physical canvas.
-            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            gc.clearRect(0, 0, fxCanvas.getWidth(), fxCanvas.getHeight());
         }
     }
 }

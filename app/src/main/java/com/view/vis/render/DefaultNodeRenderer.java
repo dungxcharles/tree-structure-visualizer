@@ -12,9 +12,6 @@ public class DefaultNodeRenderer implements NodeRenderer {
 
     @Override
     public void render(GraphicsContext gc, VisualNode node) {
-        if (!node.isVisible())
-            return;
-
         double x = node.getX();
         double y = node.getY();
 

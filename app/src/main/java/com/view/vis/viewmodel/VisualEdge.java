@@ -10,7 +10,6 @@ public class VisualEdge implements VisualElement {
     private VisualNode source;
     private VisualNode target;
     private String colorHex;
-    private boolean visible;
     private double opacity = 1.0;
     private double progress = 1.0;
     private double highlightProgress = 0.0;
@@ -28,7 +27,6 @@ public class VisualEdge implements VisualElement {
         this.source = source;
         this.target = target;
         this.childSide = childSide == null ? ChildSide.UNKNOWN : childSide;
-        this.visible = true;
         this.colorHex = "#000000";
     }
 
@@ -42,10 +40,6 @@ public class VisualEdge implements VisualElement {
 
     public ChildSide getChildSide() {
         return this.childSide;
-    }
-
-    public void setChildSide(ChildSide childSide) {
-        this.childSide = childSide == null ? ChildSide.UNKNOWN : childSide;
     }
 
     public String getColorHex() {
@@ -86,13 +80,5 @@ public class VisualEdge implements VisualElement {
 
     public void setHighlightColor(String highlightColor) {
         this.highlightColor = highlightColor;
-    }
-
-    public boolean isVisible() {
-        return this.visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
     }
 }

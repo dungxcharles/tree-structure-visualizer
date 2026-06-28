@@ -10,13 +10,10 @@ public class DefaultEdgeRenderer implements EdgeRenderer {
 
     @Override
     public void render(GraphicsContext gc, VisualEdge edge) {
-        if (!edge.isVisible())
-            return;
-
         VisualNode source = edge.getSource();
         VisualNode target = edge.getTarget();
 
-        if (source == null || target == null || !source.isVisible() || !target.isVisible()) {
+        if (source == null || target == null) {
             return;
         }
 

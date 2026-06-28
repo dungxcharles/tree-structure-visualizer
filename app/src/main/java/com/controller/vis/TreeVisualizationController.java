@@ -1,40 +1,28 @@
 package com.controller.vis;
 
-import com.model.step.AnimationStep;
-import com.model.step.StepType;
-import com.model.step.TreeOperationListener;
+import com.model.step.*;
 import com.model.tree.AbstractTree;
-import com.view.vis.viewmodel.VisualEdge;
-import com.view.vis.viewmodel.VisualNode;
-import com.view.vis.viewmodel.VisualTree;
+import com.view.vis.viewmodel.*;
 import com.view.vis.TreeCanvas;
-import com.view.vis.animation.AnimationManager;
-import com.view.vis.animation.NodeMoveAnimation;
-import com.view.vis.animation.TreeAnimation;
-import com.view.vis.animation.strategy.StepAnimationStrategy;
-import com.view.vis.animation.strategy.StepAnimatorFactory;
+import com.view.vis.animation.*;
+import com.view.vis.animation.strategy.*;
 import com.view.vis.layout.LayoutStrategy;
-import com.util.VisualTreeMapper;
-import com.util.VisualTreeUtils;
+import com.util.*;
 import javafx.animation.AnimationTimer;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class TreeVisualizationController implements TreeOperationListener {
-    private VisualTree visualTree;
+    private VisualTree visualTree = new VisualTree();
     private TreeCanvas canvas;
     private AnimationManager animationManager;
     private LayoutStrategy layoutStrategy;
-    private List<AnimationStep> recordedSteps;
-    private StepAnimatorFactory animatorFactory;
+    private List<AnimationStep> recordedSteps = new ArrayList<>();
+    private StepAnimatorFactory animatorFactory = new StepAnimatorFactory();
 
-    private Canvas fxCanvas;
     private AnimationTimer renderLoop;
-    private boolean animating = false;
     private double animationSpeed = 1.0;
 
     private Consumer<String> stepHighlightCallback;
@@ -45,20 +33,11 @@ public class TreeVisualizationController implements TreeOperationListener {
     private double canvasWidth;
     private double canvasHeight;
 
-    public TreeVisualizationController(
-            TreeCanvas canvas,
-            AnimationManager animationManager,
+    public TreeVisualizationController(TreeCanvas canvas, AnimationManager animationManager,
             LayoutStrategy layoutStrategy) {
-        this.visualTree = new VisualTree();
         this.canvas = canvas;
         this.animationManager = animationManager;
         this.layoutStrategy = layoutStrategy;
-        this.recordedSteps = new ArrayList<>();
-        this.animatorFactory = new StepAnimatorFactory();
-    }
-
-    public void setFxCanvas(Canvas fxCanvas) {
-        this.fxCanvas = fxCanvas;
     }
 
     public void setStepHighlightCallback(Consumer<String> callback) {
@@ -77,20 +56,12 @@ public class TreeVisualizationController implements TreeOperationListener {
         this.onAnimationFinished = action;
     }
 
-    public void setLayoutStrategy(LayoutStrategy layoutStrategy) {
-        this.layoutStrategy = layoutStrategy;
-    }
-
     public boolean isAnimating() {
-        return animating;
+        return renderLoop != null;
     }
 
     public boolean isAnimationPaused() {
         return this.animationManager.isPaused();
-    }
-
-    public VisualTree getVisualTree() {
-        return visualTree;
     }
 
     public void pauseAnimation() {
@@ -102,18 +73,14 @@ public class TreeVisualizationController implements TreeOperationListener {
     }
 
     public void resetCamera() {
-        if (this.canvas != null) {
+        if (this.canvas != null)
             this.canvas.resetCamera();
-        }
     }
 
-    public void setTreeData(Object logicalTreeData) {
-        if (this.visualTree != null) {
-            this.visualTree.clear();
-        }
+    public void setTreeData(AbstractTree<?> tree) {
+        this.visualTree.clear();
 
-        if (logicalTreeData instanceof AbstractTree) {
-            AbstractTree<?> tree = (AbstractTree<?>) logicalTreeData;
+        if (tree != null) {
             this.logicalTree = tree;
             tree.setListener(this);
             VisualTreeMapper.updateVisualTreeWithoutLayout(tree, this.visualTree);
@@ -123,15 +90,15 @@ public class TreeVisualizationController implements TreeOperationListener {
     public void updateLayout(double width, double height) {
         this.canvasWidth = width;
         this.canvasHeight = height;
-        if (this.layoutStrategy != null && this.visualTree != null) {
+        if (this.layoutStrategy != null && !isAnimating()) {
             this.layoutStrategy.calculateLayout(this.visualTree, width, height);
         }
     }
 
-    public void renderFrame(GraphicsContext gc) {
-        if (this.canvas != null && gc != null) {
-            this.canvas.clear(gc);
-            this.canvas.draw(this.visualTree, gc);
+    public void renderFrame() {
+        if (this.canvas != null) {
+            this.canvas.clear();
+            this.canvas.draw(this.visualTree);
         }
     }
 
@@ -141,7 +108,7 @@ public class TreeVisualizationController implements TreeOperationListener {
     }
 
     public void playAnimations() {
-        if (this.visualTree == null || this.recordedSteps.isEmpty()) {
+        if (this.recordedSteps.isEmpty()) {
             finishWithoutAnimation();
             return;
         }
@@ -151,19 +118,16 @@ public class TreeVisualizationController implements TreeOperationListener {
     }
 
     private void finishWithoutAnimation() {
-        if (this.visualTree != null && this.logicalTree != null) {
+        if (this.logicalTree != null) {
             VisualTreeMapper.updateVisualTreeWithoutLayout(this.logicalTree, this.visualTree);
-            if (canvasWidth > 0 && canvasHeight > 0) {
+            if (canvasWidth > 0 && canvasHeight > 0)
                 updateLayout(canvasWidth, canvasHeight);
-            }
-            renderCurrentFrame();
+            renderFrame();
         }
-        if (progressCallback != null) {
+        if (progressCallback != null)
             progressCallback.accept(1.0);
-        }
-        if (onAnimationFinished != null) {
+        if (onAnimationFinished != null)
             onAnimationFinished.run();
-        }
     }
 
     private void processRecordedStepsAndAnimate() {
@@ -171,11 +135,11 @@ public class TreeVisualizationController implements TreeOperationListener {
                 this.canvasHeight);
 
         List<VisualNode> newNodes = injectInvisibleNewNodes(finalTree);
-        boolean hasDeletions = checkForDeletions(finalTree, newNodes);
+        boolean hasDeletions = checkForDeletions(finalTree);
 
         List<TreeAnimation> stepAnimations = createStepAnimations();
 
-        List<TreeAnimation> moveAnimations = createLayoutMoveAnimations(finalTree, newNodes);
+        List<TreeAnimation> moveAnimations = createLayoutMoveAnimations(finalTree);
 
         playAnimationSequence(stepAnimations, moveAnimations, newNodes.isEmpty(), hasDeletions);
     }
@@ -183,35 +147,34 @@ public class TreeVisualizationController implements TreeOperationListener {
     private List<VisualNode> injectInvisibleNewNodes(VisualTree finalTree) {
         List<VisualNode> newNodes = new ArrayList<>();
         for (VisualNode finalNode : finalTree.getNodes()) {
-            VisualNode existingNode = VisualTreeUtils.findNodeById(this.visualTree, finalNode.getId());
+            if (VisualTreeUtils.findNodeById(this.visualTree, finalNode.getId()) != null)
+                continue;
 
-            if (existingNode == null) {
-                VisualNode newNode = new VisualNode(finalNode.getId(), finalNode.getLabel());
-                newNode.setX(finalNode.getX());
-                newNode.setY(finalNode.getY());
-                newNode.setOpacity(0.0);
-                this.visualTree.addNode(newNode);
-                newNodes.add(newNode);
+            VisualNode newNode = new VisualNode(finalNode.getId(), finalNode.getLabel());
+            newNode.setX(finalNode.getX());
+            newNode.setY(finalNode.getY());
+            newNode.setOpacity(0.0);
+            this.visualTree.addNode(newNode);
+            newNodes.add(newNode);
 
-                VisualEdge finalEdge = VisualTreeUtils.findIncomingEdge(finalTree, finalNode);
-                if (finalEdge != null) {
-                    VisualNode sourceInCurrent = VisualTreeUtils.findNodeById(this.visualTree,
-                            finalEdge.getSource().getId());
-                    if (sourceInCurrent != null) {
-                        VisualEdge newEdge = new VisualEdge(sourceInCurrent, newNode, finalEdge.getChildSide());
-                        newEdge.setProgress(0.0);
-                        this.visualTree.addEdge(newEdge);
-                    }
-                }
+            VisualEdge finalEdge = VisualTreeUtils.findIncomingEdge(finalTree, finalNode);
+            if (finalEdge == null)
+                continue;
+
+            VisualNode sourceInCurrent = VisualTreeUtils.findNodeById(this.visualTree,
+                    finalEdge.getSource().getId());
+            if (sourceInCurrent != null) {
+                VisualEdge newEdge = new VisualEdge(sourceInCurrent, newNode, finalEdge.getChildSide());
+                newEdge.setProgress(0.0);
+                this.visualTree.addEdge(newEdge);
             }
         }
         return newNodes;
     }
 
-    private boolean checkForDeletions(VisualTree finalTree, List<VisualNode> newlyInjectedNodes) {
+    private boolean checkForDeletions(VisualTree finalTree) {
         for (VisualNode currentNode : this.visualTree.getNodes()) {
-            if (VisualTreeUtils.findNodeById(finalTree, currentNode.getId()) == null
-                    && !newlyInjectedNodes.contains(currentNode)) {
+            if (VisualTreeUtils.findNodeById(finalTree, currentNode.getId()) == null) {
                 return true;
             }
         }
@@ -221,12 +184,11 @@ public class TreeVisualizationController implements TreeOperationListener {
     private List<TreeAnimation> createStepAnimations() {
         List<TreeAnimation> stepAnimations = new ArrayList<>();
         int totalSteps = this.recordedSteps.size();
-        int currentStepIndex = 0;
 
-        for (AnimationStep step : this.recordedSteps) {
+        for (int i = 0; i < totalSteps; i++) {
+            AnimationStep step = this.recordedSteps.get(i);
             final String message = step.getMessage();
-            final double progress = totalSteps > 0 ? (double) currentStepIndex / totalSteps : 0.0;
-            currentStepIndex++;
+            final double progress = totalSteps > 0 ? (double) i / totalSteps : 0.0;
 
             stepAnimations.add(new TreeAnimation() {
                 private Runnable onFinished;
@@ -270,20 +232,13 @@ public class TreeVisualizationController implements TreeOperationListener {
         return stepAnimations;
     }
 
-    private List<TreeAnimation> createLayoutMoveAnimations(VisualTree finalTree, List<VisualNode> newNodes) {
+    private List<TreeAnimation> createLayoutMoveAnimations(VisualTree finalTree) {
         List<TreeAnimation> moveAnimations = new ArrayList<>();
-
         for (VisualNode currentNode : this.visualTree.getNodes()) {
             VisualNode finalNode = VisualTreeUtils.findNodeById(finalTree, currentNode.getId());
-
-            if (finalNode != null && !newNodes.contains(currentNode)) {
-                double diffX = Math.abs(currentNode.getX() - finalNode.getX());
-                double diffY = Math.abs(currentNode.getY() - finalNode.getY());
-
-                // Only animate if the distance moved is significant (greater than 1 pixel)
-                if (diffX > 1 || diffY > 1) {
-                    moveAnimations.add(new NodeMoveAnimation(currentNode, finalNode.getX(), finalNode.getY(), 400));
-                }
+            if (finalNode != null && (Math.abs(currentNode.getX() - finalNode.getX()) > 1
+                    || Math.abs(currentNode.getY() - finalNode.getY()) > 1)) {
+                moveAnimations.add(new NodeMoveAnimation(currentNode, finalNode.getX(), finalNode.getY(), 400));
             }
         }
         return moveAnimations;
@@ -296,43 +251,29 @@ public class TreeVisualizationController implements TreeOperationListener {
         Runnable finalizeAndCleanup = () -> {
             resetAllNodeColors();
             VisualTreeMapper.updateVisualTreeWithoutLayout(this.logicalTree, this.visualTree);
+            stopRenderLoop();
             if (canvasWidth > 0 && canvasHeight > 0)
                 updateLayout(canvasWidth, canvasHeight);
-            stopRenderLoop();
-            renderCurrentFrame();
+            renderFrame();
             if (progressCallback != null)
                 progressCallback.accept(1.0);
             if (onAnimationFinished != null)
                 onAnimationFinished.run();
         };
 
-        if (stepAnimations.isEmpty() && moveAnimations.isEmpty()) {
-            finalizeAndCleanup.run();
-            return;
-        }
+        for (TreeAnimation a : moveAnimations)
+            a.setRate(this.animationSpeed);
 
-        if (!noNewNodes || (!hasDeletions && !moveAnimations.isEmpty())) {
-            if (!moveAnimations.isEmpty()) {
-                for (TreeAnimation a : moveAnimations)
-                    a.setRate(this.animationSpeed);
-                this.animationManager.setOnAllFinished(() -> playSequentialSteps(stepAnimations, finalizeAndCleanup));
-                this.animationManager.playParallel(moveAnimations);
-            } else {
-                playSequentialSteps(stepAnimations, finalizeAndCleanup);
-            }
-        } else if (hasDeletions) {
-            playSequentialSteps(stepAnimations, () -> {
-                if (!moveAnimations.isEmpty()) {
-                    for (TreeAnimation a : moveAnimations)
-                        a.setRate(this.animationSpeed);
-                    this.animationManager.setOnAllFinished(finalizeAndCleanup);
-                    this.animationManager.playParallel(moveAnimations);
-                } else {
-                    finalizeAndCleanup.run();
-                }
-            });
-        } else {
+        if (moveAnimations.isEmpty()) {
             playSequentialSteps(stepAnimations, finalizeAndCleanup);
+        } else if (!noNewNodes || !hasDeletions) {
+            this.animationManager.setOnAllFinished(() -> playSequentialSteps(stepAnimations, finalizeAndCleanup));
+            this.animationManager.playParallel(moveAnimations);
+        } else {
+            playSequentialSteps(stepAnimations, () -> {
+                this.animationManager.setOnAllFinished(finalizeAndCleanup);
+                this.animationManager.playParallel(moveAnimations);
+            });
         }
     }
 
@@ -349,8 +290,8 @@ public class TreeVisualizationController implements TreeOperationListener {
 
     private void resetAllNodeColors() {
         for (VisualNode node : this.visualTree.getNodes()) {
-            if (!node.getColorHex().equals(VisualNode.COLOR_RED_BLACK_RED)
-                    && !node.getColorHex().equals(VisualNode.COLOR_RED_BLACK_BLACK)) {
+            String color = node.getColorHex();
+            if (!color.equals(VisualNode.COLOR_RED_BLACK_RED) && !color.equals(VisualNode.COLOR_RED_BLACK_BLACK)) {
                 node.setColorHex(VisualNode.COLOR_DEFAULT);
             }
         }
@@ -359,27 +300,19 @@ public class TreeVisualizationController implements TreeOperationListener {
     private void startRenderLoop() {
         if (renderLoop != null)
             renderLoop.stop();
-        animating = true;
         renderLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                renderCurrentFrame();
+                renderFrame();
             }
         };
         renderLoop.start();
     }
 
     private void stopRenderLoop() {
-        animating = false;
         if (renderLoop != null) {
             renderLoop.stop();
             renderLoop = null;
-        }
-    }
-
-    private void renderCurrentFrame() {
-        if (fxCanvas != null) {
-            renderFrame(fxCanvas.getGraphicsContext2D());
         }
     }
 }

@@ -30,9 +30,6 @@ public class WorkspaceController {
     private Pane visualizerPane;
 
     @FXML
-    private Button homeButton;
-
-    @FXML
     private ComboBox<String> treeTypeComboBox;
 
     @FXML
@@ -47,7 +44,7 @@ public class WorkspaceController {
     private ListViewPseudoCodeDisplay pseudoCodeDisplay;
 
     @FXML
-    private Label heightLabel, numNodesLabel, leafNodesLabel, rootValueLabel, balanceFactorLabel,
+    private Label heightLabel, numNodesLabel, rootValueLabel, balanceFactorLabel,
             balanceFactorTextLabel,
             traverseStatusLabel;
 
@@ -72,7 +69,6 @@ public class WorkspaceController {
     private HistoryManager historyManager;
 
     private TreeVisualizationController treeController;
-    private Canvas fxCanvas;
     private AbstractTree<?> logicalTree;
     private boolean recordingTraverseStatus = false;
     private final List<Integer> traverseStatusValues = new ArrayList<>();
@@ -240,8 +236,6 @@ public class WorkspaceController {
     }
 
     private void replayHistory() {
-        setOperationButtonsDisabled(true);
-
         logicalTree.setListener(null);
 
         logicalTree = TreeFactory.create(currentTreeType);
@@ -254,8 +248,6 @@ public class WorkspaceController {
         logicalTree.setListener(treeController);
         treeController.setTreeData(logicalTree);
         redrawTree();
-
-        setOperationButtonsDisabled(false);
     }
 
     private void updateUndoRedoButtons() {
@@ -298,7 +290,7 @@ public class WorkspaceController {
     }
 
     private void setupVisualization() {
-        fxCanvas = new Canvas();
+        Canvas fxCanvas = new Canvas();
         fxCanvas.widthProperty().bind(visualizerPane.widthProperty());
         fxCanvas.heightProperty().bind(visualizerPane.heightProperty());
         visualizerPane.getChildren().add(fxCanvas);
@@ -309,7 +301,6 @@ public class WorkspaceController {
                 : new BinaryTreeLayout();
 
         treeController = new TreeVisualizationController(treeCanvas, new AnimationManager(), layoutStrategy);
-        treeController.setFxCanvas(fxCanvas);
         treeController.setOnAnimationFinished(() -> {
             updateStatistics();
             recordingTraverseStatus = false;
@@ -318,7 +309,7 @@ public class WorkspaceController {
 
         treeCanvas.setRedrawCallback(() -> {
             if (!treeController.isAnimating()) {
-                treeController.renderFrame(fxCanvas.getGraphicsContext2D());
+                treeController.renderFrame();
             }
         });
     }
@@ -422,7 +413,9 @@ public class WorkspaceController {
 
         if (width > 0 && height > 0) {
             treeController.updateLayout(width, height);
-            treeController.renderFrame(fxCanvas.getGraphicsContext2D());
+            if (!treeController.isAnimating()) {
+                treeController.renderFrame();
+            }
         }
         updateStatistics();
     }
@@ -441,8 +434,7 @@ public class WorkspaceController {
                     .setText(logicalTree.getRoot() == null ? "None" : String.valueOf(logicalTree.getRoot().getValue()));
         }
 
-        if (currentTreeType == TreeType.AVL && balanceFactorLabel != null) {
-            AVLTree avlTree = (AVLTree) logicalTree;
+        if (logicalTree instanceof AVLTree avlTree && balanceFactorLabel != null) {
             balanceFactorLabel.setText(String.valueOf(avlTree.getBalanceFactor(avlTree.getRoot())));
         }
     }

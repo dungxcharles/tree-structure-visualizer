@@ -6,7 +6,6 @@ public class VisualNode implements VisualElement {
     private double x;
     private double y;
     private String colorHex;
-    private boolean visible;
     private double opacity = 1.0;
 
     public static final String COLOR_DEFAULT = "#ffffff";
@@ -16,7 +15,6 @@ public class VisualNode implements VisualElement {
     public VisualNode(String id, String label) {
         this.id = id;
         this.label = label;
-        this.visible = true;
         this.colorHex = COLOR_DEFAULT;
     }
 
@@ -62,13 +60,5 @@ public class VisualNode implements VisualElement {
 
     public void setOpacity(double opacity) {
         this.opacity = Math.max(0.0, Math.min(1.0, opacity));
-    }
-
-    public boolean isVisible() {
-        return this.visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
     }
 }
