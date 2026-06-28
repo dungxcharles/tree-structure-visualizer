@@ -1,21 +1,13 @@
 package com.controller.workspace;
 
-import com.model.history.HistoryManager;
-import com.model.history.HistoryOperation;
-import com.model.tree.AbstractTree;
-import com.model.tree.AVLTree;
-import com.model.tree.TraversalType;
-import com.model.tree.TreeFactory;
-import com.model.tree.TreeType;
-import com.view.vis.layout.GeneralTreeLayout;
-import com.view.vis.TreeCanvas;
-import com.view.vis.animation.AnimationManager;
-import com.view.vis.render.DefaultEdgeRenderer;
-import com.view.vis.render.DefaultNodeRenderer;
+import com.model.history.*;
+import com.model.tree.*;
+import com.view.vis.layout.*;
+import com.view.vis.*;
+import com.view.vis.animation.*;
+import com.view.vis.render.*;
 import com.controller.NavigationManager;
 import com.controller.vis.TreeVisualizationController;
-import com.view.vis.layout.BinaryTreeLayout;
-import com.view.vis.layout.LayoutStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,23 +15,14 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.Pane;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
 import javafx.geometry.Insets;
-import com.view.vis.pseudocode.ListViewPseudoCodeDisplay;
+import com.view.vis.pseudocode.*;
 import javafx.scene.input.MouseEvent;
-import com.util.InputValidator;
-import com.util.AlertUtils;
+import com.util.*;
 
 public class WorkspaceController {
 
@@ -107,26 +90,26 @@ public class WorkspaceController {
 
         setOperationButtonsDisabled(true);
 
+        boolean success = false;
         try {
             operation.run();
+            success = true;
         } catch (NumberFormatException e) {
-            setOperationButtonsDisabled(false);
-            recordingTraverseStatus = false;
             AlertUtils.showErrorAlert("Invalid Input", "Please enter a valid integer value.");
-            return;
         } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
-            setOperationButtonsDisabled(false);
-            recordingTraverseStatus = false;
             AlertUtils.showErrorAlert("Operation Error", e.getMessage());
-            return;
         } catch (Exception e) {
-            setOperationButtonsDisabled(false);
-            recordingTraverseStatus = false;
             AlertUtils.showErrorAlert("Unexpected Error", "An unexpected error occurred: " + e.getMessage());
-            return;
+        } finally {
+            if (!success) {
+                setOperationButtonsDisabled(false);
+                recordingTraverseStatus = false;
+            }
         }
 
-        treeController.playAnimations();
+        if (success) {
+            treeController.playAnimations();
+        }
     }
 
     @FXML
@@ -146,18 +129,14 @@ public class WorkspaceController {
                     clearTraverseStatus();
                 }
             } else {
-                boolean inserted;
-                if (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY) {
-                    inserted = logicalTree.insert(parentValue, value);
-                } else {
-                    inserted = logicalTree.insert(0, value);
-                }
+                boolean inserted = (currentTreeType == TreeType.GENERAL || currentTreeType == TreeType.BINARY)
+                        ? logicalTree.insert(parentValue, value)
+                        : logicalTree.insert(0, value);
                 if (inserted) {
                     historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.INSERT, parentValue, value));
                     clearTraverseStatus();
                 }
             }
-            updateUndoRedoButtons();
         });
     }
 
@@ -165,12 +144,10 @@ public class WorkspaceController {
     void handleDeleteAction(ActionEvent event) {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
-            boolean deleted = logicalTree.delete(value);
-            if (deleted) {
+            if (logicalTree.delete(value)) {
                 historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.DELETE, 0, value));
                 clearTraverseStatus();
             }
-            updateUndoRedoButtons();
         });
     }
 
@@ -193,10 +170,8 @@ public class WorkspaceController {
         form.setHgap(10);
         form.setVgap(10);
         form.setPadding(new Insets(12));
-        form.add(new Label("Current value:"), 0, 0);
-        form.add(currentValueField, 1, 0);
-        form.add(new Label("New value:"), 0, 1);
-        form.add(newValueField, 1, 1);
+        form.addRow(0, new Label("Current value:"), currentValueField);
+        form.addRow(1, new Label("New value:"), newValueField);
 
         dialog.getDialogPane().setContent(form);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -214,12 +189,10 @@ public class WorkspaceController {
         executeTreeOperation(() -> {
             int currentValue = InputValidator.getValidInt(currentValueField);
             int newValue = InputValidator.getValidInt(newValueField);
-            boolean updated = logicalTree.update(currentValue, newValue);
-            if (updated) {
+            if (logicalTree.update(currentValue, newValue)) {
                 historyManager.addOperation(new HistoryOperation(HistoryOperation.Type.UPDATE, currentValue, newValue));
                 clearTraverseStatus();
             }
-            updateUndoRedoButtons();
         });
     }
 
@@ -293,16 +266,11 @@ public class WorkspaceController {
     }
 
     private void setOperationButtonsDisabled(boolean disabled) {
-        if (insertButton != null)
-            insertButton.setDisable(disabled);
-        if (deleteButton != null)
-            deleteButton.setDisable(disabled);
-        if (updateButton != null)
-            updateButton.setDisable(disabled);
-        if (searchButton != null)
-            searchButton.setDisable(disabled);
-        if (traversalComboBox != null)
-            traversalComboBox.setDisable(disabled);
+        for (Node node : new Node[] { insertButton, deleteButton, updateButton, searchButton,
+                traversalComboBox }) {
+            if (node != null)
+                node.setDisable(disabled);
+        }
 
         if (disabled) {
             if (undoButton != null)
@@ -384,6 +352,16 @@ public class WorkspaceController {
             parentValueTextField.setManaged(needsParent);
             parentValueTextField.setPromptText("Parent");
         }
+
+        boolean hasBalanceFactor = (currentTreeType == TreeType.AVL);
+        if (balanceFactorTextLabel != null) {
+            balanceFactorTextLabel.setVisible(hasBalanceFactor);
+            balanceFactorTextLabel.setManaged(hasBalanceFactor);
+        }
+        if (balanceFactorLabel != null) {
+            balanceFactorLabel.setVisible(hasBalanceFactor);
+            balanceFactorLabel.setManaged(hasBalanceFactor);
+        }
         if (valueTextField != null) {
             valueTextField.setPromptText("Value");
         }
@@ -459,26 +437,13 @@ public class WorkspaceController {
             numNodesLabel.setText(String.valueOf(logicalTree.getNumberOfNodes()));
 
         if (rootValueLabel != null) {
-            if (logicalTree.getRoot() == null) {
-                rootValueLabel.setText("None");
-            } else {
-                rootValueLabel.setText(String.valueOf(logicalTree.getRoot().getValue()));
-            }
+            rootValueLabel
+                    .setText(logicalTree.getRoot() == null ? "None" : String.valueOf(logicalTree.getRoot().getValue()));
         }
 
-        boolean hasBalanceFactor = logicalTree instanceof AVLTree;
-        if (balanceFactorTextLabel != null) {
-            balanceFactorTextLabel.setVisible(hasBalanceFactor);
-            balanceFactorTextLabel.setManaged(hasBalanceFactor);
-        }
-        if (balanceFactorLabel != null) {
-            balanceFactorLabel.setVisible(hasBalanceFactor);
-            balanceFactorLabel.setManaged(hasBalanceFactor);
-
-            if (hasBalanceFactor) {
-                AVLTree avlTree = (AVLTree) logicalTree;
-                balanceFactorLabel.setText(String.valueOf(avlTree.getBalanceFactor(avlTree.getRoot())));
-            }
+        if (currentTreeType == TreeType.AVL && balanceFactorLabel != null) {
+            AVLTree avlTree = (AVLTree) logicalTree;
+            balanceFactorLabel.setText(String.valueOf(avlTree.getBalanceFactor(avlTree.getRoot())));
         }
     }
 
@@ -509,7 +474,6 @@ public class WorkspaceController {
             traverseStatusValues.add(Integer.parseInt(valueText));
             updateTraverseStatusLabel();
         } catch (NumberFormatException ignored) {
-            // Ignore messages that are not node values.
         }
     }
 
@@ -522,14 +486,8 @@ public class WorkspaceController {
             return;
         }
 
-        StringBuilder status = new StringBuilder();
-        for (int i = 0; i < traverseStatusValues.size(); i++) {
-            if (i > 0) {
-                status.append(" -> ");
-            }
-            status.append(traverseStatusValues.get(i));
-        }
-        traverseStatusLabel.setText(status.toString());
+        String result = traverseStatusValues.toString();
+        traverseStatusLabel.setText(result.substring(1, result.length() - 1).replace(", ", " -> "));
     }
 
     @FXML
