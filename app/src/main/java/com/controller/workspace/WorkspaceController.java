@@ -109,7 +109,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void handleInsertAction(ActionEvent event) {
+    private void handleInsertAction(ActionEvent event) {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
 
@@ -137,7 +137,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void handleDeleteAction(ActionEvent event) {
+    private void handleDeleteAction(ActionEvent event) {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
             if (logicalTree.delete(value)) {
@@ -148,7 +148,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void handleUpdateAction(ActionEvent event) {
+    private void handleUpdateAction(ActionEvent event) {
         if (treeController.isAnimating()) {
             return;
         }
@@ -193,7 +193,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void handlePauseResumeAction(ActionEvent event) {
+    private void handlePauseResumeAction(ActionEvent event) {
         if (treeController.isAnimationPaused()) {
             treeController.resumeAnimation();
             pauseResumeButton.setText("Pause");
@@ -204,7 +204,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void handleSearchAction(ActionEvent event) {
+    private void handleSearchAction(ActionEvent event) {
         executeTreeOperation(() -> {
             int value = InputValidator.getValidInt(valueTextField);
             logicalTree.search(value);
@@ -212,7 +212,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void handleRecenterAction(ActionEvent event) {
+    private void handleRecenterAction(ActionEvent event) {
         if (treeController != null) {
             treeController.resetCamera();
             redrawTree();
@@ -220,7 +220,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void handleUndoAction(ActionEvent event) {
+    private void handleUndoAction(ActionEvent event) {
         if (historyManager == null || !historyManager.canUndo() || treeController.isAnimating())
             return;
         historyManager.undo();
@@ -228,7 +228,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void handleRedoAction(ActionEvent event) {
+    private void handleRedoAction(ActionEvent event) {
         if (historyManager == null || !historyManager.canRedo() || treeController.isAnimating())
             return;
         historyManager.redo();
@@ -483,7 +483,7 @@ public class WorkspaceController {
     }
 
     @FXML
-    void homeButtonClicked(MouseEvent event) {
+    private void homeButtonClicked(MouseEvent event) {
         NavigationManager.getInstance().navigateTo("/com/view/fxml/tree-selection-view.fxml");
     }
 }
